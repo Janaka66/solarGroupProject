@@ -1,0 +1,194 @@
+/* You can add global styles to this file, and also import other style files */
+/* Core Grid CSS */
+@import 'ag-grid-community/styles/ag-grid.css';
+/* Quartz Theme Specific CSS */
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.title-bar{
+    background-color: #e9e9e9;;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 5px;
+    flex-direction: row;
+    justify-content: space-between;
+
+    div{
+        display: flex;
+        align-items: center;
+
+        img{
+            margin-right: 10px;
+        }
+    }
+
+    .moduleLoader-container{
+        height: 100%;
+
+        img{
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.dashboard{
+    
+    width: 100%;
+    height: 50%;
+    display: flex;
+
+    p-chart{
+        div{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+    
+}
+
+mat-stepper{
+
+    height: 100%;
+
+    .mat-horizontal-stepper-wrapper{
+    
+
+        .mat-horizontal-content-container  {
+
+            padding-bottom: 8px !important;
+
+            .mat-horizontal-stepper-content {
+
+            }
+        }
+    }
+    
+}
+
+.search{
+
+    mat-card {
+
+        mat-card-header{
+    
+            mat-card-title-group{
+                div{
+                    flex: 1;
+                    height: 80px;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        
+            
+        }
+    
+    }
+}
+
+.left-panal{
+
+    mat-nav-list{
+
+        mat-list-item{
+
+            .mdc-list-item__content{
+
+                span{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}
+
+@font-face {
+    font-family: serif;
+    font-weight: 400;
+    font-style: normal;
+    font-display: fallback;
+  }
+
+mat-accordion{
+       
+    mat-expansion-panel{
+
+        mat-expansion-panel-header{
+            height: 48px !important;
+
+            span{
+                height: 100%;
+
+                img{
+                    height: 100%;
+                    object-fit: cover;
+
+                }
+            }
+        }
+    }
+}
+
+.p-carousel-items-content{
+    height: 100% !important;
+}
+
+.p-carousel-indicators{
+    display: none !important;
+}
+
+.relative{
+
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img{
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.p-carousel-item{
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+p-carousel{
+    width: 100%;
+}
+
+.surface-border{
+    display: flex;
+    justify-content: center;
+}
+
+.invoceDetails{
+
+    padding-left: 20px;
+
+    .font-medium{
+
+        margin-top: 10px;
+    }
+}

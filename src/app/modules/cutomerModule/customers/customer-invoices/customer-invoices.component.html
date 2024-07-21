@@ -1,0 +1,92 @@
+<div class="customer-invoices">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text">Customers</span>
+        </div>
+
+        <div class="moduleLoader-container">
+            <img *ngIf="isLoaderAvailable" src="../../../../assets/loader.gif">
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="search-add-invoice-container">
+            
+            <div class="search-section">
+
+                <app-customer-search #customerSearch (selcetedCustomerData)="bindCutomerData($event)"></app-customer-search>
+                
+            </div>
+    
+            <div class="bottom-section">
+
+                <div class="add-show-invoice-section">
+
+                    <div class="show-customer-invoices">
+    
+                        <p-carousel 
+                        [value]="allInvoices" 
+                        [numVisible]="1" 
+                        [numScroll]="1" 
+                        orientation="vertical" 
+                        [showNavigators]="false"
+                        [responsiveOptions]="responsiveOptions"
+                        (onPage)="onPage($event)">
+                        <ng-template let-product pTemplate="item">
+                            <div class="border-1 surface-border border-round m-2 p-3" (click)="selectItem(product)">
+                                <div class="mb-3">
+                                    <div class="relative mx-auto">
+                                        <img 
+                                            src="../../../../../assets/placeHolderInvoice.PNG"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="invoceDetails">
+
+                                    <div class="mb-3 font-medium">
+                                        <div>Invoice No :</div>
+                                        <div>{{ product.invcNo }}</div>
+                                    </div>
+
+                                    <div class="mb-3 font-medium">
+                                        <div>Inovice Date :</div>
+                                        <div>{{ product.invcDate }}</div>
+                                    </div>
+
+                                    <div class="mb-3 font-medium">
+                                        <div>Job Description :</div>
+                                        <div>{{ product.jobDescription }}</div>
+                                    </div>
+
+                                    <div class="mb-3 font-medium">
+                                        <div>Total Price</div>
+                                        <div>{{ product.totalPrice }}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                    
+
+                    </div>
+    
+                </div>
+
+                <div class="show-selected-invoice">
+                    <app-form-viewer #formViewer (loaderEnableDesabled)="loaderHandle($event)" (loadAllInvoicesBack)="getAllInvoices()"></app-form-viewer>
+                </div>
+
+            </div>
+
+        </div>
+       
+
+    </div>
+</div>

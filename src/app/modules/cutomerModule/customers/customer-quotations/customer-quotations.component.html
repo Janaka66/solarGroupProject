@@ -1,0 +1,102 @@
+<div class="customer-quotations">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+        </div>
+        
+        <span class="text">Customer Quotations</span>
+        
+    </div>
+
+    <div class="content">
+
+        <div class="search-add-quotations-container">
+
+            <div class="search-section">
+
+                <app-customer-search></app-customer-search>
+                
+            </div>
+    
+            <div class="bottom-section">
+
+                <div class="add-show-quotations-section">
+    
+                    <div class="add-quotations">
+    
+                        <div>
+    
+                            <mat-form-field hintLabel="Max 10 characters">
+                                <mat-label>Enter some input</mat-label>
+                                <input matInput #input maxlength="10" placeholder="Ex. Nougat">
+                                <mat-hint align="end">{{input.value.length}}/10</mat-hint>
+                            </mat-form-field>
+    
+                            <mat-form-field hintLabel="Max 10 characters">
+                                <mat-label>Enter some input</mat-label>
+                                <input matInput #input maxlength="10" placeholder="Ex. Nougat">
+                                <mat-hint align="end">{{input.value.length}}/10</mat-hint>
+                            </mat-form-field>
+    
+                            <mat-form-field hintLabel="Max 10 characters">
+                                <mat-label>Enter some input</mat-label>
+                                <input matInput #input maxlength="10" placeholder="Ex. Nougat">
+                                <mat-hint align="end">{{input.value.length}}/10</mat-hint>
+                            </mat-form-field>
+    
+                        </div>
+    
+                    </div>
+    
+                    <div class="show-added-customer-quotations">
+    
+                        <ag-grid-angular
+                            class="ag-theme-quartz"
+                            [rowData]="rowData"
+                            [columnDefs]="colDefs"
+                            style="height: 100%;">
+                        </ag-grid-angular>
+    
+                    </div>
+    
+                    <div class="show-customer-quotations">
+    
+                        <p-carousel 
+                        [value]="products" 
+                        [numVisible]="3" 
+                        [numScroll]="1" 
+                        [responsiveOptions]="responsiveOptions">
+                            <ng-template let-product pTemplate="item">
+                                <div class="border-1 surface-border border-round m-2 p-3">
+                                    <div class="mb-3">
+                                        <div class="relative mx-auto">
+                                            <img 
+                                                src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" 
+                                                [alt]="product.name" 
+                                                class="w-full border-round" />
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 font-medium">
+                                        {{ product.name }}
+                                    </div>
+                                </div>
+                            </ng-template>
+                    </p-carousel>
+                    
+                    </div>
+    
+                </div>
+
+                <div class="show-selected-quotations">  
+                    <app-form-viewer></app-form-viewer>
+                 
+                </div>
+            </div>
+
+        </div>
+       
+
+    </div>
+</div>

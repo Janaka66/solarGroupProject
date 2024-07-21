@@ -1,0 +1,865 @@
+.customers{
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .content{
+        height: calc(100% - 62px);
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 0px 5px;
+
+        .search-addCustomer-container{
+
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+            .search-section{
+                height: 100%;
+                width: 300px;
+                flex-shrink: 0;
+            }
+    
+            .add-customer-section{
+                height: 100%;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                padding-left: 10px;
+
+                .mat-tab-container{
+                    width: 100%;
+                    flex: 1;
+
+                    mat-stepper{
+
+                        .heading{
+                            height: 40px;
+                            width: 100%;
+                            background: #c6efff;
+                            padding-left: 10px;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            margin-top: 10px;
+                            justify-content: space-between;
+                        }
+
+                        .phoneNumbers{
+                            
+                            width: 100% !important;
+                            height: 200px !important;
+                            padding-top: 10px;
+                            display: flex;
+                            flex-direction: column; 
+
+                            .inputContainer{
+
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                padding-left: 10px;
+
+                                input{
+                                    height: 25px;
+                                }
+
+                                button{
+                                    height: 25px;
+                                    margin-left: 10px;
+                                }
+                            }
+
+                            
+                            @media screen and (max-width: 700px) {
+
+                                .inputContainer{
+
+    
+                                    input{
+
+                                        width: 100%;
+                                    }
+    
+                                }
+                            }
+
+                            .resultContainer{
+                                width: 100%;
+                                height: 100%;
+                                overflow: auto;
+                                box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+                                margin-top: 5px;
+                            }
+                        }
+
+                        .emails{
+
+                            width: 100% !important;
+                            height: 200px !important;
+                            padding-top: 10px;
+                            display: flex;
+                            flex-direction: column; 
+
+                            .inputContainer{
+
+                                padding-left: 10px;
+
+                                input{
+                                    height: 25px;
+                                }
+
+                                button{
+                                    height: 25px;
+                                    margin-left: 10px;
+                                }
+                            }
+
+                            .resultContainer{
+                                width: 100%;
+                                height: 100%;
+                                overflow: auto;
+                                box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+                                margin-top: 5px;
+                            }
+
+                            @media screen and (max-width: 700px) {
+
+                                .inputContainer{
+
+    
+                                    input{
+
+                                        // width: 100%;
+                                    }
+    
+                                }
+                            }
+                        }
+
+                        form{
+                          
+
+                            .cust-info-container{
+                                display: flex;
+                                flex-direction: row;
+                                height: 370px;
+
+                                .cust-info{
+                                    
+                                    overflow: auto;
+                                    width: 100%;
+
+                                    mat-form-field{
+                                        padding: 5px;
+                                        width: unset;
+                                    }
+
+                                }
+
+                                @media screen and (max-width: 510px) {
+                                    .cust-info{
+                                        overflow: auto !important;
+                                    }
+                                }
+
+                                .img{
+
+                                    height: 100%;
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    .image-upload-wrap{
+                                        width: 275px;
+                                        border: 1px solid #bebebe;
+                                        border-radius: 5px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        flex-direction: column;
+                                        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                                        height: 100%;
+
+                                        .upload-wrap{
+                                            width: 100%;
+                                            padding: 5px;
+                                            font-weight: 500;
+                                            display: flex;
+                                            flex-direction: column;
+                                            align-items: center;
+                                            justify-content: center;
+                            
+                                            .upload-icon{
+                                                width: 50px;
+                                            }
+                            
+                                            .inputfile {
+                                                width: 0.1px;
+                                                height: 0.1px;
+                                                opacity: 0;
+                                                overflow: hidden;
+                                                position: absolute;
+                                                z-index: -1;
+                                            }
+                            
+                                            .inputfile + label {
+                                                font-size: 1.25em;
+                                                font-weight: 700;
+                                                color: #acacac;
+                                                display: inline-block;
+                                                margin-right: unset;
+                                            }
+                                        }
+                            
+                                        .image-wrap{
+                            
+                                            width: 100%;
+                                            
+                                            img{
+                                                max-height: 100%;
+                                                max-width: 100%;
+                                                object-fit: cover;
+                                            }
+            
+                                              .overlay {
+                                                opacity: 0.1;
+                                                width: 275px;
+                                                height: 370px;
+                                                position: absolute;
+                                                top: 126px;
+                                              }
+                                        }
+
+                                        
+                                    }
+                            
+                                    .image-upload-wrap:hover {
+                                        background-color: #e6e6e6;
+                                        cursor: pointer;
+                                    }
+
+                                }
+
+
+                            }
+
+                            @media screen and (max-width: 600px) {
+
+                                
+                                .cust-info-container{
+                                   
+                                    flex-direction: column;
+                                    overflow: auto;
+
+                                    .cust-info{
+                                        overflow: unset;
+                                    }
+
+                                    .img{
+                                        height: 200px;
+                                        flex-shrink: 0;
+
+                                        .image-upload-wrap{
+                                            width: unset;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .phoneNumberContiner{
+                                height: 100px;
+                            }
+
+                            .emailContainer{
+                                height: 100px;
+                            }
+
+                            .btn{
+                                margin-top: 30px;
+                                text-align: end;
+
+                                button{
+                                    margin: 5px;
+
+                                }
+
+                            }
+                            
+                            mat-form-field{
+                                width: 100%;
+                            }
+
+                            .addressContainer{
+                                display: flex;
+                                flex-direction: row;
+                                height: 100%;
+
+                                mat-form-field{
+                                    padding: 5px;
+                                }
+                            }
+
+                          
+                        }
+
+                        .addressContainer{
+
+                            max-height: 208px;
+                            height: 208px;
+                            display: flex;
+                            flex-direction: column;
+                            box-shadow: rgba(253, 175, 175, 0.2) 0px 2px 8px 0px;
+                            overflow: auto;
+
+                            form{
+                          
+                                padding: 5px;
+
+                                .cust-info-container{
+                                    display: flex;
+                                    flex-direction: row;
+                                    height: 370px;
+    
+                                    .cust-info{
+                                        
+                                        mat-form-field{
+                                            padding: 5px;
+                                            width: unset;
+                                        }
+    
+                                    }
+    
+                                    .img{
+    
+                                        height: 100%;
+    
+                                        .image-upload-wrap{
+                                            width: 275px;
+                                            border: 1px solid #bebebe;
+                                            border-radius: 5px;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            flex-direction: column;
+                                            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                                            height: 100%;
+    
+                                            .upload-wrap{
+                                                width: 100%;
+                                                padding: 5px;
+                                                font-weight: 500;
+                                                display: flex;
+                                                flex-direction: column;
+                                                align-items: center;
+                                                justify-content: center;
+                                
+                                                .upload-icon{
+                                                    width: 50px;
+                                                }
+                                
+                                                .inputfile {
+                                                    width: 0.1px;
+                                                    height: 0.1px;
+                                                    opacity: 0;
+                                                    overflow: hidden;
+                                                    position: absolute;
+                                                    z-index: -1;
+                                                }
+                                
+                                                .inputfile + label {
+                                                    font-size: 1.25em;
+                                                    font-weight: 700;
+                                                    color: #acacac;
+                                                    display: inline-block;
+                                                    margin-right: unset;
+                                                }
+                                            }
+                                
+                                            .image-wrap{
+                                
+                                                img{
+                                                    max-height: 100%;
+                                                    max-width: 100%;
+                                                    object-fit: cover;
+                                                }
+                                            }
+                                        }
+                                
+                                        .image-upload-wrap:hover {
+                                            background-color: #e6e6e6;
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+    
+                                .phoneNumberContiner{
+                                    height: 370px;
+                                }
+    
+                                .emailContainer{
+                                    height: 370px;
+                                }
+    
+                                .btn{
+                                    margin-top: 30px;
+                                    text-align: end;
+    
+                                    button{
+                                        margin: 5px;
+    
+                                    }
+    
+                                }
+                                
+                                mat-form-field{
+                                    width: 100%;
+                                }
+    
+                                .addressContainer{
+                                    display: flex;
+                                    flex-direction: row;
+                                    height: 370px;
+    
+                                    mat-form-field{
+                                        padding: 5px;
+                                    }
+                                }
+    
+                              
+                            }
+
+                            .address-group {
+                                height: 50px;
+                                padding-top: 5px;
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                border-bottom: 1px solid lightgray;
+                                box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+                                width: max-content;
+                                min-width: 100%;
+                                justify-content: space-between;
+                                padding: 5px;
+
+                                .addressInputs{
+
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: row;
+
+                                    div{
+                                        height: 100%;
+                                        display: flex;
+                                        align-items: center;
+    
+                                        input{
+                                            margin-left: 5px;
+                                            height: 25px;
+                                        }
+    
+                                        .readOnlyArea{
+                                            pointer-events: none;
+                                            border: unset;
+                                        }
+                                    }
+                                }
+
+                                .btn{
+                                    display: flex;
+                                    justify-content: flex-end;
+                                }
+                            }
+
+                            @media screen and (max-width: 700px) {
+
+                                .address-group {
+
+                                    height: 100%;
+
+                                    .addressInputs{
+
+                                        flex-direction: column;
+                                    
+                                        div{
+                                            width: 100%;
+
+                                            input{
+                                                width: 100px;
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                        .lastSec{
+                            height: 370px;
+                           
+                        }
+
+                        .btn{
+                            text-align: end;
+
+                            button{
+                                margin: 5px;
+
+                            }
+                        }
+
+                        .uploadontainer{
+                            width: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            height: 750px;
+
+                            .docMainContainer{
+                                width: 600px;
+                                height: 100%;
+                                display: flex;
+                                flex-direction: column;
+
+                                .leftsec{
+                                    width: 100%;
+                                    border-right: 1px solid lightgray;
+                                    display: flex;
+                                    flex-direction: row;
+    
+                                    .upload{
+    
+                                        height: 300px;
+                                        width: 43%;
+    
+                                        .img{
+        
+                                            height: 100%;
+        
+                                            .image-upload-wrap{
+                                                border: 1px solid #bebebe;
+                                                border-radius: 5px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                flex-direction: column;
+                                                box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                                                height: 100%;
+        
+                                                .upload-wrap{
+                                                    width: 100%;
+                                                    padding: 5px;
+                                                    font-weight: 500;
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                    
+                                                    .pdfIcon{
+                                                        width: 40%;
+                                                    }
+    
+                                                    .upload-icon{
+                                                        width: 50px;
+                                                    }
+                                    
+                                                    .inputfile {
+                                                        width: 0.1px;
+                                                        height: 0.1px;
+                                                        opacity: 0;
+                                                        overflow: hidden;
+                                                        position: absolute;
+                                                        z-index: -1;
+                                                    }
+                                    
+                                                    .inputfile + label {
+                                                        font-size: 1.25em;
+                                                        font-weight: 700;
+                                                        color: #acacac;
+                                                        display: inline-block;
+                                                        margin-right: unset;
+                                                    }
+                                                }
+                                    
+                                                .image-wrap{
+                                    
+                                                    img{
+                                                        max-height: 100%;
+                                                        max-width: 100%;
+                                                        object-fit: cover;
+                                                    }
+                                                }
+                                            }
+                                    
+                                            .image-upload-wrap:hover {
+                                                background-color: #e6e6e6;
+                                                cursor: pointer;
+                                            }
+    
+                                            @media screen and (max-width: 330px) {
+                                                .image-upload-wrap{
+                                                    width: 230px !important;
+                                                }
+                                            }
+                                        }
+    
+                                        button{
+                                            width: 100%;
+                                        }
+                                    }
+    
+                                    .inputs{
+                                        height: 100%;
+                                        width: 50%;
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 10px;
+                                        flex-direction: column;
+
+                                        .docBtn{
+                                            display: flex;
+
+                                            button{
+
+                                                margin: 3px;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .rightSec{
+                                    width: 100%;
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    overflow: auto;
+                                    cursor: pointer;
+    
+                                    .heading{
+                                        display: flex;
+                                        flex-direction: row;
+                                        height: 40px;
+                                        background: #8ac9ff;
+                                        justify-content: flex-start;
+    
+                                        .icon{
+                                            display: flex;
+                                        }
+    
+                                        .txt{
+                                            font-size: 15px;
+                                        }
+                                    }
+    
+                                    .docsConatiner{
+    
+                                        display: flex;
+                                        flex-direction: column;
+                                        overflow: auto;
+                                        flex-wrap: wrap;
+                                        width: 100%;
+                                        height: 100%;
+    
+                                        .doc{
+                                            width: 200px;
+                                            display: flex;
+                                            justify-content: space-around;
+                                            flex-direction: column;
+                                            align-items: center;
+    
+                                            img{
+                                                width: 50px;
+                                                object-fit: contain;
+                                                padding-bottom: 10px;
+                                            }
+                                        }
+                                    }
+    
+                                    div{
+                                        padding: 5px;
+                                        height: 100%;
+                                        align-items: center;
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+    
+                                        img{
+                                            width: 50px;
+                                        }
+                                    }
+                                    
+                                }
+                            }
+
+                            .pdfViewer{
+                                height: 100%;
+                                flex: 1;
+                            }
+
+                            @media screen and (max-width: 1700px) {
+
+                               
+                            }
+
+                            @media screen and (max-width: 700px) {
+
+                                .leftsec{
+                                    flex-direction: column;
+                                }
+                            }
+
+                        }
+
+                        @media screen and (max-width: 1300px) {
+
+                            .uploadontainer {
+                                flex-direction: column;
+                                overflow: auto;
+                                height: 100%;
+
+                                .leftsec{
+                                    width: 100%;
+                                    display: flex;
+                                    flex-direction: row;
+
+                                    .upload{
+                                        display: flex;
+                                        justify-content: center;
+                                        width: 100%;
+                                        flex-direction: column;
+                                    }
+                                }
+
+                                .rightSec{
+                                    width: 100%;
+                                }
+                            }
+                        }
+
+                        .phoneNumbers{
+
+                            width: 50%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                            
+
+                            .resultContainer{
+                                height: 100%;
+                                overflow: auto;
+                                padding: 5px;
+
+                                .results{
+                                    background: #f8fdff;
+                                    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                                    border-radius: 10px;
+                                    padding: 5px;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    height: 40px;
+                                    align-items: center;
+                                    margin-top: 5px;
+                                    
+                                    div{
+                                        display: flex;
+                                        flex-direction: row;
+                                        align-items: center;
+                                    }
+                                }
+                            }
+                        }
+
+                        .emails{
+
+                            width: 50%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+                            .resultContainer{
+                                height: 100%;
+                                overflow: auto;
+                                padding: 5px;
+
+                                .results{
+                                    background: #f8fdff;
+                                    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                                    border-radius: 10px;
+                                    padding: 5px;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    height: 40px;
+                                    align-items: center;
+                                    margin-top: 5px;
+
+                                    div{
+                                        display: flex;
+                                        flex-direction: row;
+                                        align-items: center;
+                                    }
+                                }
+                            }
+                        }
+                            
+                    }
+                    
+                }
+
+                .add-customer-btn{
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    padding-right: 10px;
+
+                    button{
+                        background: green;
+                    }
+                }
+
+                mat-icon{
+                    cursor: pointer;
+                }
+
+                .btn{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+    
+                    .updateOrAdd{
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            .btn{
+                .new{
+                    background-color: #059917;
+                }
+            }
+
+        }
+        
+        @media screen and (max-width: 1024px) {
+
+            .search-addCustomer-container{
+                flex-direction: column;
+
+                .search-section{
+                    width: 100%;
+                    height: 250px;
+                }
+
+                .add-customer-section{
+                    margin-top: 10px;
+                    padding-left: unset;
+                    overflow: auto;
+                }
+            }
+        }
+    }
+}

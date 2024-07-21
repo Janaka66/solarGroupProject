@@ -1,0 +1,364 @@
+<div class="customers">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text">Customers</span>
+        </div>
+
+        <div class="moduleLoader-container">
+            <img *ngIf="isLoaderAvailable" src="../../../../assets/loader.gif">
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="search-addCustomer-container">
+
+            <div class="search-section">
+
+                <app-customer-search #customerSearch (selcetedCustomerData)="bindCutomerData($event)"></app-customer-search>
+                
+            </div>
+    
+            <div class="add-customer-section" >
+    
+                <div class="mat-tab-container">
+                    
+                    <mat-stepper #matStepper>
+
+                        <mat-step [stepControl]="customerNameDetails">
+
+                            <form [formGroup]="customerNameDetails">
+                                
+                                <ng-template matStepLabel>Customer Details</ng-template>
+                                
+                                <div class="cust-info-container">
+
+                                    <div class="cust-info">
+
+                                        <mat-form-field>
+                                            <mat-label>First Name</mat-label>
+                                            <input matInput placeholder="First name" formControlName="firstName" required>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-label>Middle Name</mat-label>
+                                            <input matInput placeholder="Middle Name" formControlName="middleName" required>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-label>Last Name</mat-label>
+                                            <input matInput placeholder="Last Name" formControlName="lastName" required>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-label>SurName</mat-label>
+                                            <input matInput placeholder="SurName" formControlName="surName" required>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-label>Initials</mat-label>
+                                            <input matInput placeholder="Initials" formControlName="initials" required>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-label>NIC</mat-label>
+                                            <input matInput placeholder="NIC" formControlName="nic" required>
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <mat-label>Gender</mat-label>
+                                            <mat-select formControlName="gender">
+                                              <mat-option value="male">Male</mat-option>
+                                              <mat-option value="female">Female</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                          <mat-form-field>
+                                            <mat-label>Title</mat-label>
+                                            <mat-select formControlName="title">
+                                              <mat-option value="mr">Mr</mat-option>
+                                              <mat-option value="mrs">Mrs</mat-option>
+                                            </mat-select>
+                                          </mat-form-field>
+
+                                    </div>
+
+                                    <div class="img">
+
+                                        <label class="image-upload-wrap">
+
+                                            <div class = 'upload-wrap'>
+                
+                                                <mat-icon *ngIf="!custImgAvailable">cloud_upload</mat-icon>
+                
+                                                <input type="file" *ngIf="!custImgAvailable"  name="file" id="file-id" class="inputfile" (change) = 'uploadImage($event)' />
+                
+                                                <label *ngIf="!custImgAvailable" for="file-id">Browse Files</label>
+                
+                                            </div>
+
+                                            <div class = 'row-wrap image-wrap'>
+                                                <img  *ngIf="custImgAvailable" src="data:image/png;base64,{{uploadedImg}}"/>
+                                            </div>
+
+                                        </label>    
+                                        
+                                        <button  mat-flat-button color="warn" (click)="removeImage()">Remove Image</button>
+
+                                    </div>                                    
+
+                                </div>
+
+                            </form>
+                        </mat-step>
+                        <mat-step  [stepControl]="customerPhoneNumbers">
+                            
+                            <ng-template matStepLabel>Contact Details</ng-template>
+
+                            <div class="heading">
+
+                                <span>Phone Numbers</span>
+
+                            </div>
+
+                            <div class="phoneNumbers">
+
+                                <div class="inputContainer">
+                                    <input [(ngModel)]="phoneNumber" placeholder="Enter phone number" />
+                                    <button mat-raised-button color="primary" (click)="addPhoneNumber()">Add</button>
+                                </div>
+                                    
+                                    <div class="resultContainer">
+                                    <div *ngFor="let number of phoneNumbers; let i = index" class="results">
+
+                                        <span>{{ number.phone }} </span>
+
+                                        <div class="btnChkboxes">
+                                            <mat-icon (click)="removePhoneNumber(i, number.phone)">remove_circle</mat-icon>
+                                            <input type="checkbox" [ngModel]="number.isDefault" (click)="setDefault('phoneNum',i, $event)">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="heading">
+
+                                <span>Emails</span>
+
+                            </div>
+
+                            <div class="emails">
+
+                                <div class="inputContainer">
+                                    <input [(ngModel)]="email" placeholder="Enter your Email " />
+                                    <button mat-raised-button color="primary" (click)="addEmail()">Add</button>
+                                </div>
+                                    
+                                    <div class="resultContainer">
+                                    <div *ngFor="let email of emails; let i = index" class="results">
+
+                                        <span>{{ email.email}}</span>
+
+                                        <div class="btnChkboxes">
+                                            <mat-icon (click)="removeEmail(i, email.email)">remove_circle</mat-icon>
+                                            <input type="checkbox" [ngModel]="email.isDefault" (click)="setDefault('email',i, $event)">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="heading">
+
+                                <span>Addresses</span>
+                                <mat-icon (click)="addAddressFields()">add_circle</mat-icon>
+
+                            </div>
+
+                            <div class="addressContainer">
+
+                                <div *ngFor="let address of addresses; let i = index" class="address-group">
+
+                                    <div class="addressInputs">
+
+                                        <div>
+                                            <label>Address Line 1:</label>
+                                            <input
+                                              [ngClass]="{'readOnlyArea': address.readonly === true}"
+                                              type="text" 
+                                              [(ngModel)]="address.addLine1" 
+                                              placeholder="Address Line 1" 
+                                              (change)="onAddressChange(address.addLine1, address.addLine2, address.addLine3, i)"
+                                            >
+                                           
+                                        </div>
+                                      
+                                        <div>
+                                            <label>Address Line 2:</label>
+                                            <input
+                                              [ngClass]="{'readOnlyArea': address.readonly === true}"
+                                              type="text" 
+                                              [(ngModel)]="address.addLine2" 
+                                              placeholder="Address Line 2" 
+                                              (change)="onAddressChange(address.addLine1, address.addLine2, address.addLine3, i)"
+                                            >
+                                            
+                                        </div>
+                     
+                                        <div>
+                                            <label>Address Line 3:</label>
+                                            <input
+                                              [ngClass]="{'readOnlyArea': address.readonly === true}"
+                                              type="text" 
+                                              [(ngModel)]="address.addLine3" 
+                                              placeholder="Address Line 3" 
+                                              (change)="onAddressChange(address.addLine1, address.addLine2, address.addLine3, i)"
+                                            >
+                                            
+                                        </div>
+
+                                    </div>
+                                    
+                                    <div class="btn">
+                                        <mat-icon (click)="removeAddressFields(i, address.id)">remove_circle</mat-icon>
+                                        <input type="checkbox" [ngModel]="address.isDefault"  (click)="setDefault('address',i, $event)">
+                                    </div>
+                                    
+                                </div>
+                                 
+
+                            </div>
+
+                        </mat-step>   
+                        <mat-step  [stepControl]="documentDetails">
+                
+                            <ng-template matStepLabel>Documents</ng-template>
+
+                            <div class="uploadontainer">
+
+                                <div class="docMainContainer">
+
+                                    <div class="leftsec">
+
+                                        <div class="upload">
+    
+                                            <div class="img">
+    
+                                                <label class="image-upload-wrap">
+        
+                                                    <div class = 'upload-wrap'>
+                        
+                                                        <mat-icon *ngIf="!UploadFileImgAvailable">cloud_upload</mat-icon>
+                        
+                                                        <input type="file"  *ngIf="!UploadFileImgAvailable" name="file" id="file-id" class="inputfile" (change) = 'uploadFile($event)' />
+                        
+                                                        <label *ngIf="!UploadFileImgAvailable" for="file-id">Browse Files</label>
+    
+                                                        <img  *ngIf="UploadFileImgAvailable" class="pdfIcon" src="../../../../assets/pdfIcon.png" alt="">
+                                                    </div>
+                                        
+                                                    <div class = 'row-wrap image-wrap'>
+                                                        <img id="output" src = {{this.uploadedFileIcon}}/>
+                                                    </div>
+                        
+                                                </label>
+                                                
+                                            </div>
+    
+                                            <button   mat-flat-button color="warn" (click)="removeImageDoc()">Remove Image</button>
+    
+                                        </div>
+    
+                                        <div class="inputs">
+    
+                                            <form [formGroup]="documentDetails">
+    
+                                                <mat-form-field>
+                                                    <mat-label>Document Name</mat-label>
+                                                    <input matInput placeholder="Document Name" formControlName="docName" required>
+                                                </mat-form-field>
+        
+                                                <mat-form-field>
+                                                    <mat-label>Display Name</mat-label>
+                                                    <input matInput placeholder="Display Name" formControlName="displayName" required>
+                                                </mat-form-field>
+        
+                                                <mat-form-field>
+                                                    <mat-label>Document Type</mat-label>
+                                                    <mat-select formControlName="docType">
+                                                      <mat-option *ngFor="let doc of documentTypes" [value]="doc.name">
+                                                        {{ doc.name }}
+                                                      </mat-option>
+                                                    </mat-select>
+                                                  </mat-form-field>
+        
+                                                <mat-form-field>
+                                                    <mat-label>Remark</mat-label>
+                                                    <input matInput placeholder="Remark" formControlName="remark" required>
+                                                </mat-form-field>
+    
+                                            </form>
+                                            
+                                            <div class="docBtn">
+
+                                                <button   mat-flat-button color="primary" (click)="UpdateDocData()" [disabled]="!updateDocBtnDisabled">Update</button>
+                                                <button   mat-flat-button color="primary" (click)="clearDoc()">Clear</button>
+
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="rightSec">
+
+                                        <div class="heading">
+    
+                                            <div class="icon" (click)="documentBack()">
+                                                <mat-icon>keyboard_arrow_left</mat-icon>
+                                            </div>
+                                            <div class="txt">
+                                                documents
+                                            </div>
+                                        </div>
+                                        <div class="docsConatiner">
+    
+                                            <div *ngFor="let doc of getKeys(copyOfDocuments)">
+                                                <img *ngIf="!fileAvailable" src="../../../../assets/folder.png" (click)="getFiles(doc.id)">
+                                                <img (click)="loadDataToInputs(doc)" *ngIf="fileAvailable" src="../../../../assets/pdfIcon.png">
+                                                <h4>{{doc.name}}</h4>
+    
+    
+                                                <button mat-flat-button color="primary"  *ngIf="fileAvailable" (click)="deletePdf(doc)">Delete</button>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="pdfViewer">
+                                    <iframe *ngIf="URIBlob" [src]="URIBlob" frameborder="0" height="100%" width="100%"></iframe> 
+                                </div>
+
+                            </div>
+                            <div class="pdfViewer">
+
+                            </div>
+         
+                        </mat-step>
+                    </mat-stepper>
+                </div>
+                <div class="btn">
+                    <button class="new" mat-raised-button color="warn" (click)="newCustomer()">New Customer</button>
+                    <button class="updateOrAdd" mat-raised-button color="primary" [disabled]="customerNameDetails.invalid || updateDocBtnDisabled" (click)="registerCustomer('nameInfo')">{{buttonText}}</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>

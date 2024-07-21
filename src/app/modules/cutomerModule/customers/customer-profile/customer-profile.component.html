@@ -1,0 +1,161 @@
+<div class="customer-profile">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+        </div>
+        
+        <span class="text">Customer Profile</span>
+        
+    </div>
+
+    <div class="content">
+
+       <div class="left-content">
+
+            <div class="account-setting card" (click)="changeUserProfileView('account-settings')">
+                <label *ngIf="!enableIcons"><mat-icon >account_circle</mat-icon> Account Settings</label>
+                <mat-icon *ngIf="enableIcons">account_circle</mat-icon>
+            </div>
+
+            <div class="security card" (click)="changeUserProfileView('security-settings')">
+                <label *ngIf="!enableIcons"><mat-icon >security</mat-icon>Password & Security</label>
+                <mat-icon *ngIf="enableIcons">security</mat-icon>
+            </div>
+
+       </div>
+
+       <div *ngIf="accountSettingAvailable" class="account-setting-content">
+
+            <div class="user-profile-section card">
+
+                <div class="profile-img">
+
+                </div>
+                <div class="user-data">
+
+                    <label>User Name</label>
+                    <label>User Roll</label>
+
+                </div>
+                <div class="upload-btn">
+                    <button mat-raised-button color="primary">Upload</button>
+                </div>
+            </div>
+
+            <div class="user-info card">
+
+                <h2>Change your informations here</h2>
+
+                <div class="sec-1">
+
+                    <div class="userName userData">
+
+                        <label>Full Name</label>
+                        <input type="text">
+    
+                    </div>
+    
+                    <div class="email userData">
+    
+                        <label>Email Address</label>
+                        <input type="text">
+                        
+                    </div>
+
+                </div>
+
+                <div class="address">
+
+                    <label>Address</label>
+                    <input type="text">
+                    
+                </div>
+
+                <div class="sec-2">
+
+                    <div class="city userData">
+
+                        <label>City</label>
+                        <input type="text">
+                        
+                    </div>
+
+                    <div class="state userData">
+
+                        <label>State</label>
+                        <input type="text">
+                        
+                    </div>
+
+                </div>
+
+
+                <div class="sec-3">
+
+                    <div class="zip userData">
+
+                        <label>Zip Code</label>
+                        <input type="text">
+                        
+                    </div>
+
+                    <div class="country userData">
+
+                        <label>Contry</label>
+                        <input type="text">
+                        
+                    </div>
+
+                </div>
+
+            </div>
+            
+            <div class="btn">
+                <button mat-raised-button color="primary">Update</button>
+            </div>
+
+       </div>
+
+       <div *ngIf="securitySettingAvailable" class="security-setting-content">
+
+            <div class="user-info card">
+
+                <h2>Change your password</h2>
+
+                <div class="sec-1">
+
+                    <div class="userName userData">
+
+                        <label>Current Password</label>
+                        <input type="text">
+
+                    </div>
+
+                    <div class="email userData">
+
+                        <label>New Password</label>
+                        <input type="text">
+                        
+                    </div>
+
+                </div>
+
+                <div class="email">
+
+                    <label>New Email Address</label>
+                    <input type="text">
+
+                </div>
+
+            </div>
+
+            <div class="btn">
+                <button mat-raised-button color="primary">Update</button>
+            </div>
+       </div>
+
+    </div>
+
+</div>

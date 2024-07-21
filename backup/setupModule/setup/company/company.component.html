@@ -1,0 +1,103 @@
+<div class="content">
+
+    <div class="title">
+        <span>Company</span>
+    </div>
+
+    <div class="itemContainer">
+
+    
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="companyItems">
+    
+                    <mat-form-field>
+                        <mat-label>Company Name</mat-label>
+                        <input matInput formControlName="cmpName" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>address Line 1</mat-label>
+                        <input matInput formControlName="addLinA" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Address Line 2</mat-label>
+                        <input matInput formControlName="addLineB" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Address Line 3</mat-label>
+                        <input matInput formControlName="addLineC" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Phone</mat-label>
+                        <input type="number" matInput formControlName="phone" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Mobile</mat-label>
+                        <input type="number" matInput formControlName="mobile" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Fax</mat-label>
+                        <input type="number" matInput formControlName="fax" required>
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required>
+                    </mat-form-field>
+    
+                </form>
+    
+                <div class="uploadImgContainer">
+                    
+                    <div class='upload-wrap'>
+                        
+                        <mat-icon>cloud_upload</mat-icon>
+    
+                        <input type="file" name="file" id="file-id" class="inputfile" (change) = 'uploadFile($event)' />
+    
+                        <label for="file-id">Browse Files</label>
+    
+                    </div>
+    
+                </div>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addCompany()">add_box</mat-icon>
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let item of allCompanyData; let i = index">
+    
+                <div>
+                    {{item.cmpName}}
+                    {{item.addLineA}}
+                    {{item.addLineB}}
+                    {{item.addLineC}}
+                    {{item.phone}}
+                    {{item.mobile}}
+                    {{item.fax}}
+                    {{item.email}}
+                </div>
+                <div>
+                    <mat-icon (click)="removeItem(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+</div>

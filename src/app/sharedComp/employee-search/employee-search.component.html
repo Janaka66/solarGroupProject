@@ -1,0 +1,28 @@
+<div class="search">
+
+    <div class="search-bar" *ngIf="compName !== 'inqComp'">
+
+        <form>
+            <input type="text" class="searchTerm" placeholder="What are you looking for?">
+            <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div class="search-result">
+
+        <mat-card 
+        class="search-result-card" 
+        *ngFor="let searchRes of searchResult"
+        (click)="sendSelectedData(searchRes, $event)"
+        [ngClass]="{'selected-card': selectedSearchRes === searchRes}">
+      
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ searchRes.initials + ' ' + searchRes.fname }}</mat-card-title>
+            <img src="data:image/png;base64,{{ searchRes.profileImage }}">
+          </mat-card-title-group>
+        </mat-card-header>
+      </mat-card>
+
+    </div>
+
+</div>

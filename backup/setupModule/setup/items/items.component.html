@@ -1,0 +1,116 @@
+<div class="content">
+
+    <div class="title">
+        <span>Items</span>
+    </div>
+
+    <div class="itemContainer">
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="items">
+    
+                    <mat-form-field>
+                        <mat-label>Item Name</mat-label>
+                        <input matInput formControlName="itemName" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="description" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Model</mat-label>
+                        <input matInput formControlName="model" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Power Rating</mat-label>
+                        <input type="number" matInput formControlName="powerRating" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Effiancy</mat-label>
+                        <input type="number" matInput formControlName="efficiency" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Unit Price</mat-label>
+                        <input type="number" matInput formControlName="unitPrice" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Warrenty Period</mat-label>
+                        <input type="number" matInput formControlName="warrantyPeriod" required>
+                    </mat-form-field>
+                    
+                    <mat-form-field>
+                        <mat-label>Stock Quantity</mat-label>
+                        <input type="number" matInput formControlName="stockQuantity" required>
+                    </mat-form-field>
+        
+                    <mat-form-field>
+                        <mat-label>Item Types</mat-label>
+                        <mat-select formControlName="itemType">
+                          <mat-option *ngFor="let type of itemTypes" [value]="type.id">
+                            {{ type.name }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field>
+                        <mat-label>Manufacture</mat-label>
+                        <mat-select formControlName="ManuFactures">
+                          <mat-option *ngFor="let manuf of manuFac" [value]="manuf.id">
+                            {{ manuf.name }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Brand</mat-label>
+                        <mat-select formControlName="brandName">
+                          <mat-option *ngFor="let brand of allBrandNames" [value]="brand.id">
+                            {{ brand.brandName }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addItem()">add_box</mat-icon>
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let item of allItems; let i = index">
+    
+                <div>
+                    {{item.itemName}}
+                    {{item.description}}
+                    {{item.model}}
+                    {{item.powerRating}}
+                    {{item.efficiency}}
+                    {{item.unitPrice}}
+                    {{item.warrantyPeriod}}
+                    {{item.stockQuantity}}
+                    {{item.itemType}}
+                </div>
+                <div>
+                    <mat-icon (click)="removeItem(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+</div>

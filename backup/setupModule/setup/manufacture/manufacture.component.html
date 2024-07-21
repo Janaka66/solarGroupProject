@@ -1,0 +1,78 @@
+<div class="content">
+
+    <div class="title">
+        <span>Manufacture</span>
+    </div>
+    
+    <div class="ManufatureItemsContainer">
+    
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="manufatureItems">
+    
+                        
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name" required>
+                    </mat-form-field>
+    
+                    <mat-form-field>
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput formControlName="pNumber" required>
+                    </mat-form-field>
+    
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required>
+                    </mat-form-field>
+    
+                    <mat-form-field>
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addManufature()">add_box</mat-icon>
+               
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let mItem of allSavedIManufatureItems; let i = index">
+    
+                <div class="manuFacDetails">
+                    <div>
+                        <span class="left">Name</span>
+                        <span class="right">: {{mItem.name}}</span>
+                    </div>
+                    <div>
+                        <span class="left">Contact</span>
+                        <span class="right">: {{mItem.phoneNo}}</span>
+                    </div>
+                    <div>
+                        <span class="left">Email</span>
+                        <span class="right">: {{mItem.email}}</span>
+                    </div>
+                    <div>
+                        <span class="left">Address</span>
+                        <span class="right">: {{mItem.address}}</span>
+                    </div>
+                </div>
+                <div class="removeIcon">
+                    <mat-icon (click)="removeManuFacItem(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+</div>

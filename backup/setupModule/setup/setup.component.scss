@@ -1,0 +1,92 @@
+.setup-container{
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .content{
+        height: calc(100% - 59px);
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 0px 5px;
+
+        .type-container{
+            display: flex;
+            flex-direction: row;
+
+            .lefContainer{
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                margin: 3px;
+                padding: 5px;
+                width: 40%;
+            }
+
+            .rightContainer{
+                flex: 1;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                margin: 3px;
+                padding: 5px;
+
+                .items{
+                    overflow: auto;
+                    height: 420px;
+                    width: 100%;
+                }
+            }
+        }
+
+        .docType{
+
+            height: 100px;
+            width: 100%;
+        }
+
+        .itemType{
+            height: 100px;
+            width: 100%;
+        }
+
+        .stage{
+            height: 110px;
+            width: 100%;
+        }
+
+        .brand{
+            height: 110px;
+            width: 100%;
+        }
+
+        .items{
+            width: 100%;
+            overflow: auto;
+            flex: 1;
+        }
+
+        .manufacture{
+            overflow: auto;
+            height: 345px;
+            display: flex;
+            flex-direction: row;
+
+            .lefContainer{
+                width: 40%;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                margin: 3px;
+                padding: 5px;
+            }
+
+            .rightContainer{
+                flex: 1;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                margin: 3px;
+                padding: 5px;
+            }
+        }
+
+        .company{
+            overflow: auto;
+            flex: 1;
+        }
+
+    }
+}

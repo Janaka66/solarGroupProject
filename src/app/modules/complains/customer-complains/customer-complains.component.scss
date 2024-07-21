@@ -1,0 +1,309 @@
+.customer-payments{
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .content{
+        height: calc(100% - 55px);
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 0px 5px;
+
+        .search-addCustomer-payment-container{
+
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+
+            .search-section{
+                height: 100%;
+                width: 300px;
+            }
+
+            .add-customer-payment-section{
+
+                flex: 1;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                padding-left: 20px;
+                overflow: auto;
+
+                .top{
+                    flex: 1;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+
+                    .descClear{
+
+                        width: 100%;
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+
+                        .desc{
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            padding-left: 10px;
+    
+                            span{
+                                font-size: large;
+                            }
+    
+                            textArea{
+                                height: 100%;
+                                resize: none;
+                                border: 1px solid lightgray;
+                            }
+
+                           
+                        }
+
+                        .btnContainer{
+
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-end;
+                            height: 100%;
+                            margin-top: 5px;
+
+                            div{
+                                height: 50px;
+                            }
+
+                            button{
+                                width: 100%;
+                                height: 100%;
+                            }
+
+                            .new{
+                                background-color: green;
+                            }
+
+                            .new:disabled,
+                            .new[disabled]{
+                            border: 1px solid #999999;
+                            background-color: #cccccc;
+                            color: #666666;
+                            }
+
+                            .clear{
+                                padding-left: 5px;
+                            }
+
+                            .remove{
+                                padding-left: 5px;
+                            }
+
+                            .update{
+                                padding-left: 5px;
+                            }
+                        }
+
+                        @media screen and (max-width: 530px) {
+                            .btnContainer{
+                                flex-direction: column;
+
+                                .clear{
+                                    padding-left: 0;
+                                }
+    
+                                .remove{
+                                    padding-left: 0;
+                                }
+    
+                                .update{
+                                    padding-left: 0;
+                                }
+                            }
+                        }
+                    }
+   
+
+                    .data-container{
+
+                        display: flex;
+                        flex-direction: column;
+
+                        
+                        .btncontainer {
+                            display: flex;
+                            gap: 20px;
+
+                            .icon-btn {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                padding: 10px 30px;
+                                border: none;
+                                border-radius: 5px;
+                                font-size: 16px;
+                                cursor: pointer;
+                                transition: transform 0.3s, box-shadow 0.3s;
+
+                                .icon {
+                                    font-size: 18px;
+                                }
+                            }
+
+                            .icon-btn.verify {
+                                background-color: #4caf50;
+                                color: white;
+                            }
+
+                            .icon-btn.verify:hover {
+                                transform: translateY(-3px);
+                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                            }
+                            
+                            .icon-btn.verify:disabled,
+                            .icon-btn.verify[disabled]{
+                            border: 1px solid #999999;
+                            background-color: #cccccc;
+                            color: #666666;
+                            }
+
+                            .icon-btn.decline {
+                                background-color: #f44336;
+                                color: white;
+                            }
+
+                            .icon-btn.decline:disabled,
+                            .icon-btn.decline[disabled]{
+                            border: 1px solid #999999;
+                            background-color: #cccccc;
+                            color: #666666;
+                            }
+                            
+                            .icon-btn.decline:hover {
+                                transform: translateY(-3px);
+                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                            }
+                        }
+
+
+                    }
+                }
+
+                .bottom{
+                    width: 100%;
+                    height: 420px;
+                    margin-top: 60px;;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    border: 1px solid lightgray;
+                    padding-left: 50px;
+                    overflow: auto;
+                    flex-shrink: 0;
+
+                    .inqDataContainer{
+                        width: 300px;
+                        background: white;
+                        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                        cursor: pointer;
+                        margin: 10px;
+
+                        .inqContainer{
+
+                            .complain-card {
+                                background: #fff;
+                                border-radius: 10px;
+                                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                                padding: 20px;
+                                max-width: 400px;
+                                width: 100%;
+                                transition: box-shadow 0.3s ease;
+
+                                .description{
+
+                                    margin-bottom: 0;
+
+                                    textArea{
+                                        resize: none;
+                                        height: 75px;
+                                        width: 100%;
+                                        border-radius: 10px;
+                                        border: 1px solid lightgray;
+                                    }
+                                }
+                            }
+                            
+                            .complain-card:hover {
+                                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                            }
+                            
+                            .complain-card div {
+                                margin-bottom: 15px;
+                            }
+                            
+                            .complain-card span {
+                                font-weight: bold;
+                            }
+                            
+                            .status {
+                                padding: 10px;
+                                border-radius: 5px;
+                                color: #fff;
+                                text-align: center;
+                            }
+                            
+                            .status.pending {
+                                background-color: #ffa500;
+                            }
+                            
+                            .status.approved {
+                                background-color: #28a745;
+                            }
+                            
+                            .status.declined {
+                                background-color: #dc3545;
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width: 1300px) {
+
+                    .top{
+                        flex-direction: column;
+
+                        .descClear{
+
+                            .desc{
+                                margin-top: 15px;
+
+                                textArea{
+                                    height: 100px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        @media screen and (max-width: 1024px) {
+
+            .search-addCustomer-payment-container{
+                flex-direction: column;
+
+                .search-section{
+                    width: 100%;
+                    height: 250px;
+                }
+
+                .add-customer-payment-section{
+                    margin-top: 10px;
+                    padding-left: unset;
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,46 @@
+<div class="content">
+
+    <div class="title">
+        <span>Feedback Status</span>
+    </div>
+
+    <div class="feedbackContainer">
+
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="designation">
+        
+                    <mat-form-field>
+                        <mat-label>Feedback Status</mat-label>
+                        <input matInput formControlName="desgDesc" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addInputType()">add_box</mat-icon>
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let designation of alldesoignations; let i = index">
+    
+                <div>
+                    {{designation.desgDesc}}
+                </div>
+                <div>
+                    <mat-icon (click)="removefeedback(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

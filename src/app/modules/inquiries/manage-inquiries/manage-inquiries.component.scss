@@ -1,0 +1,358 @@
+.customer-payments{
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .content{
+        height: calc(100% - 55px);
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 0px 5px;
+
+        .search-addCustomer-payment-container{
+
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+
+            .search-section{
+                height: 100%;
+                width: 300px;
+            }
+
+            .add-customer-payment-section{
+
+                flex: 1;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                padding-left: 20px;
+                overflow: auto;
+
+                .top{
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    
+                    .left{
+                        width: 85%;
+                        height: 400px;
+                        display: flex;
+                        flex-direction: row;
+
+                        .data-container{
+                            width: 65%;
+                            box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+                            margin: 10px;
+                            padding: 5px;
+                            display: flex;
+                            flex-direction: row;
+
+                            img{
+                                object-fit: cover;
+                                width: 100%;
+                            }
+
+                            .search-result-card{
+                                cursor: pointer;
+                                margin-top: 5px;
+                                border: 1px solid #e9e9e9;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                
+                                mat-card-header{
+                                    padding: 6px 6px 6px;
+                        
+                                    mat-card-title-group{
+                                        div{
+                                            flex: 1;
+                                        }
+                                    }
+                    
+                                    img{
+                                        object-fit: cover;
+                                        height: 80px;
+                                    }
+                                }
+                    
+                                .iconConatiner{
+                    
+                                    align-items: center;
+                                    display: flex;
+                    
+                                    input{
+                                        width: 18px;
+                                        height: 18px;
+                                    }
+                                }
+                            }
+
+                            .employees{
+                                width: 40%;
+                                height: 100%;
+                            }
+
+                            .employeeDetails{
+                                height: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                padding: 10px;
+                                width: 60%;
+
+                                .empNote{
+                                    width: 100%;
+                                    height: 80%;
+                                    display: flex;
+                                    flex-direction: column;
+
+                                    textArea{
+                                        height: 100%;
+                                        resize: none;
+                                    }
+                                }
+
+                                .status{
+                                    width: 100%;
+                                    height: 20%;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: space-between;
+                                    
+                                    .status.pending {
+                                        background-color: #ffa500;
+                                    }
+                                    
+                                    .status.approved {
+                                        background-color: #28a745;
+                                        height: 100%;
+                                        margin-top: 10px;
+                                        border-radius: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 25px;
+                                    }
+                                    
+                                    .status.declined {
+                                        background-color: #dc3545;
+                                        background-color: #28a745;
+                                        height: 100%;
+                                        margin-top: 10px;
+                                        border-radius: 20px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 25px;
+                                    }
+
+                                    .btnContainer{
+                                        margin-top: 10px;
+
+                                        button{
+                                            margin-right: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                      
+                        }
+
+                        .descClear{
+                            width: 35%;
+                            box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+                            margin: 10px;
+                            padding: 5px;
+
+                            img{
+                                object-fit: cover;
+                                width: 100%;
+                            }
+                        }
+
+                        
+                        @media screen and (max-width: 700px) {
+                                
+                            .data-container{
+                                flex-direction: column;
+
+                                .employees{
+                                    width: 100%;
+                                }
+
+                                .employeeDetails{
+                                    width: 100%;
+
+                                    .status{
+                                        height: 100%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .right{
+                        width: 15%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+                        padding: 10px;
+
+                        button{
+                            width: 100%;
+                        }
+                    }
+
+                }
+
+                .bottom{
+                    width: 100%;
+                    height: 420px;
+                    margin-top: 60px;;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    border: 1px solid lightgray;
+                    padding-left: 50px;
+                    overflow: auto;
+                    flex-shrink: 0;
+
+                    .inqDataContainer{
+                        width: 300px;
+                        background: white;
+                        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                        cursor: pointer;
+                        margin: 10px;
+                        flex-shrink: 0;
+
+                        .inqContainer{
+
+                            .inquiry-card {
+                                background: #fff;
+                                border-radius: 10px;
+                                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                                padding: 20px;
+                                max-width: 400px;
+                                width: 100%;
+                                transition: box-shadow 0.3s ease;
+
+                                .description{
+
+                                    margin-bottom: 0;
+
+                                    textArea{
+                                        resize: none;
+                                        height: 75px;
+                                        width: 100%;
+                                        border-radius: 10px;
+                                        border: 1px solid lightgray;
+                                    }
+                                }
+                            }
+                            
+                            .inquiry-card:hover {
+                                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                            }
+                            
+                            .inquiry-card div {
+                                margin-bottom: 15px;
+                            }
+                            
+                            .inquiry-card span {
+                                font-weight: bold;
+                            }
+                            
+                            .status {
+                                padding: 10px;
+                                border-radius: 5px;
+                                color: #fff;
+                                text-align: center;
+                            }
+                            
+                            .status.pending {
+                                background-color: #ffa500;
+                            }
+                            
+                            .status.approved {
+                                background-color: #28a745;
+                            }
+                            
+                            .status.declined {
+                                background-color: #dc3545;
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width: 1300px) {
+
+                    .top{
+
+                        flex-direction: column;
+
+                        .left{
+
+                            flex-direction: column;
+                            width: 100%;
+                            height: 100%;
+
+                            .data-container{
+
+                                width: 100%;
+                                min-height: 200px;
+
+                            }
+
+                            .descClear{
+                                width: 100%;
+                                min-height: 200px;
+                            }
+                        }
+
+                        .right{
+                            flex-direction: row;
+
+                            .clear{
+                                padding-left: 10px;
+                            }
+                        }
+
+                        .update{
+
+                            button{
+                                width: 140px;
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width: 1024px) {
+                    .bottom{
+                        flex-shrink: 0
+                    }
+                }
+            }
+        }
+        
+        @media screen and (max-width: 1024px) {
+
+            .search-addCustomer-payment-container{
+                flex-direction: column;
+
+                .search-section{
+                    width: 100%;
+                    height: 250px;
+                }
+
+                .add-customer-payment-section{
+                    margin-top: 10px;
+                    padding-left: unset;
+                    flex-direction: column-reverse;
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,168 @@
+<div class="customer-payments">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text">Customer Inquires</span>
+        </div>
+        
+        <div class="moduleLoader-container">
+            <img *ngIf="isLoaderAvailable" src="../../../../assets/loader.gif">
+        </div>
+        
+    </div>
+
+    <div class="content">
+
+        <div class="search-addCustomer-payment-container">
+
+            <div class="search-section">
+
+                <app-customer-search #customerSearch (selcetedCustomerData)="bindCutomerData($event)"></app-customer-search>
+
+            </div>
+    
+            <div class="add-customer-payment-section">
+    
+                <div class="top">
+
+                    <div class="data-container">
+
+                        <div class="inqDate">
+                            <mat-form-field>
+                                <mat-label>Inquiry Date</mat-label>
+                                <input matInput [matDatepicker]="inqPicker"  [(ngModel)]="inqDate" [disabled]="isInqDateDisabled">
+                                <mat-datepicker-toggle matIconSuffix [for]="inqPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #inqPicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="completeDate">
+                            <mat-form-field>
+                                <mat-label>Completd Date</mat-label>
+                                <input matInput [matDatepicker]="completePicker" [(ngModel)]="completedDate" [disabled]="isCompleteDateDisabled">
+                                <mat-datepicker-toggle matIconSuffix [for]="completePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #completePicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="feedbacktype">
+
+                            <mat-form-field>
+                                <mat-label>FeedBack Type</mat-label>
+                                <mat-select [(ngModel)]="selctedFfeedBackType">
+                                  <mat-option *ngFor="let feedback of feedbacks" [value]="feedback.typeDesc">
+                                    {{ feedback.typeDesc }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+
+                        </div>
+
+                        <div class="feedbackStatus">
+
+                            <mat-form-field>
+                                <mat-label>FeedBack Status</mat-label>
+                                <mat-select [(ngModel)]="selctedFStatus">
+                                  <mat-option *ngFor="let fStstus of feedBackStatus" [value]="fStstus.cfStatusDesc">
+                                    {{ fStstus.cfStatusDesc }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+
+                        </div>
+                        
+                        <div class="btncontainer">
+                            <button class="icon-btn verify" mat-raised-button  [disabled]="isVerifiedBtnDisabled" (click)="verifyInq()">
+                                <span class="icon">&#10003;</span>
+                                <span class="text">Verify</span>
+                            </button>
+                            <button class="icon-btn decline" mat-raised-button  [disabled]="isDeclinedBtnDisabled" (click)="declineInq()">
+                                <span class="icon">&#10007;</span>
+                                <span class="text">Decline</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="descClear">
+                        <div class="desc">
+                            <span>Description</span>
+                            <textarea [(ngModel)]="description"></textarea>
+                        </div>
+    
+                        <div class="btnContainer">
+
+                                <div class="new">
+                                    <button class="new" mat-raised-button color="warn" [disabled]="isNewBtnDisabled" (click)="addInquiry()">Add Inquiry</button>
+                                </div>
+        
+                                <div class="update">
+                                    <button class="update" [disabled]="updateBtnDisabled" mat-raised-button color="primary" (click)="updateInquiry()">Update Inquiry</button>
+                                </div>
+        
+                                <div class="remove">
+                                    <button class="remove" mat-raised-button color="warn" [disabled]="isRemoveBtnDisabled" (click)="removeInquiry()">Remove Inquiry</button>
+                                </div>
+    
+                                <div class="clear">
+                                    <button class="clear" mat-raised-button color="warn" (click)="clear()">Clear</button>
+                                </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="bottom">
+
+                    <div class="inqDataContainer" *ngFor="let inquire of inquires">
+
+                        <div class="inqContainer" (click)="showClickedData(inquire)">
+
+
+                            <div class="inquiry-card">
+                                <div class="inquiry-date">
+                                    <span>Inquiry Date:</span>
+                                    {{inquire.iquiryAddeddAt}}
+                                </div>
+                                <div class="completion-date">
+                                    <span>Completion Date:</span>
+                                    {{inquire.completedAt}}
+                                </div>
+                                <div class="feedback-type">
+                                    <span>Feedback Type:</span>
+                                    {{inquire.feedBackType}}
+                                </div>
+                                <div class="feedBack-status">
+                                    <span>Status:</span>
+                                    {{inquire.feedBackStatus}}
+                                </div> 
+
+                                <div class="description">
+
+                                    <textarea style="resize: none;">{{inquire.description}}</textarea>
+                                </div>
+
+                                <div class="status" [ngClass]="{ 'approved': inquire.isAccepted === true, 'declined': inquire.isrejected === true }">
+                                    {{ inquire.isAccepted === true ? 'Approved' : (inquire.isrejected === true ? 'Declined' : '') }}
+                                  </div>                                  
+
+                            </div>
+
+
+                        </div>
+                       
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+       
+
+    </div>
+</div>

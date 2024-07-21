@@ -1,0 +1,46 @@
+<div class="container left-panal">
+
+    <div class="topSection">
+
+        <div class="topLogoContainer">
+            <div (click)="handleLeftBar()">
+                <img src="../../../../assets/view-headlne.gif" height="30">
+            </div>
+            <div class="logo">LOGO goes here ......</div>
+        </div>
+
+        <div class="profileImage">
+            <img src="../../assets/profilePic.jfif">
+        </div>
+
+        <div class="userDetails">
+            <span>Kim Jone sim</span>
+            <span>Direcor</span>
+        </div>
+    </div>
+
+    <div class="bottomSection">
+
+        <mat-nav-list>
+            <ng-container *ngFor="let item of leftMenu">
+                <mat-list-item (click)="sendModuleName(item.comp, item.idx, $event)">
+                    <span class="full-width" *ngIf="isExpanded || isShowing">{{ item.title }}</span>
+                    <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
+                    <mat-icon class="menu-button" [ngClass]="{'rotated' : item.showSubmenu}" (click)="item.showSubmenu = !item.showSubmenu">expand_more</mat-icon>
+                </mat-list-item>
+                <div [ngClass]="{'expanded' : item.showSubmenu}" [@expandCollapse]="item.showSubmenu ? 'expanded' : 'collapsed'" class="submenu">
+                    <ng-container *ngFor="let subItem of item.children">
+                        <a mat-list-item href="" (click)="sendModuleName(subItem.comp, subItem.idx, $event); $event.preventDefault()">
+                            <span>{{ subItem.title }}</span>
+                            <mat-icon>{{ subItem.icon }}</mat-icon>
+                        </a>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </mat-nav-list>
+    
+        <div class="setupIcon" (click)="getSliderwindow()">
+            <img src="../../assets/setup.png">
+        </div>
+    </div>
+</div>

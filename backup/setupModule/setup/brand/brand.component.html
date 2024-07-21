@@ -1,0 +1,56 @@
+<div class="title-bar">
+
+    <div (click)="handleLeftBar()">
+        <img src="../../../../assets/view-headlne.gif" height="30">
+    </div>
+    
+    <span class="text">Customer Invoices</span>
+
+</div>
+
+<div class="content">
+
+    <div class="title">
+        <span>Brand</span>
+    </div>
+
+    <div class="brandContainer">
+
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="brand">
+        
+                    <mat-form-field>
+                        <mat-label>Brand Name</mat-label>
+                        <input matInput formControlName="brandName" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addInputType()">add_box</mat-icon>
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let brand of allBrandNames; let i = index">
+    
+                <div>
+                    {{brand.brandName}}
+                </div>
+                <div>
+                    <mat-icon (click)="removebrand(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="content">
+
+    <div class="title">
+        <span>IType</span>
+    </div>
+
+    <div class="itemTypeContainer">
+
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="itemType">
+    
+                    <mat-form-field>
+                        <mat-label>Item Types</mat-label>
+                        <input matInput formControlName="name" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addItemType()">add_box</mat-icon>
+               
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let iType of allSavedItemTypes; let i = index">
+    
+                <div>
+                    {{iType.name}}
+                </div>
+                <div>
+                    <mat-icon (click)="removeItemType(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

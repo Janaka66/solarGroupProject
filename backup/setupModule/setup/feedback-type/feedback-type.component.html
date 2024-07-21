@@ -1,0 +1,46 @@
+<div class="content">
+
+    <div class="title">
+        <span>Feedback Type</span>
+    </div>
+
+    <div class="feedbackContainer">
+
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="feedback">
+        
+                    <mat-form-field>
+                        <mat-label>Feedback Type</mat-label>
+                        <input matInput formControlName="typeDesc" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addInputType()">add_box</mat-icon>
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let feedback of allfeedbackNames; let i = index">
+    
+                <div>
+                    {{feedback.typeDesc}}
+                </div>
+                <div>
+                    <mat-icon (click)="removefeedback(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

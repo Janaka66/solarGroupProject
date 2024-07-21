@@ -1,0 +1,11 @@
+<div class="conatiner">
+
+    <div class="left-panel" [ngClass]="{ 'hideLeftBar' : isToggled , 'visibaleLeftBar' : !isToggled }">
+        <app-left-panel (leftPanelAction)="viewModule($event)"></app-left-panel>
+    </div>
+
+    <div class="right-panel"> 
+        <ng-container #viewContainer></ng-container>
+    </div>
+
+</div>

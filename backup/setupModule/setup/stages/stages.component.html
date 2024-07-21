@@ -1,0 +1,47 @@
+<div class="content">
+
+    <div class="title">
+        <span>Doc</span>
+    </div>
+
+    <div class="stageContainer">
+
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="stage">
+    
+                    <mat-form-field>
+                        <mat-label>Stage</mat-label>
+                        <input matInput formControlName="stagDesc" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+    
+                <mat-icon (click)="addStagDesc()">add_box</mat-icon>
+                
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let stage of allSavedStages; let i = index">
+    
+                <div>
+                    {{stage.stagDesc}}
+                </div>
+                <div>
+                    <mat-icon (click)="removeStage(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+</div>

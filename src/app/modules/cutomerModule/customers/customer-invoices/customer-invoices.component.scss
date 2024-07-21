@@ -1,0 +1,383 @@
+.customer-invoices{
+
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    display: flex;
+
+    .content{
+
+        height: calc(100% - 55px);
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 0px 5px;
+
+        .search-add-invoice-container{
+
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+            .search-section{
+                height: 100%;
+                width: 300px;
+            }
+
+            .bottom-section{
+
+                flex: 1;
+                height: 100%;
+                // overflow: auto;
+                display: flex;
+                flex-direction: row;
+
+                .add-show-invoice-section{
+
+                    height: 100%;
+                    width: 800px;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 10px;
+
+                    .add-invoice{
+                        width: 100%;
+                        height: 35%;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                        margin-bottom: 10px;
+                        border-radius: 7px;
+                        padding: 5px;
+
+                        mat-form-field{
+                            width: 100%;
+                        }
+                    }
+
+                    .show-added-customer-invoice{
+                        width: 100%;
+                        flex: 1;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                        margin-bottom: 10px;
+                        border-radius: 7px;
+                    }
+
+                    .show-customer-invoices{
+                        height: 100%;
+                        width: 100%;
+                        overflow: auto;
+                        padding-top: 10px;
+                        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                        border-radius: 7px;
+                        display: flex;
+                        justify-content: center;
+                    }
+
+                }
+
+                .show-selected-invoice{
+
+                    height: 100%;
+                    flex: 1;
+
+                    .printIcon{
+                        height: 96%;
+                        background: #f1f1f1;
+                        max-height: 850px;
+                        width: 29px;
+                        display: flex;
+                        justify-content: center;
+                        padding-top: 5px;
+
+                        mat-icon{
+                            color: #9d9d9d;
+                        }
+                    }
+
+                    .invoices-container{
+
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        // max-height: 850px;
+                        // max-width: 540px;
+                        // min-width: 540px;
+                        // min-height: 850px;
+                        border: 1px solid #ddf4ff;
+                        background: #fdfdfd;
+                        // overflow: auto;
+
+                        .address-logo-conatiner{
+                            
+                            width: 100%;
+                            height: 100px;
+                            display: flex;
+                            justify-content: space-between;
+                            flex-direction: row;
+
+                            .address{
+                                width: 70%;
+                                height: 100%;
+                                display: flex;
+                                flex-direction: column;
+                            }
+
+                            .logo{
+                                width: 30%;
+                                height: 100%;
+                                background: beige;
+                            }
+                        }
+
+                        .billTo-shipTo-container{
+
+                            width: 100%;
+                            height: 120px;
+                            display: flex;
+                            flex-direction: row;
+                            border-bottom: 1px solid lightgray;
+                            border-top: 1px solid lightgray;
+                            margin-bottom: 50px;
+
+                            .issued-due{
+
+                                height: 100%;
+                                width: 180px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                justify-content: center;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+
+                                .issued{
+                                    display: flex;
+                                    flex-direction: column;
+                                    width: 180px;
+                                    
+                                }
+
+                                .due{
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                            }
+
+                            .billTo{
+
+                                height: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                width: 180px;
+                                border-left: 1px solid lightgray;
+                                border-right: 1px solid lightgray;
+                                justify-content: center;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                            }
+
+                            .from{
+
+                                display: flex;
+                                flex-direction: column;
+                                width: 180px;
+                                justify-content: center;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+
+
+                            }
+                        }
+
+                        .table-container{
+
+                            width: 100%;
+                            flex: 1;
+
+                            .table{
+
+                                display: grid;
+                                grid-template-columns: 55% 10% 10% 25%;
+                                height: 40px;
+                                border-bottom: 1px solid lightgray;
+                                margin-bottom: 10px;
+                            }
+
+                            .service-1{
+                                display: grid;
+                                grid-template-columns: 55% 10% 10% 25%;
+                                
+                                .lineLbl{
+                                    text-align: end;
+                                }
+                            }
+
+                            .service-2{
+                                display: grid;
+                                grid-template-columns: 55% 10% 10% 25%;
+                                
+                                .lineLbl{
+                                    text-align: end;
+                                }
+                            }
+
+                            .service-3{
+                                display: grid;
+                                grid-template-columns: 55% 10% 10% 25%;
+                                
+                                .lineLbl{
+                                    text-align: end;
+                                }
+                            }
+
+                            .service-4{
+                                display: grid;
+                                grid-template-columns: 55% 10% 10% 25%;
+                                border-bottom: 1px solid lightgray;
+                                
+                                .lineLbl{
+                                    text-align: end;
+                                }
+                            }
+                        
+                        }
+                        .quote-calc{
+
+                            width: 100%;
+                            height: 200px;
+                            display: grid;
+                            grid-template-columns: 60% 20% 20%;
+
+                            .thank-label{
+
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                            }
+
+                            .calculations{
+
+                                height: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-evenly;
+
+                                .amountLbl{
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: space-between;
+                                }
+
+                                .amount{
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: space-between;
+
+                                    div{
+                                        width: 100%;
+                                        text-align: end;
+                                    }
+                                }
+                            }
+                        }
+
+                        .footer{
+                            width: 100%;
+                            height: 100px;
+                            display: flex;
+                            flex-direction: column;
+
+                            hr{
+                                width: 100%;
+                            }
+
+                            .footer-end{
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                            }
+                        }
+                    }
+
+                    @media screen and (max-width: 425px) {
+
+                        .printIcon{
+                            display: none;
+                        }
+                    }
+                }
+
+   
+            }
+
+        }
+        
+        @media screen and (max-width: 1500px) {
+
+            .search-add-invoice-container{
+                flex-direction: column;
+                width: 100%;
+                overflow: auto;
+
+                .search-section{
+                    width: 100%;
+                    height: 250px;
+                }
+
+                .bottom-section{
+
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
+                    display: block;
+    
+                    .add-show-invoice-section{
+    
+                        // height: 400px;
+                        width: 100%;
+                        overflow: auto;
+                        display: block;
+
+                        .add-invoice{
+                            width: 100%;
+                            height: 35%;
+                            overflow: auto;
+                        }
+
+                        .show-added-customer-invoice{
+                            width: 100%;
+                            height: 65%;
+                        }
+
+                        .show-customer-invoices{
+                            width: 100%;
+                        
+                        }
+                    }
+    
+                    .show-selected-invoice{
+    
+                        height: 100%;
+                        width: 100%;
+    
+                        .invoices-container{
+                            max-height: 850px;
+                            max-width: 540px;
+                            height: unset;
+                        }
+                    }
+
+                    
+                }
+
+            }
+        }
+    }
+}

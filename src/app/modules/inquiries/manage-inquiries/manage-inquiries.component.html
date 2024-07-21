@@ -1,0 +1,165 @@
+<div class="customer-payments">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text">Manage Inquires</span>
+        </div>
+        
+        <div class="moduleLoader-container">
+            <img *ngIf="isLoaderAvailable" src="../../../../assets/loader.gif">
+        </div>
+        
+    </div>
+
+    <div class="content">
+
+        <div class="search-addCustomer-payment-container">
+
+            <div class="search-section">
+
+                <app-customer-search #customerSearch (selcetedCustomerData)="bindCutomerData($event)"></app-customer-search>
+                
+            </div>
+    
+            <div class="add-customer-payment-section">
+    
+                <div class="top">
+
+                   <div class="left">
+
+                        <div class="data-container">
+                            
+                            <div class="employees">
+
+                                <div [hidden]="isSelectedInqDisabled">
+
+                                    <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq" (click)="selectInqSelectedEmp(selectedIngEmp)">
+    
+                                        <mat-card-header>
+                                          <mat-card-title-group>
+                                            <mat-card-title>{{selectedIngEmp.initials + ' ' + selectedIngEmp.fname}}</mat-card-title>
+                                          </mat-card-title-group>
+                                        </mat-card-header>
+                            
+                                    </mat-card>
+    
+                                </div>
+
+                            </div>
+
+                            <div class="employeeDetails">
+
+                                <div class="empNote">
+                                    <span>Employee Note</span>
+                                    <textarea [(ngModel)]="employeNote" [disabled]="isTextAreaDesabled"></textarea>
+                                </div>
+
+                                <div class="status">
+
+                                    <div class="btnContainer">
+                                        <button class="icon-btn verify" mat-raised-button  [disabled]="isAcceptedSelectedInqEmp" (click)="verifyOrDecline(true)">
+                                            <span class="icon">&#10003;</span>
+                                            <span class="text">Accepted</span>
+                                        </button>
+                                        <button class="icon-btn decline" mat-raised-button  [disabled]="isDeclinedSelectedInqEmp" (click)="verifyOrDecline(false)">
+                                            <span class="icon">&#10007;</span>
+                                            <span class="text">Decline</span>
+                                        </button>
+
+                                        <button class="icon-btn decline" mat-raised-button [disabled]="isPendingSelectedInqEmp">
+                                            <span class="icon">&#10007;</span>
+                                            <span class="text">Pending</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="btnContainer">
+                                        <button class="icon-btn decline" mat-raised-button  (click)="UpdateAssignedEmpForInq()">
+                                            <span class="text">Update</span>
+                                        </button>
+                                    </div>
+                
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                        <div class="descClear">
+
+                            <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"  [hidden]="isloadedEmpDisabled"></app-employee-search>
+                            
+                        </div>
+                   </div>
+                   <div class="right">
+
+                        <div class="update">
+
+                            <button 
+                                class="update" 
+                                [disabled]="updateBtnDisabled" 
+                                mat-raised-button 
+                                color="primary" 
+                                (click)="updateInquiry()">
+                                {{ButtonText}}
+                            </button>
+
+                        </div>
+
+                        <div class="clear">
+                            <button class="clear" mat-raised-button color="warn" (click)="clear()">Clear</button>
+                        </div>
+
+                   </div>
+                    
+                </div>
+
+                <div class="bottom">
+
+                    <div class="inqDataContainer" *ngFor="let inquire of inquires">
+
+                        <div class="inqContainer">
+
+                            <div class="inquiry-card" #inquiryContainer  (click)="showClickedData(inquire, inquiryContainer)">
+                                <div class="inquiry-date">
+                                    <span>Inquiry Date:</span>
+                                    {{inquire.iquiryAddeddAt}}
+                                </div>
+                                <div class="completion-date">
+                                    <span>Completion Date:</span>
+                                    {{inquire.completedAt}}
+                                </div>
+                                <div class="feedback-type">
+                                    <span>Feedback Type:</span>
+                                    {{inquire.feedBackType}}
+                                </div>
+                                <div class="feedBack-status">
+                                    <span>Status:</span>
+                                    {{inquire.feedBackStatus}}
+                                </div> 
+
+                                <div class="description">
+
+                                    <textarea style="resize: none; pointer-events: none;">{{inquire.description}}</textarea>
+                                </div>
+
+                                <div class="status" [ngClass]="{ 'approved': inquire.isAccepted === true, 'declined': inquire.isAccepted === false}">  {{ inquire.isAccepted === 'true' ? 'Approved' : 'Declined' }}</div>
+
+                            </div>
+
+
+                        </div>
+                       
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+       
+
+    </div>
+</div>

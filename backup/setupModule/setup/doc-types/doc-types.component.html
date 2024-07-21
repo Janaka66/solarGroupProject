@@ -1,0 +1,46 @@
+<div class="content">
+
+    <div class="title">
+        <span>Doc</span>
+    </div>
+
+    <div class="docTypeContainer">
+
+
+        <div class="topContainer">
+    
+            <div class="inputs">
+    
+                <form [formGroup]="docType">
+        
+                    <mat-form-field>
+                        <mat-label>Document Type</mat-label>
+                        <input matInput formControlName="documentType" required>
+                    </mat-form-field>
+                    
+                </form>
+        
+            </div>
+    
+            <div class="btn">
+                
+                <mat-icon (click)="addInputType()">add_box</mat-icon>
+    
+            </div>
+        </div>
+    
+        <div class="results-container">
+    
+            <div class="result" *ngFor="let doc of allSavedDocsTypes; let i = index">
+    
+                <div>
+                    {{doc.name}}
+                </div>
+                <div>
+                    <mat-icon (click)="removeDocType(i)">remove_circle</mat-icon>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>
