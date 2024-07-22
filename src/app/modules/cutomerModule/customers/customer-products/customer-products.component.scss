@@ -21,10 +21,7 @@
                 flex-direction: row;
                 height: 100%;
     
-                .search-section{
-                    height: 100%;
-                    width: 300px;
-                }
+
         
                 .add-customer-prod-section{
                     height: 100%;
@@ -77,6 +74,11 @@
         .right{
             width: 60%;
             height: 100%;
+
+            .search-section{
+                height: 100%;
+                width: 300px;
+            }
         }
 
     }

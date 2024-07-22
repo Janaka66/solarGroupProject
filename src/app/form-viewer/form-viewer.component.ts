@@ -193,6 +193,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     this.updateBtnEnabled = false;
     this.addBtnEnabled = true;
 
+    
     await this.getInvoiceItems(this.invoiceNo)
   }
 

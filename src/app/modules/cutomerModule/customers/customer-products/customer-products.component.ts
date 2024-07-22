@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 
 import { ColDef } from 'ag-grid-community'; 
 import { ExtApiService } from 'src/app/ext-api.service';
+import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/customer-search.component';
 @Component({
   selector: 'app-customer-products',
   templateUrl: './customer-products.component.html',
   styleUrls: ['./customer-products.component.scss']
 })
-export class CustomerProductsComponent implements OnInit{
+export class CustomerProductsComponent implements OnInit, AfterViewInit{
 
+  @ViewChild('customerSearch') CustomerSearchComponent: CustomerSearchComponent | any;
+  
   flag: boolean = false;
   panelOpenState = false;
   customerProducts: any = [];
@@ -25,6 +28,7 @@ export class CustomerProductsComponent implements OnInit{
   shortCode: any = '';
   buttonText: string = 'Add Product';
   prodId: any;
+  selectedCustID: any;
 
   constructor(private communicationService: AppService, private extApi : ExtApiService){
 
@@ -41,6 +45,10 @@ export class CustomerProductsComponent implements OnInit{
 
   ngOnInit(): void {
       this.getProducts()
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+      await this.getAllCustomers();
   }
 
 
@@ -170,4 +178,22 @@ export class CustomerProductsComponent implements OnInit{
     }
   }
 
+  
+  bindCutomerData(event : any){
+
+    this.selectedCustID = event.id;
+
+  }
+
+  async getAllCustomers(){
+
+    try {
+      
+      let result = await this.extApi.getAllCustomers();
+      this.CustomerSearchComponent.showCustomers(result.data[0]);
+
+    } catch (e: any) {
+      console.log(e.error)
+    }
+}
 }
