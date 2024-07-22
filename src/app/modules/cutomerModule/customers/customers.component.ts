@@ -528,6 +528,9 @@ export class CustomersComponent implements OnInit, AfterViewInit{
     this.buttonText = 'Upate Customer';
 
     let custEmailPhone = await this.extApi.getAllCustomers({custID: custData.id} as any);
+    let custDoc = await this.extApi.GetCustomerDocs({custID: custData.id} as any);
+
+    console.log(custDoc)
 
     if(custEmailPhone.data[0][0].custPhones && custEmailPhone.data[0][0].custPhones.length !== 0){
 
@@ -579,9 +582,9 @@ export class CustomersComponent implements OnInit, AfterViewInit{
       this.custImgAvailable = false;
     }
 
-    if(custEmailPhone.data[0][0].custDocuments && custEmailPhone.data[0][0].custDocuments.length !== 0){
+    if(custDoc.data && custDoc.data.length !== 0){
 
-      let filterNotDeletedDocData = custEmailPhone.data[0][0].custDocuments.filter((el: any) => el.status !== 1);
+      let filterNotDeletedDocData = custDoc.data.filter((el: any) => el.status !== 1);
 
       this.documents = filterNotDeletedDocData.reduce((acc: any, obj:any) => {
         const { docTypeId, displayFileName } = obj;
@@ -964,8 +967,9 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
       this.fileAvailable = false;
 
-      if(Object.keys(doc).length !== 0)
-        return this.documentTypes.filter((el:any) => el.id === Object.keys(doc)[0]).map((el:any) => ({ id: el.id, name: el.name }));
+      if(Object.keys(doc).length !== 0){
+        return this.documentTypes.filter((el:any, idx: any) => el.id === Object.keys(doc)[idx]).map((el:any) => ({ id: el.id, name: el.name }));
+      }
       else
         return Object.keys(doc);
     }
