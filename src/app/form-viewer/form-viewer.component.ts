@@ -69,51 +69,26 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
 
   addItem() {
     this.invoiceItems.push({ item: '', description: '', rate: 0, quantity: 0, price: 0 });
+    this.calculateTotal();
   }
 
   removeItem(index: number) {
     this.invoiceItems.splice(index, 1);
+    this.calculateTotal();
   }
 
   updateRate(item: any, event: any) {
-    const newValue = parseFloat(event.target.innerText);
-    if (!isNaN(newValue)) {
-      item.rate = newValue;
-      this.calculatePrice(item); // Trigger total recalculation
-      this.calculateTotal();
-      this.updateItem(item);
-    }
+    const value = parseFloat(event.target.textContent) || 0;
+    item.rate = value;
+    item.price = this.calculatePrice(item);
+    this.calculateTotal();
   }
 
   updateQuantity(item: any, event: any) {
-    const newValue = parseInt(event.target.innerText, 10);
-    if (!isNaN(newValue)) {
-      item.quantity = newValue;
-      this.calculatePrice(item); // Trigger total recalculation
-      this.calculateTotal();
-      this.updateItem(item);
-    }
-  }
-
-  updateItem(updatedItem: any) {
-
-      let findIdx = this.invoiceItems.findIndex((el: any) => el.item === updatedItem.item);
-
-      if(findIdx !== -1){
-
-        this.invoiceItems[findIdx].rate = updatedItem.rate;
-        this.invoiceItems[findIdx].quantity = updatedItem.quantity;
-        this.invoiceItems[findIdx].price = updatedItem.price;
-
-      }else{
-
-        this.invoiceItems.push({
-          item: updatedItem.item, rate: updatedItem.rate, quantity: updatedItem.quantity,
-          description: '',
-          price: 0
-        })
-      }
-    
+    const value = parseFloat(event.target.textContent) || 0;
+    item.quantity = value;
+    item.price = this.calculatePrice(item);
+    this.calculateTotal();
   }
 
   calculatePrice(item: any) {
@@ -121,13 +96,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   }
 
   calculateTotal() {
-    
-    this.totalAmount = 0;
-
-    this.items.forEach((el:any) => {
-      
-        this.totalAmount += el.rate * el.quantity
-    });
+    this.totalAmount = this.invoiceItems.reduce((total: any, item: any) => total + item.price, 0);
   }
 
   setSelectedCustData(selectedCustData: any){
@@ -194,7 +163,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     this.addBtnEnabled = true;
 
     
-    await this.getInvoiceItems(this.invoiceNo)
+    await this.getInvoiceItems(this.invoicePrimeID)
   }
 
   async addInvoice(){
@@ -219,7 +188,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
       await this.loadAllInvoicesBack.emit();
 
       await this.updateInvoiceItems(invoiceAddRes.data[0]);
-      await this.updateInvoice();
+      // await this.updateInvoice();
       
       this.loaderEnableDesabled.emit(false);
 
@@ -229,39 +198,39 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     }
   }
 
-  async updateInvoice(){
-    debugger
-    this.loaderEnableDesabled.emit(true);
+  // async updateInvoice(){
+  //   debugger
+  //   this.loaderEnableDesabled.emit(true);
 
-    let reqFields = [
-      {
-        "id": "string",
-        "invcNo": this.invoiceNo,
-        "invcDate": this.invoiceDate,
-        "jobDescription": this.jobDescription,
-        "custId": this.custID,
-        "totalPrice": this.totalPrice
-      }
-    ]
+  //   let reqFields = [
+  //     {
+  //       "id": "string",
+  //       "invcNo": this.invoiceNo,
+  //       "invcDate": this.invoiceDate,
+  //       "jobDescription": this.jobDescription,
+  //       "custId": this.custID,
+  //       "totalPrice": this.totalPrice
+  //     }
+  //   ]
 
-    try {
+  //   try {
 
-      let invoiceAddRes =  await this.extApi.UpdateInvoice(reqFields)
-      console.log(invoiceAddRes)
+  //     let invoiceAddRes =  await this.extApi.UpdateInvoice(reqFields)
+  //     console.log(invoiceAddRes)
 
-      this.loaderEnableDesabled.emit(false);
+  //     this.loaderEnableDesabled.emit(false);
 
-    } catch (error) {
+  //   } catch (error) {
 
-      alert("error")
-      this.loaderEnableDesabled.emit(false);
+  //     alert("error")
+  //     this.loaderEnableDesabled.emit(false);
 
-    }
+  //   }
 
-  }
+  // }
 
   async updateInvoiceItems(invoiceId: any = ''){
-    debugger
+
     let updateItemObj = 
       {
         "invId": invoiceId || this.invoicePrimeID,
@@ -297,7 +266,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   }
 
   async getInvoiceItems(invoiceID : any){
-    debugger
+    
     this.invoiceItems = [];
 
     let reqData = {
@@ -321,13 +290,6 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
       });
 
       console.log(this.invoiceItems)
-
-//       id: "000001"
-// invId: "000001"
-// invItem: "000001"
-// qty: 0
-// status: 0
-// totalPrice: 0
 
 
     } catch (e) {

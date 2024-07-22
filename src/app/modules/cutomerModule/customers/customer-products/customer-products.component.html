@@ -20,7 +20,106 @@
                 
             </div>
 
-            <div class="addCutProdItem">
+            <div class="addProdAndItems">
+
+                <div class="addCutProdItem">
+
+                    <h3>Add Customer Products</h3>
+    
+                    <div class="addCustProdInputsContainer">  
+                        
+                        <div class="top">
+                            
+                            <mat-form-field>
+                                <mat-label>Product Name</mat-label>
+                                <mat-select [(ngModel)]="prodName">
+                                <mat-option *ngFor="let data of rowData" [value]="data.productName">
+                                    {{ data.productName }}
+                                </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+    
+                            <mat-form-field>
+                                <mat-label>Product Description</mat-label>
+                                <input matInput [(ngModel)]="prodDescription" name="prodDescription">
+                            </mat-form-field>
+                            
+                            <mat-form-field>
+                                <mat-label>Remark</mat-label>
+                                <input matInput [(ngModel)]="remark" name="remark">
+                            </mat-form-field>
+    
+                        </div>
+    
+                        <div class="bottom">
+                            
+                            <button mat-raised-button (click)="addCustomerProducts()">Add</button>
+                            <button mat-raised-button (click)="updateCustProducts()">Update</button>
+                            <button mat-raised-button (click)="removeCustProducts()">Remove</button>
+                        </div>
+                          
+                    </div>
+    
+                    <div class="grid">
+                        <ag-grid-angular
+                                class="ag-theme-quartz"
+                                [rowData]="custProducts"
+                                [columnDefs]="colDefsForCustProd"
+                                style="height: 100%;"
+                                (rowClicked)="selectCUstomerProduct($event)">
+                        </ag-grid-angular>
+                    </div>
+    
+                </div>
+    
+                <div class="addCutProdItem">
+    
+                    <h3>Add Customer Products Items</h3>
+                    
+                    <div class="addCustProdInputsContainer">  
+                        
+                        <div class="top">
+                            
+                            <mat-form-field>
+                                <mat-label>Items</mat-label>
+                                <mat-select [(ngModel)]="itemName">
+                                <mat-option *ngFor="let data of allItems" [value]="data.itemName">
+                                    {{ data.itemName }}
+                                </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+    
+                            <mat-form-field>
+                                <mat-label>Product Name</mat-label>
+                                <mat-select [(ngModel)]="prodName">
+                                <mat-option *ngFor="let data of rowData" [value]="data.productName">
+                                    {{ data.productName }}
+                                </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+    
+    
+                        </div>
+    
+                        <div class="bottom">
+                            
+                            <button mat-raised-button (click)="updateCustomerProdItems()">Update</button>
+                            <button mat-raised-button (click)="removeCustomerProdItems()">Remove</button>
+                        </div>
+                          
+                    </div>
+    
+                    <div class="grid">
+                        <ag-grid-angular
+                                class="ag-theme-quartz"
+                                [rowData]="custProducts"
+                                [columnDefs]="colDefsForCustProd"
+                                style="height: 100%;"
+                                (rowClicked)="selectCUstomerProduct($event)">
+                        </ag-grid-angular>
+                    </div>
+    
+                </div>
 
             </div>
 

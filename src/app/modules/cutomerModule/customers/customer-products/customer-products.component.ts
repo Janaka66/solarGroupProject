@@ -17,9 +17,14 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
   panelOpenState = false;
   customerProducts: any = [];
 
-  rowData = [];
+  rowData = [] as any;
  
   colDefs: ColDef[] = [
+    { headerName: 'Product Name', field: 'productName', width: 185, resizable: true},
+    { headerName: 'Short Code', field: 'shortCode', width: 115, resizable: true}
+  ];
+
+  colDefsForCustProd: ColDef[] = [
     { headerName: 'Product Name', field: 'productName', width: 185, resizable: true},
     { headerName: 'Short Code', field: 'shortCode', width: 115, resizable: true}
   ];
@@ -29,6 +34,12 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
   buttonText: string = 'Add Product';
   prodId: any;
   selectedCustID: any;
+
+  prodDescription: any = '';
+  remark: any = '';
+  custProducts: any = [];
+  allItems: any = [];
+  itemName: any = '';
 
   constructor(private communicationService: AppService, private extApi : ExtApiService){
 
@@ -43,8 +54,9 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
     this.communicationService.sendData({ flag: !this.flag });
   }
 
-  ngOnInit(): void {
-      this.getProducts()
+  async ngOnInit(): Promise<void> {
+      await this.getProducts();
+      await this.loadAllItems();
   }
 
   async ngAfterViewInit(): Promise<void> {
@@ -195,5 +207,190 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
     } catch (e: any) {
       console.log(e.error)
     }
-}
+  }
+
+  
+  async addCustomerProducts(){
+debugger
+    let reqFields = [
+      {
+        "id": "string",
+        "custId": "string",
+        "prodShortCode": this.rowData.find((el: any) => el.productName === this.prodName).shortCode,
+        "refNu": "string",
+        "requestedOn": "2024-07-22T17:56:43.006Z",
+        "prodId": this.rowData.find((el: any) => el.productName === this.prodName).id,
+        "stageId": "string",
+        "description": this.prodDescription,
+        "remark": this.remark,
+        "isPaymentsDone": false,
+        "paymentDonePrecentage": 0,
+        "status": 0
+      }
+    ]
+
+    try {
+      
+      let addCustProductRes = await this.extApi.AddCustomerProdcut(reqFields);
+      alert("successfull");
+
+      await this.getCustProducts();
+      
+
+    } catch (error) {
+      alert("error")
+    }
+  }
+
+  async getCustProducts(){
+    debugger
+    let reqFields = {
+      "custId": this.selectedCustID,
+    }
+
+    try {
+
+      let allCustomerProdData = await this.extApi.GetCustomerProdcut(reqFields);
+      this.custProducts = allCustomerProdData.data;
+      
+    } catch (error) {
+      alert("error")
+    }
+  }
+
+  async updateCustProducts(){
+    
+    let reqFields = [
+      {
+        "id": "string",
+        "custId": "string",
+        "prodShortCode": "string",
+        "refNu": "string",
+        "requestedOn": "2024-07-22T23:04:50.019Z",
+        "prodId": "string",
+        "stageId": "string",
+        "description": "string",
+        "remark": "string",
+        "isPaymentsDone": false,
+        "paymentDonePrecentage": 0,
+        "status": 0
+      }
+    ]
+
+    
+    try {
+      
+      let addCustProductRes = await this.extApi.UpdateCustomerProdcut(reqFields);
+      alert("successfull");
+
+      await this.getCustProducts();
+      
+
+    } catch (error) {
+      alert("error")
+    }
+  }
+
+  async removeCustProducts(){
+
+    let reqFields = [
+      {
+        "id": "string",
+        "custId": "string",
+        "prodShortCode": "string",
+        "refNu": "string",
+        "requestedOn": "2024-07-22T23:04:50.019Z",
+        "prodId": "string",
+        "stageId": "string",
+        "description": "string",
+        "remark": "string",
+        "isPaymentsDone": false,
+        "paymentDonePrecentage": 0,
+        "status": 1
+      }
+    ]
+
+    
+    try {
+      
+      let addCustProductRes = await this.extApi.UpdateCustomerProdcut(reqFields);
+      alert("successfull");
+
+      await this.getCustProducts();
+      
+
+    } catch (error) {
+      alert("error")
+    }
+  }
+
+  selectCUstomerProduct(event: any){
+
+  }
+
+  async loadAllItems(){
+    
+    try {
+      
+      let loadedAllItems = await this.extApi.Items();
+      this.allItems = loadedAllItems.data;
+
+    } catch (e: any) {
+      
+      console.log(e)
+    }
+  }
+
+  async updateCustomerProdItems(){
+
+    let reqFields = {
+      "custId": this.selectedCustID,
+      "prodId": this.rowData.find((el: any) => el.productName === this.prodName).id,
+      "customerProductItem": [
+        {
+          "id": "string",
+          "custId": this.selectedCustID,
+          "prodId": this.rowData.find((el: any) => el.productName === this.prodName).id,
+          "itemId": this.allItems.find((el: any) => el.itemName === this.itemName).id,
+          "status": 0
+        }
+      ]
+    }
+
+    try {
+
+      let res = await this.extApi.UpdateCustomerProdcutItem(reqFields)
+      
+    } catch (error) {
+      alert("error")
+    }
+  }
+
+  async removeCustomerProdItems(){
+
+    let reqFields = {
+      "custId": this.selectedCustID,
+      "prodId": this.rowData.find((el: any) => el.productName === this.prodName).id,
+      "customerProductItem": [
+        {
+          "id": "string",
+          "custId": this.selectedCustID,
+          "prodId": this.rowData.find((el: any) => el.productName === this.prodName).id,
+          "itemId": this.allItems.find((el: any) => el.itemName === this.itemName).id,
+          "status": 1
+        }
+      ]
+    }
+
+    try {
+
+      let res = await this.extApi.UpdateCustomerProdcutItem(reqFields)
+      
+    } catch (error) {
+      alert("error")
+    }
+
+  }
+  
+
 }

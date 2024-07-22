@@ -72,20 +72,35 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of invoiceItems; let i = index">
-   
-            <td><a class="cut" (click)="removeItem(i)">-</a><select [(ngModel)]="item.item"> <option *ngFor="let option of allItems" [value]="option.name">{{option.itemName}}</option></select>
-            <td><span data-prefix>$</span><span contenteditable (blur)="updateRate(item, $event)">{{item.rate}}</span></td>
-            <td><span contenteditable (blur)="updateQuantity(item, $event)">{{item.quantity}}</span></td>
-            <td><span data-prefix>$</span><span>{{calculatePrice(item)}}</span></td>
+            <td>
+              <a class="cut" (click)="removeItem(i)">-</a>
+              <select [(ngModel)]="item.item">
+                <option *ngFor="let option of allItems" [value]="option.name">{{option.itemName}}</option>
+              </select>
+            </td>
+            <td>
+              <span data-prefix>$</span>
+              <span contenteditable (blur)="updateRate(item, $event)">{{item.rate}}</span>
+            </td>
+            <td>
+              <span contenteditable (blur)="updateQuantity(item, $event)">{{item.quantity}}</span>
+            </td>
+            <td>
+              <span data-prefix>$</span>
+              <span>{{item.price}}</span>
+            </td>
           </tr>
         </tbody>
       </table>
       <a class="add" (click)="addItem()">+</a>
       <table class="balance totalAmt">
         <tr>
-            <th><span contenteditable>Total</span></th>
-            <td><span data-prefix>$</span><span>{{totalAmount}}</span></td>
-          </tr>
+          <th>Total</th>
+          <td>
+            <span data-prefix>$</span>
+            <span>{{totalAmount}}</span>
+          </td>
+        </tr>
       </table>
     </article>
     <aside>
