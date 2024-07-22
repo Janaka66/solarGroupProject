@@ -332,4 +332,18 @@ export class ExtApiService {
     
   }
 
+  getAllProducts(reqFields?: any): Promise<any> {
+    return this.http.post<any>(`http://www.solardb.somee.com/api/Product/GetProdcut`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  AddProdcut(reqFields?: any): Promise<any> {
+    return this.http.post<any>(`http://www.solardb.somee.com/api/Product/AddProdcut`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  UpdateProdcut(reqFields?: any): Promise<any> {
+    return this.http.put<any>(`http://www.solardb.somee.com/api/Product/UpdateProdcut`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
 }

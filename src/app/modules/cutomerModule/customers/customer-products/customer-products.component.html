@@ -12,57 +12,66 @@
 
     <div class="content">
 
-        <div class="search-addCustomer-prod-container">
+        <div class="left">
+            
+            <div class="search-addCustomer-prod-container">
 
-            <div class="search-section">
-
-                <app-customer-search></app-customer-search>
-                
-            </div>
+                <div class="search-section">
     
-            <div class="add-customer-prod-section">
+                    <app-customer-search></app-customer-search>
+                    
+                </div>
+        
+                <div class="add-customer-prod-section">
+        
+                    <div class="add-customer-prod">
     
-                <div class="add-customer-prod">
-
-                    <div>
-
-                        <mat-form-field hintLabel="Max 10 characters">
-                            <mat-label>Enter some input</mat-label>
-                            <input matInput #input maxlength="10" placeholder="Ex. Nougat">
-                            <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-                        </mat-form-field>
-
-                        <mat-form-field hintLabel="Max 10 characters">
-                            <mat-label>Enter some input</mat-label>
-                            <input matInput #input maxlength="10" placeholder="Ex. Nougat">
-                            <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-                        </mat-form-field>
-
-                        <mat-form-field hintLabel="Max 10 characters">
-                            <mat-label>Enter some input</mat-label>
-                            <input matInput #input maxlength="10" placeholder="Ex. Nougat">
-                            <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-                        </mat-form-field>
-
+                        <div>
+    
+                            <mat-form-field>
+                                <mat-label>Product Name</mat-label>
+                                <input matInput [(ngModel)]="prodName" name="prodName">
+                              </mat-form-field>
+                              
+                              <div class="code">
+    
+                                <mat-form-field>
+                                    <mat-label>Short Code</mat-label>
+                                    <input matInput [(ngModel)]="shortCode" name="statusCode">
+                                  </mat-form-field>
+        
+                                  <button mat-raised-button (click)="generateUniqueCode()">genarate Shortcode</button>
+    
+                              </div>
+    
+                              <button mat-raised-button (click)="onButtonClick()">{{buttonText}}</button>
+                              <button mat-raised-button (click)="removeProduct()">Remove</button>
+                              
+                        </div>
+    
                     </div>
-
+    
+                    <div class="show-customer-prod">
+    
+                        <ag-grid-angular
+                            class="ag-theme-quartz"
+                            [rowData]="rowData"
+                            [columnDefs]="colDefs"
+                            style="height: 100%;"
+                            (rowClicked)="onRowClicked($event)">
+                        </ag-grid-angular>
+    
+                    </div>
+    
                 </div>
-
-                <div class="show-customer-prod">
-
-                    <ag-grid-angular
-                        class="ag-theme-quartz"
-                        [rowData]="rowData"
-                        [columnDefs]="colDefs"
-                        style="height: 100%;">
-                    </ag-grid-angular>
-
-                </div>
-
+    
             </div>
 
         </div>
        
+        <div class="right">
+
+        </div>
 
     </div>
 </div>

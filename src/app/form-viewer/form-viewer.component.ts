@@ -147,7 +147,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     
     try {
       
-      let itemTypes = await this.extApi.ItemTypes();
+      let itemTypes = await this.extApi.Items();
       this.allItems = itemTypes.data.filter((el: any) => el.status === 0);
 
     } catch (e: any) {
@@ -300,7 +300,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     this.invoiceItems = [];
 
     let reqData = {
-      "invcNo": invoiceID,
+      "invId": invoiceID,
     }
 
     try {
