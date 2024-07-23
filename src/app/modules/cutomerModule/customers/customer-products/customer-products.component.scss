@@ -12,7 +12,7 @@
 
         .left{
 
-            width: 40%;
+            width: 20%;
             height: 100%;
 
             .search-addCustomer-prod-container{
@@ -73,7 +73,7 @@
         }
 
         .right{
-            width: 60%;
+            width: 80%;
             height: 100%;
             display: flex;
             flex-direction: row;
@@ -102,6 +102,11 @@
                         width: 100%;
                         margin-top: 20px;
                     }
+                }
+
+                .filterDrop{
+                    display: flex;
+                    justify-content: end;
                 }
             }
 

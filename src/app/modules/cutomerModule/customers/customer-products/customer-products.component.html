@@ -22,6 +22,17 @@
 
             <div class="addProdAndItems">
 
+                <div class="filterDrop">
+                    <mat-form-field>
+                        <mat-label>Product Name</mat-label>
+                        <mat-select [(ngModel)]="allCustProducts" (selectionChange)="filterProdAndItems($event)">
+                        <mat-option *ngFor="let data of rowData" [value]="data">
+                            {{ data.productName }}
+                        </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
                 <div class="addCutProdItem">
 
                     <h3>Add Customer Products</h3>
@@ -32,7 +43,7 @@
                             
                             <mat-form-field>
                                 <mat-label>Product Name</mat-label>
-                                <mat-select [(ngModel)]="prodName">
+                                <mat-select [(ngModel)]="custProdName">
                                 <mat-option *ngFor="let data of rowData" [value]="data.productName">
                                     {{ data.productName }}
                                 </mat-option>
@@ -81,6 +92,24 @@
                         <div class="top">
                             
                             <mat-form-field>
+                                <mat-label>Product Name</mat-label>
+                                <mat-select [(ngModel)]="prodNameforItems" (selectionChange)="onProductNameChange($event)">
+                                  <mat-option *ngFor="let data of rowData" [value]="data.id">
+                                    {{ data.productName }}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+    
+                            <mat-form-field>
+                                <mat-label>Product Ref</mat-label>
+                                <mat-select [(ngModel)]="prodRefNumber" (selectionChange)="loadItemsByRefAndProd($event)">
+                                  <mat-option *ngFor="let data of prodRefNumbers" [value]="data.refNu">
+                                    {{ data.refNu }}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
                                 <mat-label>Items</mat-label>
                                 <mat-select [(ngModel)]="itemName">
                                 <mat-option *ngFor="let data of allItems" [value]="data.itemName">
@@ -88,16 +117,8 @@
                                 </mat-option>
                                 </mat-select>
                             </mat-form-field>
-    
-                            <mat-form-field>
-                                <mat-label>Product Name</mat-label>
-                                <mat-select [(ngModel)]="prodName">
-                                <mat-option *ngFor="let data of rowData" [value]="data.productName">
-                                    {{ data.productName }}
-                                </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-    
+
+                            <button (click)="addItemsToCustomerProd()">ADD Items</button>
     
                         </div>
     
@@ -110,12 +131,12 @@
                     </div>
     
                     <div class="grid">
-                        <ag-grid-angular
+                        <ag-grid-angular #agGrid
                                 class="ag-theme-quartz"
-                                [rowData]="custProducts"
-                                [columnDefs]="colDefsForCustProd"
+                                [rowData]="custProductsItems"
+                                [columnDefs]="colDefsForCustProdItems"
                                 style="height: 100%;"
-                                (rowClicked)="selectCUstomerProduct($event)">
+                                (rowClicked)="selectCUstomerProductsItems($event)">
                         </ag-grid-angular>
                     </div>
     

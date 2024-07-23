@@ -167,7 +167,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   }
 
   async addInvoice(){
-    debugger
+    
     this.loaderEnableDesabled.emit(true);
 
     let reqFields =
@@ -199,7 +199,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   }
 
   // async updateInvoice(){
-  //   debugger
+  //   
   //   this.loaderEnableDesabled.emit(true);
 
   //   let reqFields = [

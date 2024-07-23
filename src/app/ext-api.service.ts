@@ -355,7 +355,7 @@ export class ExtApiService {
   }
 
   GetCustomerProdcut(reqFields?: any): Promise<any> {
-    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerProduct/GetCustomerProdcut`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerProduct/GetCustomerProdcut`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
     
   }
 
@@ -367,6 +367,11 @@ export class ExtApiService {
   
   UpdateCustomerProdcutItem(reqFields?: any): Promise<any> {
     return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerProduct/UpdateCustomerProdcutItem`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  GetCustomerProdcutItem(reqFields?: any): Promise<any> {
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerProduct/GetCustomerProdcutItem`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
     
   }
 

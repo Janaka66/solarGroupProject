@@ -39,7 +39,7 @@ export class AppConfigService {
   }
 
   public getBaseUrl(name: string) {
-debugger
+
     let env = this.getEnvironment();
     return this.paths[name][env];
   }
