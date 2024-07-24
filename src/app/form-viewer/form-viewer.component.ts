@@ -373,14 +373,17 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
             {
               rate: el.unitPrice,
               quantity: el.qty,
-              item : this.allItems.find((elx: any) => elx.id === el.id).itemName
+              item : this.allItems.find((elx: any) => elx.id === el.invId).itemName,
+              id: el.invId
             }
           )
+
+          this.selectedItemInDrop = el.invId
   
         });
   
         this.invoiceItems = invoiceItemsfound
-
+        this.cdr.detectChanges()
     } catch (e) {
       
       alert(e)

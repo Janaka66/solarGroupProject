@@ -194,7 +194,7 @@
         <tr *ngFor="let item of invoiceItems; let i = index">
           <td>
             <a class="cut" (click)="removeItem(i)">-</a>
-            <select [(ngModel)]="selectedItemInDrop" (change)="onItemChange(i)">
+            <select [(ngModel)]="item.id" (change)="onItemChange(i)">
               <option *ngFor="let option of quatDropdownItems" [value]="option.itemId">{{option.itemName}}</option>
             </select>
           </td>
