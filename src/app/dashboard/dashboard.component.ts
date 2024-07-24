@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   }
 
   handleLeftBar() {
-    
+    debugger
     this.communicationService.sendData({ flag: false });
   }
 
