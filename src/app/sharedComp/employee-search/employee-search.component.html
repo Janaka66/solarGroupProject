@@ -9,19 +9,19 @@
     </div>
     <div class="search-result">
 
-        <mat-card 
-        class="search-result-card" 
-        *ngFor="let searchRes of searchResult"
-        (click)="sendSelectedData(searchRes, $event)"
-        [ngClass]="{'selected-card': selectedSearchRes === searchRes}">
-      
-        <mat-card-header>
+      <mat-card class="search-result-card" *ngFor="let searchRes of searchResult">
+
+        <mat-card-header  (click)="sendSelectedData(searchRes,$event)">
           <mat-card-title-group>
-            <mat-card-title>{{ searchRes.initials + ' ' + searchRes.fname }}</mat-card-title>
-            <img src="data:image/png;base64,{{ searchRes.profileImage }}">
+            <mat-card-title>{{searchRes.initials + ' ' + searchRes.fname}}</mat-card-title>
           </mat-card-title-group>
         </mat-card-header>
-      </mat-card>
+
+        <div class="iconConatiner">
+            <mat-icon (click)="removeEmployee(searchRes)"  *ngIf="compName !== 'inqComp'">delete</mat-icon>
+            <input type="checkbox" (change)="selectEmpForInquiries(searchRes, $event)" [checked]="searchRes.checked"  *ngIf="compName === 'inqComp'">
+        </div>
+    </mat-card>
 
     </div>
 
