@@ -69,6 +69,8 @@
                                         <div>{{ product.totalPrice }}</div>
                                     </div>
 
+                                    <button (click)="removeQuatOrInvoice(product); $event.stopPropagation()">Delete</button>
+                                    
                                 </div>
                             </div>
                         </ng-template>

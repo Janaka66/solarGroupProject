@@ -1,8 +1,12 @@
 <div class="actionContainer">
 
     <div class="crudBtn">
-        <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="addInvoice()" [disabled]="addBtnEnabled">Add Invoice</button>
-        <button mat-raised-button color="primary" style="margin-right: 10px;" (click)="updateInvoiceItems()" [disabled]="updateBtnEnabled">Update Invoice</button>
+        <button mat-raised-button color="primary" *ngIf="!cutomerQuatationInvoice" style="margin-right: 10px;" (click)="addInvoice()" [disabled]="addBtnEnabled">Add Invoice</button>
+        <button mat-raised-button color="primary" *ngIf="!cutomerQuatationInvoice" style="margin-right: 10px;" (click)="updateInvoiceItems()" [disabled]="updateBtnEnabled">Update Invoice</button>
+
+        <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" (click)="addQuatation()" [disabled]="addBtnEnabled">Add Quatation</button>
+        <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" [disabled]="updateBtnEnabled">Update Quatation</button>
+
         <button mat-raised-button color="primary" (click)="clear()">Clear</button>
     </div>
 
@@ -74,8 +78,8 @@
           <tr *ngFor="let item of invoiceItems; let i = index">
             <td>
               <a class="cut" (click)="removeItem(i)">-</a>
-              <select [(ngModel)]="item.item">
-                <option *ngFor="let option of allItems" [value]="option.name">{{option.itemName}}</option>
+              <select [(ngModel)]="selectedItemInDrop" (change)="onItemChange(i)">
+                <option *ngFor="let option of allItems" [value]="option.id">{{option.itemName}}</option>
               </select>
             </td>
             <td>
@@ -110,78 +114,122 @@
     <div class="invoiceBottom">
         <img src="../../assets//invoiceBottom.png">
     </div>
+    </div>
+    </aside>
+</div>
   
 
 <div *ngIf="cutomerQuatationInvoice" id="quatation-print-section" class="customer-quotation">
+  <header>
+    <h1>Invoice</h1>
 
-    <header>
-        <h1>Invoice2</h1>
-        <address contenteditable>
-            <p>Jonathan Neal</p>
-            <p>101 E. Chapman Ave<br>Orange, CA 92866</p>
-            <p>(800) 555-1234</p>
-        </address>
-    </header>
-    <article>
-        <table class="meta">
-            <tr>
-                <th><span contenteditable>Issued</span></th>
-                <td><span contenteditable>101138</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>Due</span></th>
-                <td><span contenteditable>101138</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>Bill To</span></th>
-                <td><span contenteditable>January 1, 2012</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>From</span></th>
-                <td><span id="prefix" contenteditable>$</span><span>600.00</span></td>
-            </tr>
-        </table>
-        <table class="inventory">
-            <thead>
-                <tr>
-                    <th><span contenteditable>Item</span></th>
-                    <th><span contenteditable>Description</span></th>
-                    <th><span contenteditable>Rate</span></th>
-                    <th><span contenteditable>Quantity</span></th>
-                    <th><span contenteditable>Price</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a class="cut">-</a><span contenteditable>Front End Consultation</span></td>
-                    <td><span contenteditable>Experience Review</span></td>
-                    <td><span data-prefix>$</span><span contenteditable>150.00</span></td>
-                    <td><span contenteditable>4</span></td>
-                    <td><span data-prefix>$</span><span>600.00</span></td>
-                </tr>
-            </tbody>
-        </table>
-        <a class="add">+</a>
-        <table class="balance totalAmt">
-            <tr>
-                <th><span contenteditable>Total</span></th>
-                <td><span data-prefix>$</span><span>600.00</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>Amount Paid</span></th>
-                <td><span data-prefix>$</span><span contenteditable>0.00</span></td>
-            </tr>
-            <tr>
-                <th><span contenteditable>Balance Due</span></th>
-                <td><span data-prefix>$</span><span>600.00</span></td>
-            </tr>
-        </table>
-    </article>
-    <aside>
-        <h1><span contenteditable>Thank you for the business</span></h1>
-        <div contenteditable>
-            <p>Please Pay within 15 days of receiving this invoice</p>
-        </div>
-    </aside>
+    <div class="logo">
+      <img src="../../assets/invoiceLogo.png">
+    </div>
 
+    <address contenteditable>
+      <h3>BG Solar Energy (Private)Ltd.</h3>
+      <p>{{comapnyAddress}}</p>
+      <p>Kurunegala, Sri Lanka</p>
+      <p>(PV 114860)</p>
+
+      <p>Tel : {{mobile}}</p>
+      <p>Fax : {{fax}}</p>
+      <p>E-mail : {{email}}</p>
+    </address>
+
+    <div [ngClass]="{'confirmed-true': isConfirmed, 'confirmed-false': !isConfirmed}">
+      {{isConfirmed}}
+    </div>
+
+  </header>
+  <article>
+    <table class="meta">
+      <tr>
+        <th><span contenteditable>Invoice No</span></th>
+        <td><span contenteditable>{{invoiceNo}}</span></td>
+      </tr>
+      <tr>
+        <th><span contenteditable>Date</span></th>
+        <td><span contenteditable>{{invoiceDate}}</span></td>
+      </tr>
+      <tr>
+        <th><span contenteditable>Bill To</span></th>
+        <td><span contenteditable>{{custDataForInvoice}}</span></td>
+      </tr>
+      <tr>
+        <th><span contenteditable>Job Description</span></th>
+        <td><span contenteditable>{{jobDescription}}</span></td>
+      </tr>
+      <tr>
+        <th><span contenteditable>Product</span></th>
+        <td>
+          <select [(ngModel)]="selectedProduct" (change)="onProductChange(selectedProduct)">
+            <option *ngFor="let option of allProducts" [value]="option.productName">{{option.productName}}</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th><span contenteditable>ProdRef</span></th>
+        <td><span contenteditable>{{prodRef}}</span></td>
+      </tr>
+      <tr>
+        <th><span contenteditable>Valid</span></th>
+        <td>
+          <input id="datePicker" type="date" [(ngModel)]="selectedDate" >
+          
+        </td>
+      </tr>
+    </table>
+    <table class="inventory">
+      <thead>
+        <tr>
+          <th><span contenteditable>Item</span></th>
+          <th><span contenteditable>Rate</span></th>
+          <th><span contenteditable>Quantity</span></th>
+          <th><span contenteditable>Amount</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of invoiceItems; let i = index">
+          <td>
+            <a class="cut" (click)="removeItem(i)">-</a>
+            <select [(ngModel)]="selectedItemInDrop" (change)="onItemChange(i)">
+              <option *ngFor="let option of quatDropdownItems" [value]="option.itemId">{{option.itemName}}</option>
+            </select>
+          </td>
+          <td>
+            <span data-prefix>$</span>
+            <span contenteditable (blur)="updateRate(item, $event)">{{item.rate}}</span>
+          </td>
+          <td>
+            <span contenteditable (blur)="updateQuantity(item, $event)">{{item.quantity}}</span>
+          </td>
+          <td>
+            <span data-prefix>$</span>
+            <span>{{item.price}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="add" (click)="addItem()">+</a>
+    <table class="balance totalAmt">
+      <tr>
+        <th>Total</th>
+        <td>
+          <span data-prefix>$</span>
+          <span>{{totalAmount}}</span>
+        </td>
+      </tr>
+    </table>
+  </article>
+  <aside>
+    <h1><span contenteditable>Thank you for the business</span></h1>
+    <div contenteditable>
+      
+  <div class="invoiceBottom">
+      <img src="../../assets//invoiceBottom.png">
+  </div>
+  </div>
+  </aside>
 </div>

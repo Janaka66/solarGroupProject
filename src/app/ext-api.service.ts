@@ -375,4 +375,35 @@ export class ExtApiService {
     
   }
 
+  
+  AddQuotation(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/AddQuotation`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  UpdateQuotation(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotation`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  GetQuotation(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetQuotation`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  UpdateQuotationItems(reqFields?: any): Promise<any> {
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationItems`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  GetQuotationItem(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetQuotationItem`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  UpdateQuotationConfirmEmployees(reqFields?: any): Promise<any> {
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationConfirmEmployees`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
 }

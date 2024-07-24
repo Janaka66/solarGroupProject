@@ -42,6 +42,7 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
     productService: any;
     allInvoices = [];
+    selecetedQIItem: any;
 
   constructor(private communicationService: AppService, private extApi : ExtApiService){
 
@@ -128,6 +129,8 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
                 
                 let invoiceRes = await this.extApi.GetInvoice({"custID" : this.selectedCustID});
 
+                // invoiceRes.data = invoiceRes.data.filter((el: any) => el.status === 0)
+
                 invoiceRes.data.forEach((el: any) => {
                     
                     el.invcDate = moment(el.invcDate).format('YYYY/MM/DD');
@@ -157,4 +160,39 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
         this.isLoaderAvailable = event;
     }
+
+    async removeQuatOrInvoice(event: any){
+        debugger
+        this.selecetedQIItem = event
+
+        await this.removeQuatation()
+
+        
+    }
+
+    async removeQuatation(){
+    
+        let reqFields = [
+            {
+              "id": this.selecetedQIItem.id,
+              "invcNo": this.selecetedQIItem.invcNo,
+              "invcDate": "2024-07-24T11:38:53.218Z",
+              "jobDescription": this.selecetedQIItem.jobDescription,
+              "custId": this.selecetedQIItem.custId,
+              "totalPrice": 1
+            }
+          ]
+    
+        try {
+    
+          let invoiceAddRes =  await this.extApi.UpdateInvoice(reqFields)
+          this.getAllInvoices();
+          
+        } catch (error) {
+    
+          alert("error")
+    
+        }
+    
+      }
 }
