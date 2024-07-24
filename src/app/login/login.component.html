@@ -1,0 +1,38 @@
+<div class="container">
+
+    <div class="login-content">
+
+        <div class='head'>
+            
+            <h1 class='company'>xxxxxxxxxx</h1>
+    
+        </div>
+    
+    
+        <form class="login-panel" [formGroup]="checkoutForm" (ngSubmit)="navigate(checkoutForm.value)">
+
+            <div class="email">
+
+                <input type="text" placeholder='Username' class='text' formControlName = "username" required><br>
+
+            </div>
+
+            <div class="password">
+
+                <input type="password" placeholder='password' class='password' formControlName = "password"><br>
+
+            </div>
+
+            <div class="button-pannel">
+                
+                <button type="submit" class="btn-login">Sign In</button>
+            
+            </div>
+
+        </form>
+    
+
+
+    </div>
+
+</div>

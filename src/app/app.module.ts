@@ -41,6 +41,9 @@ import { SliderWindowComponent } from './slider-window/slider-window.component';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogModule } from 'primeng/dialog';
+import { LoginComponent } from './login/login.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { tokenGetter } from './auth/auth.service';
 
 
 @NgModule({
@@ -50,7 +53,8 @@ import { DialogModule } from 'primeng/dialog';
     DashboardComponent,
     LeftPanelComponent,
     SafePipe,
-    SliderWindowComponent
+    SliderWindowComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +94,13 @@ import { DialogModule } from 'primeng/dialog';
     MatListModule,
     CommonModule,
     MatDialogModule,
-    DialogModule
+    DialogModule,
+    JwtModule.forRoot({
+      config: {
+          allowedDomains: ['localhost:4200'],
+          tokenGetter: tokenGetter
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

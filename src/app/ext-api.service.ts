@@ -406,4 +406,19 @@ export class ExtApiService {
     
   }
 
+  async getToken(username: string, password: string): Promise<any>{
+
+    try {
+      
+      return this.http.post('', { username: username, password: password }, {responseType: 'text'}).toPromise() ;
+      
+    } catch (error) {
+
+      console.log(error)
+
+      return false;
+    }
+
+  }
+
 }

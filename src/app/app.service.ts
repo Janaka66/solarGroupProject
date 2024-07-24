@@ -11,6 +11,7 @@ export class AppService {
 
   data$ = this.dataSubject.asObservable();
   sliderInform$ = this.dataSlider.asObservable();
+  currentUser: any;
 
   constructor() { }
   
