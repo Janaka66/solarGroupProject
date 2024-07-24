@@ -394,7 +394,7 @@ export class ExtApiService {
   UpdateQuotationItems(reqFields?: any): Promise<any> {
     return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationItems`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
     
-  }
+  }  
 
   GetQuotationItem(reqFields?: any): Promise<any> {
     return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetQuotationItem`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();

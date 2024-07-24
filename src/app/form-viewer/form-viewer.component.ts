@@ -259,7 +259,6 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
       await this.loadAllInvoicesBack.emit();
 
       await this.updateInvoiceItems(invoiceAddRes.data[0]);
-      // await this.updateInvoice();
       
       this.loaderEnableDesabled.emit(false);
 
@@ -269,36 +268,36 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     }
   }
 
-  // async updateInvoice(){
-  //   
-  //   this.loaderEnableDesabled.emit(true);
+  async updateInvoice(){
+    
+    this.loaderEnableDesabled.emit(true);
 
-  //   let reqFields = [
-  //     {
-  //       "id": "string",
-  //       "invcNo": this.invoiceNo,
-  //       "invcDate": this.invoiceDate,
-  //       "jobDescription": this.jobDescription,
-  //       "custId": this.custID,
-  //       "totalPrice": this.totalPrice
-  //     }
-  //   ]
+    let reqFields = [
+      {
+        "id": "string",
+        "invcNo": this.invoiceNo,
+        "invcDate": this.invoiceDate,
+        "jobDescription": this.jobDescription,
+        "custId": this.custID,
+        "totalPrice": this.totalPrice
+      }
+    ]
 
-  //   try {
+    try {
 
-  //     let invoiceAddRes =  await this.extApi.UpdateInvoice(reqFields)
-  //     console.log(invoiceAddRes)
+      let invoiceAddRes =  await this.extApi.UpdateInvoice(reqFields)
+      console.log(invoiceAddRes)
 
-  //     this.loaderEnableDesabled.emit(false);
+      this.loaderEnableDesabled.emit(false);
 
-  //   } catch (error) {
+    } catch (error) {
 
-  //     alert("error")
-  //     this.loaderEnableDesabled.emit(false);
+      alert("error")
+      this.loaderEnableDesabled.emit(false);
 
-  //   }
+    }
 
-  // }
+  }
 
   async updateInvoiceItems(invoiceId: any = ''){
 
@@ -326,7 +325,9 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     try {
 
       let invoiceAddRes =  await this.extApi.UpdateInvoiceItem(updateItemObj)
-      console.log(invoiceAddRes)
+      
+      await this.updateInvoice();
+
       this.loaderEnableDesabled.emit(false);
 
     } catch (error) {
@@ -412,7 +413,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
       
       await this.loadQuataionBack.emit();
 
-      await this.updateInvoiceItems(invoiceAddRes.data[0]);
+      await this.updateQuatationItems(invoiceAddRes.data[0]);
       // await this.updateInvoice();
       
       this.loaderEnableDesabled.emit(false);
@@ -455,6 +456,42 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
     } catch (error) {
       alert("error")
       this.loaderEnableDesabled.emit(false);
+    }
+
+  }
+
+  async updateQuatation(){
+    
+    this.loaderEnableDesabled.emit(true);
+
+    let reqFields = {
+      "id": "string",
+      "custId": this.custID,
+      "prodId": this.selectedProdId,
+      "prodRefNu": this.prodRef,
+      "quotNumber": "string",
+      "jobNumber": "string",
+      "quotDate": "2024-07-24T03:22:26.844Z",
+      "validUntil": "2024-07-24T07:53:23.815Z",
+      "totalAmount": 0,
+      "notes": "string",
+      "isConfirmed": false,
+      "preparedBy": "string",
+      "status": 0
+    }
+
+    try {
+
+      let invoiceAddRes =  await this.extApi.UpdateQuotation(reqFields)
+      console.log(invoiceAddRes)
+
+      this.loaderEnableDesabled.emit(false);
+
+    } catch (error) {
+
+      alert("error")
+      this.loaderEnableDesabled.emit(false);
+
     }
 
   }
