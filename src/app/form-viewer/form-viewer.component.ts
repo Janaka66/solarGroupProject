@@ -64,6 +64,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   quatDropdownItems: any;
   invoiceDropDownItems: any;
   selectedItemInDrop: any;
+  isDisabledProdSelect: boolean = false;
 
   constructor( private communicationService: AppService, private extApi: ExtApiService, private cdr: ChangeDetectorRef){
     this.subscription = this.communicationService.data$.subscribe((data: any) => {
@@ -134,6 +135,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
 
     this.addBtnEnabled = false;
     this.updateBtnEnabled = true;
+    this.isDisabledProdSelect = false;
 
     await this.getProducts();
     await this.getCustProducts();
@@ -174,6 +176,8 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
 
       this.quatDropdownItems = itemsExceptDeleted
 
+      this.cdr.detectChanges()
+      
     } catch (e: any) {
       
       console.log(e)
@@ -221,20 +225,33 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
       this.quatationisConfirmed = invoice.isConfirmed,
       this.quatationID = invoice.id;
 
+      this.updateBtnEnabled = false;
+      this.addBtnEnabled = true;
+
       await this.getQuatationItems(this.quatationID)
 
+      this.selectedProduct = this.allProducts.find((el: any) => el.id === invoice.prodId).productName
+      this.onProductChange(this.selectedProduct)
+
+
+      this.isDisabledProdSelect = true;
+
     }else{
+
       this.invoiceNo = invoice.invcNo;
       this.invoiceDate = invoice.invcDate;
       this.jobDescription = invoice.jobDescription;
       this.totalPrice = invoice.totalPrice;
       this.invoicePrimeID = invoice.id;
       
-      this.updateBtnEnabled = false;
-      this.addBtnEnabled = true;
+      this.updateBtnEnabled = true;
+      this.addBtnEnabled = false;
+      this.isDisabledProdSelect = true;
+      
+    await this.getInvoiceItems(this.invoicePrimeID)
     }
     
-    await this.getInvoiceItems(this.invoicePrimeID)
+
   }
 
   async addInvoice(){
@@ -338,8 +355,8 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   }
 
   async getInvoiceItems(invoiceID : any){
-    
-    this.invoiceItems = [];
+    debugger
+    let invoiceItemsfound = [] as any;
 
     let reqData = {
       "invId": invoiceID,
@@ -347,22 +364,22 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
 
     try {
       
-      let invoiceData = await this.extApi.GetInvoiceItem(reqData);
 
-      invoiceData.data.forEach((el: any) => {
-        
-        this.invoiceItems.push(
-          {
-            rate: el.unitPrice,
-            quantity: el.qty,
-            item : this.allItems.find((el: any) => el.id === el.id).name
-          }
-        )
+        let invoiceData = await this.extApi.GetInvoiceItem(reqData);
 
-      });
-
-      console.log(this.invoiceItems)
-
+        invoiceData.data.forEach((el: any) => {
+          
+          invoiceItemsfound.push(
+            {
+              rate: el.unitPrice,
+              quantity: el.qty,
+              item : this.allItems.find((elx: any) => elx.id === el.id).itemName
+            }
+          )
+  
+        });
+  
+        this.invoiceItems = invoiceItemsfound
 
     } catch (e) {
       
@@ -510,6 +527,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
 
     try {
       debugger
+      
       let invoiceData = await this.extApi.GetQuotationItem(reqData);
 
       invoiceData.data.forEach((el: any) => {

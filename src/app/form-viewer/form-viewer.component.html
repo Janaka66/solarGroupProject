@@ -164,7 +164,7 @@
       <tr>
         <th><span contenteditable>Product</span></th>
         <td>
-          <select [(ngModel)]="selectedProduct" (change)="onProductChange(selectedProduct)">
+          <select [(ngModel)]="selectedProduct" (change)="onProductChange(selectedProduct)" [disabled]="isDisabledProdSelect">
             <option *ngFor="let option of allProducts" [value]="option.productName">{{option.productName}}</option>
           </select>
         </td>

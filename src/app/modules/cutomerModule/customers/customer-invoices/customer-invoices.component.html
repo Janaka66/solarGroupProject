@@ -39,7 +39,7 @@
                         [responsiveOptions]="responsiveOptions"
                         (onPage)="onPage($event)">
                         <ng-template let-product pTemplate="item">
-                            <div class="border-1 surface-border border-round m-2 p-3" (click)="selectItem(product)">
+                            <div class="border-1 surface-border border-round m-2 p-3" (click)="selectItem(product); $event.stopPropagation()">
                                 <div class="mb-3">
                                     <div class="relative mx-auto">
                                         <img 
@@ -70,7 +70,7 @@
                                     </div>
 
                                     <button (click)="removeQuatOrInvoice(product); $event.stopPropagation()">Delete</button>
-                                    
+
                                 </div>
                             </div>
                         </ng-template>
