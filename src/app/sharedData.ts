@@ -14,6 +14,8 @@ import { CustomerInquiriesComponent } from './modules/inquiries/customer-inquiri
 import { ManageInquiriesComponent } from './modules/inquiries/manage-inquiries/manage-inquiries.component';
 import { CustomerComplainsComponent } from './modules/complains/customer-complains/customer-complains.component';
 import { ManageComplainsComponent } from './modules/complains/manage-complains/manage-complains.component';
+import { CustomerComplainUserViewComponent } from './modules/complains/customer-complain-user-view/customer-complain-user-view.component';
+import { CustomerInqUserViewsComponent } from './modules/inquiries/customer-inq-user-views/customer-inq-user-views.component';
 
 @Injectable({
     providedIn: 'root'
@@ -38,28 +40,18 @@ export class sharedData{
         ]} ,
         {icon : "", title: "Completions",                   comp: CompleationsComponent,        idx: 9,         children: []} ,
         {icon : "", title: "Vistors",                       comp: VisitorsComponent,            idx: 10,        children: []} ,
-        // {icon : "", title: "Setup",         idx: 0, children: [
-        //     {icon : "", title: "Document Types",            comp: DocTypesComponent,            idx: 11},
-        //     {icon : "", title: "Brands",                    comp: BrandComponent,               idx: 12},
-        //     {icon : "", title: "Company",                   comp: CompanyComponent,             idx: 13},
-        //     {icon : "", title: "Item Types",                comp: ItemTypesComponent,           idx: 14},
-        //     {icon : "", title: "Items",                     comp: ItemsComponent,               idx: 15},
-        //     {icon : "", title: "Manufactures",              comp: ManufactureComponent,         idx: 16},
-        //     {icon : "", title: "Stages",                    comp: StagesComponent,              idx: 17},
-        //     {icon : "", title: "Feedback Status",           comp: FeedbackStatusComponent,      idx: 18},
-        //     {icon : "", title: "Feedback Type",             comp: FeedbackTypeComponent,        idx: 19},
-        //     {icon : "", title: "Designations",              comp: DesignationComponent,         idx: 20}
-        // ]} ,
         {icon : "", title: "Employees",     idx: 0, children: [
             {icon : "", title: "Add Employees",             comp: EmployeeComponent,            idx: 21}
         ]} ,
         {icon : "", title: "Inquires",      idx: 0, children: [            
             {icon : "", title: "Customer Inquiries",        comp: CustomerInquiriesComponent,   idx: 22},
             {icon : "", title: "Manage Inquiries",          comp: ManageInquiriesComponent,     idx: 23},
+            {icon : "", title: "cust Inquiries userMode",          comp: CustomerInqUserViewsComponent,     idx: 30},
         ]},
         {icon : "", title: "Complains",     idx: 0, children: [            
             {icon : "", title: "Customer Complains",        comp: CustomerComplainsComponent,   idx: 24},
             {icon : "", title: "Manage Complains",          comp: ManageComplainsComponent,     idx: 25},
+            {icon : "", title: "cust Complain userMode",          comp: CustomerComplainUserViewComponent,     idx: 31},
         ]} 
     ]
     

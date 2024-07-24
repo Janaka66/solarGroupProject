@@ -1,0 +1,46 @@
+<div class="customer-payments">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text"></span>
+        </div>
+        
+    </div>
+
+    <div class="content">
+
+        <div class="complains">
+
+            <ng-container *ngFor="let complaint of complaints">
+                <mat-card class="complaint-card">
+                  <mat-card-header>
+                    <mat-card-title>Complaint Details</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><strong>Complaint Date:</strong> {{ complaint.complainedAt | date: 'medium' }}</p>
+                    <p><strong>Completion Date:</strong> {{ complaint.completedAt | date: 'medium' }}</p>
+                    <p><strong>Description:</strong> {{ complaint.description }}</p>
+                    <p><strong>Status:</strong> <span [class.handled]="complaint.isHandled">{{ complaint.isHandled ? 'Handled' : 'Pending' }}</span></p>
+                    <p><strong>Customers:</strong></p>
+                    <ul>
+                      <li *ngFor="let customer of complaint.customers">
+                        {{ customer.name }} ({{ customer.email }})
+                      </li>
+                    </ul>
+                  </mat-card-content>
+                  <mat-card-actions *ngIf="isAdmin">
+                    <button mat-raised-button color="primary">Approve</button>
+                    <button mat-raised-button color="warn">Reject</button>
+                  </mat-card-actions>
+                </mat-card>
+              </ng-container>
+              
+              
+
+              
+        </div>
+    </div>
+</div>

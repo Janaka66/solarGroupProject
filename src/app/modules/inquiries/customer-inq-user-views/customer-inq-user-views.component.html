@@ -1,0 +1,49 @@
+<div class="customer-payments">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text"></span>
+        </div>
+        
+    </div>
+
+    <div class="content">
+
+        <div class="inq">
+              
+            <ng-container *ngFor="let inquiry of inquiries">
+                <mat-card class="inquiry-card">
+                  <mat-card-header>
+                    <mat-card-title>Inquiry Details</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><strong>Inquiry Added At:</strong> {{ inquiry.iquiryAddeddAt | date: 'medium' }}</p>
+                    <p><strong>Rejected At:</strong> {{ inquiry.rejectedAt ? (inquiry.rejectedAt | date: 'medium') : 'Not Rejected' }}</p>
+                    <p><strong>Completed At:</strong> {{ inquiry.completedAt ? (inquiry.completedAt | date: 'medium') : 'Not Completed' }}</p>
+                    <p><strong>Description:</strong> {{ inquiry.description }}</p>
+                    <p><strong>Status:</strong> 
+                      <span *ngIf="inquiry.isAccepted && !inquiry.isrejected" class="status accepted">Accepted</span>
+                      <span *ngIf="inquiry.isrejected" class="status rejected">Rejected by {{ inquiry.rejectedBy }}</span>
+                      <span *ngIf="!inquiry.isAccepted && !inquiry.isrejected" class="status pending">Pending</span>
+                    </p>
+                    <p><strong>Employees:</strong></p>
+                    <ul>
+                      <li *ngFor="let employee of inquiry.employees">
+                        {{ employee.name }} ({{ employee.email }})
+                      </li>
+                    </ul>
+                  </mat-card-content>
+                  <mat-card-actions *ngIf="isAdmin">
+                    <button mat-raised-button color="primary" (click)="acceptInquiry(inquiry)">Accept</button>
+                    <button mat-raised-button color="warn" (click)="rejectInquiry(inquiry)">Reject</button>
+                  </mat-card-actions>
+                </mat-card>
+              </ng-container>
+
+              
+        </div>
+    </div>
+</div>

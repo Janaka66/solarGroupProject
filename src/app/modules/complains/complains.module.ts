@@ -14,12 +14,15 @@ import { SharedModule } from 'src/app/sharedComp/shared.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CustomerComplainsComponent } from './customer-complains/customer-complains.component';
 import { ManageComplainsComponent } from './manage-complains/manage-complains.component';
+import { CustomerComplainUserViewComponent } from './customer-complain-user-view/customer-complain-user-view.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
   declarations: [
     CustomerComplainsComponent,
-    ManageComplainsComponent
+    ManageComplainsComponent,
+    CustomerComplainUserViewComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ import { ManageComplainsComponent } from './manage-complains/manage-complains.co
     MatSelectModule,
     SharedModule,
     MatDatepickerModule,
+    MatListModule
   ]
 })
 export class ComplainsModule { }

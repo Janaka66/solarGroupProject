@@ -13,11 +13,13 @@ import { SharedModule } from 'src/app/sharedComp/shared.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CustomerInquiriesComponent } from './customer-inquiries/customer-inquiries.component';
 import { ManageInquiriesComponent } from './manage-inquiries/manage-inquiries.component';
+import { CustomerInqUserViewsComponent } from './customer-inq-user-views/customer-inq-user-views.component';
 
 @NgModule({
   declarations: [
     CustomerInquiriesComponent,
-    ManageInquiriesComponent
+    ManageInquiriesComponent,
+    CustomerInqUserViewsComponent
   ],
   imports: [
     CommonModule,
