@@ -22,6 +22,7 @@ import { CustomerPaymentsComponent } from './customers/customer-payments/custome
 import { CustomerProductsComponent } from './customers/customer-products/customer-products.component';
 import { CustomerProfileComponent } from './customers/customer-profile/customer-profile.component';
 import { SharedModule } from 'src/app/sharedComp/shared.module';
+import { FormViewerQoutComponent } from 'src/app/form-viewer-qout/form-viewer-qout.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SharedModule } from 'src/app/sharedComp/shared.module';
     CustomerProductsComponent,
     CustomerPaymentsComponent,
     CustomerInvoicesComponent,
-    FormViewerComponent
+    FormViewerComponent,
+    FormViewerQoutComponent
   ],
   imports: [
     NgxPrintModule,

@@ -2,14 +2,9 @@
 
     <div class="crudBtn">
 
-      
-        <button mat-raised-button color="primary" *ngIf="!cutomerQuatationInvoice" style="margin-right: 10px;" (click)="addInvoice()" [disabled]="addBtnEnabled">Add Invoice</button>
-        <button mat-raised-button color="primary" *ngIf="!cutomerQuatationInvoice" style="margin-right: 10px;" (click)="updateInvoiceItems()" [disabled]="updateBtnEnabled">Update Invoice</button>
-
        
-        <!--<button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" [disabled]="updateBtnEnabled" (click)="updateQuatationItems()">Update Quatation</button>
-
-        <button mat-raised-button color="primary" (click)="clear()">Clear</button> -->
+        <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" [disabled]="addBtnEnabled" (click)="addQuatation()">Add Quatation</button>
+        <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" [disabled]="updateBtnEnabled" (click)="updateQuatationItems()">Update Quatation</button>
     </div>
 
     <div class="company">
@@ -25,105 +20,9 @@
         <button *ngIf="cutomerQuatationInvoice"  [useExistingCss]="true" printSectionId="quatation-print-section"  mat-raised-button color="primary" ngxPrint>print</button> 
     </div>
 
-</div>
+</div>  
 
-<div *ngIf="cutomerInvoice" id="invoice-print-section" class="customer-invoice">
-
-    <header>
-      <h1>Invoice</h1>
-
-      <div class="logo">
-        <img src="../../assets/invoiceLogo.png">
-      </div>
-
-      <address contenteditable>
-        <h3>BG Solar Energy (Private)Ltd.</h3>
-        <p>{{comapnyAddress}}</p>
-        <p>Kurunegala, Sri Lanka</p>
-        <p>(PV 114860)</p>
-
-        <p>Tel : {{mobile}}</p>
-        <p>Fax : {{fax}}</p>
-        <p>E-mail : {{email}}</p>
-      </address>
-
-    </header>
-    <article>
-      <table class="meta">
-        <tr>
-          <th><span contenteditable>Invoice No</span></th>
-          <td><span contenteditable>{{invoiceNo}}</span></td>
-        </tr>
-        <tr>
-          <th><span contenteditable>Date</span></th>
-          <td><span contenteditable>{{invoiceDate}}</span></td>
-        </tr>
-        <tr>
-          <th><span contenteditable>Bill To</span></th>
-          <td><span contenteditable>{{custDataForInvoice}}</span></td>
-        </tr>
-        <tr>
-          <th><span contenteditable>Job Description</span></th>
-          <td><span contenteditable (blur)="updateJobDescription($event)">{{jobDescription}}</span></td>
-          <td><span contenteditable (click)="updateDescription()">update</span></td>
-        </tr>
-      </table>
-      <table class="inventory">
-        <thead>
-          <tr>
-            <th><span contenteditable>Item</span></th>
-            <th><span contenteditable>Rate</span></th>
-            <th><span contenteditable>Quantity</span></th>
-            <th><span contenteditable>Amount</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of invoiceItems; let i = index">
-            <td>
-              <a class="cut" (click)="removeItem(i)">-</a>
-              <select [(ngModel)]="item.invItem" (change)="onItemChangeInvoice(i)">
-                <option *ngFor="let option of allItems" [value]="option.id">{{option.itemName}}</option>
-              </select>
-            </td>
-            <td>
-              <span data-prefix>$</span>
-              <span contenteditable (blur)="updateRateInvoice(item, $event)">{{item.rate}}</span>
-            </td>
-            <td>
-              <span contenteditable (blur)="updateQuantityInvoice(item, $event)">{{item.quantity}}</span>
-            </td>
-            <td>
-              <span data-prefix>$</span>
-              <span>{{item.price}}</span>
-            </td>
-          </tr>
-        
-        </tbody>
-      </table>
-      <a class="add" (click)="addItem()">+</a>
-      <table class="balance totalAmt">
-        <tr>
-          <th>Total</th>
-          <td>
-            <span data-prefix>$</span>
-            <span>{{totalAmount}}</span>
-          </td>
-        </tr>
-      </table>
-    </article>
-    <aside>
-      <h1><span contenteditable>Thank you for the business</span></h1>
-      <div contenteditable>
-        
-    <div class="invoiceBottom">
-        <img src="../../assets//invoiceBottom.png">
-    </div>
-    </div>
-    </aside>
-</div>
-  
-
-<!-- <div *ngIf="cutomerQuatationInvoice" id="quatation-print-section" class="customer-quotation">
+<div *ngIf="cutomerQuatationInvoice" id="quatation-print-section" class="customer-quotation">
   <header>
     <h1>Invoice</h1>
 
@@ -150,32 +49,20 @@
   <article>
     <table class="meta">
       <tr>
-        <th><span contenteditable>Invoice No</span></th>
-        <td><span contenteditable>{{invoiceNo}}</span></td>
+        <th><span contenteditable>Quotation No</span></th>
+        <td><span contenteditable>{{quatationNumber}}</span></td>
       </tr>
       <tr>
         <th><span contenteditable>Date</span></th>
-        <td><span contenteditable>{{invoiceDate}}</span></td>
-      </tr>
-      <tr>
-        <th><span contenteditable>Bill To</span></th>
-        <td><span contenteditable>{{custDataForInvoice}}</span></td>
-      </tr>
-      <tr>
-        <th><span contenteditable>Job Description</span></th>
-        <td><span contenteditable>{{jobDescription}}</span></td>
+        <td><span contenteditable>{{quatationqDate}}</span></td>
       </tr>
       <tr>
         <th><span contenteditable>Product</span></th>
         <td>
           <select [(ngModel)]="selectedProduct" (change)="onProductChange(selectedProduct)" [disabled]="isDisabledProdSelect">
-            <option *ngFor="let option of allProducts" [value]="option.productName">{{option.productName}}</option>
+            <option *ngFor="let option of allCustProdForDropDown" [value]="option.productPrimeID">{{option.productName}}</option>
           </select>
         </td>
-      </tr>
-      <tr>
-        <th><span contenteditable>ProdRef</span></th>
-        <td><span contenteditable>{{prodRef}}</span></td>
       </tr>
       <tr>
         <th><span contenteditable>Valid</span></th>
@@ -195,19 +82,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of invoiceItems; let i = index">
+        <tr *ngFor="let item of quataionItems; let i = index">
           <td>
             <a class="cut" (click)="removeQuotItem(i)">-</a>
-            <select [(ngModel)]="item.itemId" (change)="onItemQoutChange(i)">
+            <select [(ngModel)]="item.itemId" (change)="onItemChangeQuot(i)">
               <option *ngFor="let option of quatDropdownItems" [value]="option.itemId">{{option.itemName}}</option>
             </select>
           </td>
           <td>
             <span data-prefix>$</span>
-            <span contenteditable (blur)="updateQuotRate(item, $event)">{{item.unitPrice}}</span>
+            <span contenteditable (blur)="updateRateQuot(item, $event)">{{item.unitPrice}}</span>
           </td>
           <td>
-            <span contenteditable (blur)="updateQuotQuantity(item, $event)">{{item.quantity}}</span>
+            <span contenteditable (blur)="updateQuantityQuot(item, $event)">{{item.quantity}}</span>
           </td>
           <td>
             <span data-prefix>$</span>
@@ -236,4 +123,4 @@
   </div>
   </div>
   </aside>
-</div> -->
+</div>

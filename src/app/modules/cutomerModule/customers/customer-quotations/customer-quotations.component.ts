@@ -37,7 +37,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     { field: "electric" }
   ];
     selectedCustID: any;
-    allInvoices: any;
+    allIQuot: any;
   selecetedQIItem: any;
   quatationAvailable: any;
   invoiceAvailable: any;
@@ -109,7 +109,7 @@ debugger
         let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
         this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
 
-        await this.getAllInvoices();
+        await this.getAllQout();
 
     } catch (error) {
         
@@ -118,21 +118,21 @@ debugger
 
 }
 
-async getAllInvoices(){
+async getAllQout(){
 debugger
     return new Promise(async (resolve, reject) => {
 
         try {
             
-            let invoiceRes = await this.extApi.GetQuotation({"custID" : this.selectedCustID});
+            let quotRes = await this.extApi.GetQuotation({"custID" : this.selectedCustID});
 
-            invoiceRes.data.forEach((el: any) => {
+            quotRes.data.forEach((el: any) => {
                 
                 el.quotDate = moment(el.quotDate).format('YYYY/MM/DD');
             });
 
             
-            this.allInvoices = invoiceRes.data.filter((el: any) => el.status === 0);
+            this.allIQuot = quotRes.data.filter((el: any) => el.status === 0);
 
             resolve(1)
     
@@ -184,7 +184,7 @@ debugger
     try {
 
       let invoiceAddRes =  await this.extApi.UpdateQuotation(reqFields)
-      this.getAllInvoices();
+      this.getAllQout();
       
     } catch (error) {
 

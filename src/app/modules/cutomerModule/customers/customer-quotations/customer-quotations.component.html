@@ -31,7 +31,7 @@
                     <div class="show-customer-invoices">
     
                         <p-carousel 
-                            [value]="allInvoices" 
+                            [value]="allIQuot" 
                             [numVisible]="1" 
                             [numScroll]="1" 
                             orientation="vertical" 
@@ -49,23 +49,18 @@
                                     
                                     <div class="invoceDetails">
                                         <div class="mb-3 font-medium">
-                                            <div>Invoice No :</div>
-                                            <div>{{ product.invcNo }}</div>
+                                            <div>Quotation No :</div>
+                                            <div>{{ product.quotNumber }}</div>
                                         </div>
 
                                         <div class="mb-3 font-medium">
-                                            <div>Inovice Date :</div>
+                                            <div>Quotation Date :</div>
                                             <div>{{ product.quotDate }}</div>
                                         </div>
 
                                         <div class="mb-3 font-medium">
-                                            <div>Job Description :</div>
-                                            <div>{{ product.jobDescription }}</div>
-                                        </div>
-
-                                        <div class="mb-3 font-medium">
-                                            <div>Total Price</div>
-                                            <div>{{ product.totalPrice }}</div>
+                                            <div>Amount</div>
+                                            <div>{{ product.totalAmount }}</div>
                                         </div>
 
                                         <button (click)="removeQuatOrInvoice(product); $event.stopPropagation()">Delete</button>
@@ -82,7 +77,7 @@
                 </div>
 
                 <div class="show-selected-invoice">
-                    <app-form-viewer #formViewer (loaderEnableDesabled)="loaderHandle($event)" (loadQuataionBack)="getAllInvoices()"></app-form-viewer>
+                    <app-form-viewer-qout #formViewer (loaderEnableDesabled)="loaderHandle($event)" (loadQuataionBack)="getAllQout()"></app-form-viewer-qout>
                 </div>
 
             </div>
