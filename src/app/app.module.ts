@@ -44,6 +44,7 @@ import { DialogModule } from 'primeng/dialog';
 import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from './auth/auth.service';
+import { FormViewerQoutComponent } from './form-viewer-qout/form-viewer-qout.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { tokenGetter } from './auth/auth.service';
     LeftPanelComponent,
     SafePipe,
     SliderWindowComponent,
-    LoginComponent
+    LoginComponent,
+    FormViewerQoutComponent
   ],
   imports: [
     BrowserModule,

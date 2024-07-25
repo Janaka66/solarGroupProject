@@ -99,7 +99,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 }
 
 async bindCutomerData(custData: any){
-
+debugger
     this.selectedCustID = custData.id;
 
     try {
@@ -107,7 +107,7 @@ async bindCutomerData(custData: any){
         let custAddress = await this.extApi.CustomerAddresses(custData.id);
 
         let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
-        this.formViewer.setSelectedCustData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
+        this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
 
         await this.getAllInvoices();
 

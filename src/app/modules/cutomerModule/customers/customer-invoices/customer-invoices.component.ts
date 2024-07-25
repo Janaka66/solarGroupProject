@@ -135,7 +135,7 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
                     
                     el.invcDate = moment(el.invcDate).format('YYYY/MM/DD');
                 });
-
+debugger
                 this.allInvoices = invoiceRes.data;
 
                 resolve(1)
@@ -161,17 +161,10 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
         this.isLoaderAvailable = event;
     }
 
-    async removeQuatOrInvoice(event: any){
+    async removeInvoice(event: any){
         debugger
         this.selecetedQIItem = event
 
-        await this.removeQuatation()
-
-        
-    }
-
-    async removeQuatation(){
-    
         let reqFields = [
             {
               "id": this.selecetedQIItem.id,
@@ -186,13 +179,14 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
         try {
     
           let invoiceAddRes =  await this.extApi.UpdateInvoice(reqFields)
-          this.getAllInvoices();
+          await this.getAllInvoices();
           
         } catch (error) {
     
           alert("error")
     
         }
-    
-      }
+        
+    }
+
 }

@@ -127,7 +127,7 @@ export class LeftPanelComponent {
   }
 
   getSliderwindow(){
-
+debugger
     this.appService.sendMsgToSetupSlider('slider')
 
   }

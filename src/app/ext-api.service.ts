@@ -392,7 +392,7 @@ export class ExtApiService {
   }
 
   UpdateQuotationItems(reqFields?: any): Promise<any> {
-    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationItems`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationItems`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
     
   }  
 
@@ -411,7 +411,7 @@ export class ExtApiService {
     try {
       
       return this.http.post('', { username: username, password: password }, {responseType: 'text'}).toPromise() ;
-      
+
     } catch (error) {
 
       console.log(error)

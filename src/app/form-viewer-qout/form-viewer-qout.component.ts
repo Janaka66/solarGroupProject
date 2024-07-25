@@ -6,11 +6,11 @@ import { ExtApiService } from '../ext-api.service';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-form-viewer',
-  templateUrl: './form-viewer.component.html',
-  styleUrls: ['./form-viewer.component.scss']
+  selector: 'app-form-viewer-qout',
+  templateUrl: './form-viewer-qout.component.html',
+  styleUrls: ['./form-viewer-qout.component.scss']
 })
-export class FormViewerComponent implements OnInit, AfterViewInit{
+export class FormViewerQoutComponent implements OnInit, AfterViewInit{
 
   @Output() loaderEnableDesabled: EventEmitter<any> = new EventEmitter<any>();  
   @Output() loadAllInvoicesBack: EventEmitter<any> = new EventEmitter<any>();  
