@@ -206,7 +206,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
 
   // =========================invoice Item qty rate change==========================
   onItemChangeQuot(index: number) {
-    debugger
+    
     const selectedItem = this.allItems.find((item: any) => item.id === this.quataionItems[index].itemId);
     if (selectedItem) {
       this.quataionItems[index].unitPrice = selectedItem.unitPrice;
@@ -215,7 +215,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
   }
 
   updateRateQuot(item: any, event: any) {
-    debugger
+    
     const newRate = event.target.innerText;
     item.unitPrice = newRate;
     item.totalPrice = item.quantity * newRate;
@@ -223,7 +223,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
   }
 
   updateQuantityQuot(item: any, event: any) {
-    debugger
+    
     const newQuantity = event.target.innerText;
     item.quantity = newQuantity;
     item.totalPrice = newQuantity * item.unitPrice;
@@ -231,7 +231,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
   }
 
   // async onProductChange(event: any){
-  //   debugger
+  //   
   // let selectedProd = this.allProducts.find((el: any) => el.productName === event)
 
   // this.prodRef = selectedProd.refNu;
@@ -247,7 +247,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
 
   // =========================View customer Quot==========================
   async setSelectedCustQuotData(selectedCustData: any){
-debugger
+
     this.custDataForInvoice = '';
 
     this.custDataForInvoice = selectedCustData.custName + ', ' + selectedCustData.custAddress;
@@ -275,7 +275,7 @@ debugger
 
   // =========================View Selected Quot==========================
     public async viewSelectedInvoice(invoice: any){
-debugger
+
     // if(invoice.quotNumber){
 
       console.log('===============all products=============')
@@ -358,7 +358,7 @@ debugger
   }
 
   async getprodutsByCustomer(){
-debugger
+
     this.allCustProdForDropDown = [];
     this.quatDropdownItems = [];
 
@@ -473,7 +473,7 @@ debugger
 
       try {
 
-        debugger
+        
         
         let quatItems = await this.extApi.GetQuotationItem(reqData);
         this.quataionItems = quatItems.data;
@@ -490,7 +490,7 @@ debugger
     }
 
       async addQuatation(){
-    debugger
+    
         this.loaderEnableDesabled.emit(true);
 
         let momentDate = moment(this.selectedDate, 'YYYY/MM/DD');
@@ -576,7 +576,7 @@ debugger
 
   // =========================select customer and send to viewr==========================
   //     async setSelectedCustData(selectedCustData: any){
-  // debugger
+  // 
   //     this.custDataForInvoice = '';
 
   //     this.custDataForInvoice = selectedCustData.custName + ', ' + selectedCustData.custAddress;
@@ -603,7 +603,7 @@ debugger
   //   }
 
 //     async getInvoiceItems(invoiceID : any){
-// debugger
+// 
 //       let reqData = {
 //         "invId": invoiceID,
 //       }
@@ -672,7 +672,7 @@ debugger
 //     }
 
 //     async updateInvoiceItems(invoiceId: any = ''){
-// debugger
+// 
 //       let updateItemObj = 
 //         {
 //           "invId": this.invoicePrimeID || invoiceId,
@@ -751,7 +751,7 @@ debugger
     }
 
 //   async loadAllItemTypesForQuat(refNumber: any){
-//     debugger
+//     
 //     try {
       
 //       let req = {
@@ -810,7 +810,7 @@ debugger
 //   }
 
 //   public async viewSelectedInvoice(invoice: any){
-// debugger
+// 
 //     if(invoice.quotNumber){
 
 //       this.quatationNumber = invoice.quotNumber
@@ -893,7 +893,7 @@ debugger
 
 //   async updateDescription(){
 
-// debugger
+// 
 //     this.loaderEnableDesabled.emit(true);
 
 //     let reqFields = [
@@ -1099,7 +1099,7 @@ debugger
 
 //     try {
 
-//       debugger
+//       
       
 //       let invoiceData = await this.extApi.GetQuotationItem(reqData);
 
@@ -1164,7 +1164,7 @@ debugger
 
 
 //   async getCustProducts(){
-//     debugger
+//     
 //     let reqFields = {
 //       "custId": this.custID
 //     }
@@ -1202,7 +1202,7 @@ debugger
 //   }
 
 //   async onProductChange(event: any){
-// debugger
+// 
 //     let selectedProd = this.allProducts.find((el: any) => el.productName === event)
 
 //     this.prodRef = selectedProd.refNu;
@@ -1214,7 +1214,7 @@ debugger
 
 //   // onItemChange(idx: any){
 
-//   //   debugger
+//   //   
 //   //   let findItemValue = this.allItems.find((el: any) => el.id === this.selectedItemInDrop)
 
 //   //   this.invoiceItems[idx].rate = findItemValue.unitPrice || 0;
@@ -1264,7 +1264,7 @@ debugger
 //   }
 
 //   calculateTotalQuot() {
-//     debugger
+//     
 //     this.totalAmount = this.invoiceItems.reduce((total: any, item: any) => total + item.totalPrice, 0);
 //   }
 }

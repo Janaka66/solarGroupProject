@@ -135,7 +135,7 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
                     
                     el.invcDate = moment(el.invcDate).format('YYYY/MM/DD');
                 });
-debugger
+
                 this.allInvoices = invoiceRes.data;
 
                 resolve(1)
@@ -162,7 +162,7 @@ debugger
     }
 
     async removeInvoice(event: any){
-        debugger
+        
         this.selecetedQIItem = event
 
         let reqFields = [

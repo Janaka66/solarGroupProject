@@ -224,7 +224,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
 
   // =========================View Selected Invoice==========================
     public async viewSelectedInvoice(invoice: any){
-debugger
+
     // if(invoice.quotNumber){
 
       // this.quatationNumber = invoice.quotNumber
@@ -271,7 +271,7 @@ debugger
 
   // =========================select customer and send to viewr==========================
       async setSelectedCustData(selectedCustData: any){
-  debugger
+  
       this.custDataForInvoice = '';
 
       this.custDataForInvoice = selectedCustData.custName + ', ' + selectedCustData.custAddress;
@@ -298,7 +298,7 @@ debugger
     }
 
     async getInvoiceItems(invoiceID : any){
-debugger
+
       let reqData = {
         "invId": invoiceID,
       }
@@ -367,7 +367,7 @@ debugger
     }
 
     async updateInvoiceItems(invoiceId: any = ''){
-debugger
+
       let updateItemObj = 
         {
           "invId": this.invoicePrimeID || invoiceId,
@@ -399,7 +399,7 @@ debugger
         this.invoiceNo = '';
         this.jobDescription = '';
         this.invoiceItems = [];
-        
+
         await this.loadAllInvoicesBack.emit();
 
         this.totalAmount = 0
@@ -446,7 +446,7 @@ debugger
     }
 
 //   async loadAllItemTypesForQuat(refNumber: any){
-//     debugger
+//     
 //     try {
       
 //       let req = {
@@ -505,7 +505,7 @@ debugger
 //   }
 
 //   public async viewSelectedInvoice(invoice: any){
-// debugger
+// 
 //     if(invoice.quotNumber){
 
 //       this.quatationNumber = invoice.quotNumber
@@ -588,7 +588,7 @@ debugger
 
 //   async updateDescription(){
 
-// debugger
+// 
 //     this.loaderEnableDesabled.emit(true);
 
 //     let reqFields = [
@@ -794,7 +794,7 @@ debugger
 
 //     try {
 
-//       debugger
+//       
       
 //       let invoiceData = await this.extApi.GetQuotationItem(reqData);
 
@@ -859,7 +859,7 @@ debugger
 
 
 //   async getCustProducts(){
-//     debugger
+//     
 //     let reqFields = {
 //       "custId": this.custID
 //     }
@@ -897,7 +897,7 @@ debugger
 //   }
 
 //   async onProductChange(event: any){
-// debugger
+// 
 //     let selectedProd = this.allProducts.find((el: any) => el.productName === event)
 
 //     this.prodRef = selectedProd.refNu;
@@ -909,7 +909,7 @@ debugger
 
 //   // onItemChange(idx: any){
 
-//   //   debugger
+//   //   
 //   //   let findItemValue = this.allItems.find((el: any) => el.id === this.selectedItemInDrop)
 
 //   //   this.invoiceItems[idx].rate = findItemValue.unitPrice || 0;
@@ -959,7 +959,7 @@ debugger
 //   }
 
 //   calculateTotalQuot() {
-//     debugger
+//     
 //     this.totalAmount = this.invoiceItems.reduce((total: any, item: any) => total + item.totalPrice, 0);
 //   }
 }

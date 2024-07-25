@@ -99,7 +99,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 }
 
 async bindCutomerData(custData: any){
-debugger
+
     this.selectedCustID = custData.id;
 
     try {
@@ -119,7 +119,7 @@ debugger
 }
 
 async getAllQout(){
-debugger
+
     return new Promise(async (resolve, reject) => {
 
         try {
@@ -161,7 +161,7 @@ debugger
   
   async removeQuatation(){
 
-    debugger
+    
 
     console.log(this.selecetedQIItem)
 
@@ -229,7 +229,7 @@ debugger
   // }
 
   async removeQuatOrInvoice(event: any){
-debugger
+
 
     if(event.quotNumber){
 
