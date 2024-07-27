@@ -42,7 +42,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
   isSelectedInqDisabled : boolean = true;
   isloadedEmpDisabled : boolean = true;
 
-  componant = 'inqComp';
+  componant = 'inqComp'; 
   selectedForInq = [] as any;
   ButtonText: string = 'Add Inquiry';
   isLoaderAvailable : boolean = false;

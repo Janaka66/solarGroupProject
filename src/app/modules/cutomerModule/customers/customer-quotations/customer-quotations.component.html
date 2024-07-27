@@ -39,7 +39,7 @@
                             [responsiveOptions]="responsiveOptions"
                             (onPage)="onPage($event)">
                             <ng-template let-product pTemplate="item">
-                                <div class="border-1 surface-border border-round m-2 p-3" (click)="selectItem(product); $event.stopPropagation()">
+                                <div class="border-1 surface-border border-round m-2 p-3" (click)="selectItem(product); $event.stopPropagation()" [ngClass]="{'selected-item': product.isSelected}">
                                     <div class="mb-3">
                                         <div class="relative mx-auto">
                                             <img 
@@ -72,6 +72,29 @@
 
                     
 
+                    </div>
+
+                    <div class="assignedEmpSec">
+                         
+                        <div class="emp">
+
+                            <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"></app-employee-search>
+
+                        </div>
+
+                        <div class="assignedEmp">
+
+                            <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq" (click)="selectInqSelectedEmp(selectedIngEmp)">
+    
+                                <mat-card-header>
+                                  <mat-card-title-group>
+                                    <mat-card-title>{{selectedIngEmp.initials + ' ' + selectedIngEmp.fname}}</mat-card-title>
+                                  </mat-card-title-group>
+                                </mat-card-header>
+                    
+                            </mat-card>
+                            
+                        </div>
                     </div>
     
                 </div>

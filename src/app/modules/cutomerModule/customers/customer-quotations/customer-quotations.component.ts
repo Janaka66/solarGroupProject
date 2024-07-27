@@ -7,6 +7,7 @@ import { FormViewerComponent } from 'src/app/form-viewer/form-viewer.component';
 import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/customer-search.component';
 import { ExtApiService } from 'src/app/ext-api.service';
 import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
+import { EmployeeSearchComponent } from 'src/app/sharedComp/employee-search/employee-search.component';
 
 @Component({
   selector: 'app-customer-quotations',
@@ -19,12 +20,14 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     @ViewChild('customerSearch') CustomerSearchComponent: CustomerSearchComponent | any;
     @ViewChild('formViewer') formViewer: FormViewerComponent | any;
     @ViewChild('loader') CommonLoaderComponent: CommonLoaderComponent | any;
+    @ViewChild('employeeSearch') EmployeeSearchComponent: EmployeeSearchComponent | any;
     
   flag: boolean = false;
   products: [] | any;
   responsiveOptions: any[] | undefined;
   showLoader = false;
   isLoaderAvailable: boolean = false;
+  componant = 'inqComp'; 
 
   rowData = [
     { make: "Tesla", model: "Model Y", price: 64950, electric: true },
@@ -43,13 +46,15 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
   selecetedQIItem: any;
   quatationAvailable: any;
   invoiceAvailable: any;
-
+  selectedForInq = [] as any;
+  selectedProduct: any;
 
   constructor(private communicationService: AppService, private extApi : ExtApiService){
 
   }
 
   ngOnInit(): void {
+
     this.communicationService.enableInvices({ flag: "quatation" })
 
     
@@ -90,7 +95,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     
     this.communicationService.sendData({ flag: !this.flag });
   }
-  
+
   async getAllCustomers(){
 
     try {
@@ -118,6 +123,7 @@ async bindCutomerData(custData: any){
         this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
 
         await this.getAllQout();
+        await this.getAllemployees();
 
         this.CommonLoaderComponent.hide();
 
@@ -144,6 +150,7 @@ async getAllQout(){
 
             
             this.allIQuot = quotRes.data.filter((el: any) => el.status === 0);
+            quotRes.data.forEach((el: any) => el.isSelected = false)
 
             this.CommonLoaderComponent.hide();
             resolve(1)
@@ -163,12 +170,20 @@ async getAllQout(){
 
     this.selecetedQIItem = event;
     this.formViewer.viewSelectedInvoice(event)
+
+    this.allIQuot.forEach((product: any) => product.isSelected = false);
+
+    event.isSelected = true;
   }
 
   onPage(event: any){}
 
   loaderHandle(event: any){
-    this.isLoaderAvailable = event;
+    
+    if(event)
+      this.CommonLoaderComponent.show();
+    else
+      this.CommonLoaderComponent.hide();
   }
 
   
@@ -253,6 +268,84 @@ async getAllQout(){
       await this.removeQuatation()
 
       this.CommonLoaderComponent.hide();
+    }
+  }
+
+
+  bindEmployeeData(event: any){
+
+    this.isLoaderAvailable = true;
+
+    let existData = this.selectedForInq.filter((el: any) => el.id === event.selectedData.id);
+
+    if(existData && !event.checked){
+
+      this.selectedForInq = this.selectedForInq.filter((el: any) => el.id !== existData[0].id);
+
+    }else{
+
+      if(event.checked){
+
+        event.selectedData['inqStatus'] = 'new'
+        this.selectedForInq.push(event.selectedData)
+        
+      }else{
+        event.selectedData['inqStatus'] = ''
+      }
+
+    }
+
+    // if(this.selectedForInq.length !== 0)
+    //   this.isSelectedInqDisabled = false;
+    // else
+    //   this.isSelectedInqDisabled = true;
+
+    this.isLoaderAvailable = false;
+  }
+
+  async getAllemployees(selectedIq = []){
+
+    try {
+      
+      let result = await this.extApi.GetEmployee();
+
+      if(selectedIq.length > 0){
+
+        result.data.forEach((el: any) => {
+
+          let getInqdataIdx = selectedIq.findIndex((elIq: any) => elIq.empID === el.id)
+
+          if(getInqdataIdx !== -1){
+            el['checked'] = true
+            this.selectedForInq.push(el)
+          }
+          else
+            el['checked'] = false
+
+        })
+      }
+
+      this.EmployeeSearchComponent.showEmployees(result.data);
+
+    } catch (e: any) {
+      console.log(e.error)
+    }
+  }
+
+  async selectInqSelectedEmp(emp : any){
+
+    let reqFields = {
+     
+    }
+
+    try {
+      
+      // let getEmpByInq = await this.extApi.GetCustomerInqHasEmp(reqFields);
+
+    
+
+    }catch(e: any){
+      console.log(e)
     }
   }
 }
