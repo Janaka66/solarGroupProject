@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     this.subscription = this.communicationService.data$.subscribe((data: any) => {
         
         if(data === 'slider')
-            this.SliderWindowComponent.sliderEnableDisable({width: 55, height: 685});
+            this.SliderWindowComponent.sliderEnableDisable({width: 100, height: 780});
  
     });
   }

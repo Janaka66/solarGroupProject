@@ -46,6 +46,9 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   allIQuot: any;
   isBtnEnabaled: boolean = true;
   productForUpdate: any;
+  isSearchBtnEnabled: boolean = true;
+  prodForSearch = '';
+  quotForSearch = '';
 
   constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private dialog: MatDialog){
 
@@ -88,9 +91,9 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
     this.paymentForm.get('customerName')?.setValue(custName);
 
-    await this.getCustPayments();
     await this.getAllQout();
-
+    this.payments = [];
+    
     this.CommonLoaderComponent.hide();
 
   }
@@ -168,7 +171,9 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   async getCustPayments(){
 
     let req = {
-      "custId": this.selectedCustID
+      "custId": this.selectedCustID,
+      "prodId": this.prodForSearch,
+      "quotId": this.quotForSearch
     }
 
     try {
@@ -191,7 +196,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   }
 
   async genaratePaymentData(arg0: any) {
-    debugger
+    
     arg0.forEach(async (el: any) => {
       
       el.custmoerName = await this.getCustomerName(el.custId);
@@ -350,5 +355,9 @@ export class CustomerPaymentsComponent implements AfterViewInit {
     } catch (error) {
       return ''
     }
+  }
+
+  isButtonEnabled(){
+    return !!this.selectedCustID && !!this.prodForSearch && !!this.quotForSearch;
   }
 }

@@ -9,6 +9,21 @@ export class ExtApiService {
 
   constructor(private http: HttpClient, private appConfig: AppConfigService) {}
 
+  AddUserMode(payload: object): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/User/AddUserMode', payload).toPromise();
+    
+  }
+
+  GetUserMode(): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/User/GetUserMode', '').toPromise();
+    
+  }
+
+  UpdateUserMode(payload: object): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/User/UpdateUserMode', payload).toPromise();
+    
+  }
+
   registerCustomer(payload: object): Promise<any> {
     return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/Customer/RegisterCustomer', payload).toPromise();
     
@@ -434,5 +449,17 @@ export class ExtApiService {
   UpdateCustPayment(reqFields?: any): Promise<any> {
     return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/UpdateCustPayment`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
     
+  }
+
+  UpdateQuotationHasEmployeeToConfirm(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationHasEmployeeToConfirm`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+  }
+
+  GetQuotationHasEmployeeToConfirm(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetQuotationHasEmployeeToConfirm`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+  }
+
+  UpdateQuotationConfirmEmployeeItem(reqFields?: any): Promise<any> {
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationConfirmEmployeeItem`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
   }
 }

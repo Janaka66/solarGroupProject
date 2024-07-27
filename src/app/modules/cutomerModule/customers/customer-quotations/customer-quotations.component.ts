@@ -22,34 +22,36 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     @ViewChild('loader') CommonLoaderComponent: CommonLoaderComponent | any;
     @ViewChild('employeeSearch') EmployeeSearchComponent: EmployeeSearchComponent | any;
     
-  flag: boolean = false;
-  products: [] | any;
-  responsiveOptions: any[] | undefined;
-  showLoader = false;
-  isLoaderAvailable: boolean = false;
-  componant = 'inqComp'; 
+    flag: boolean = false;
+    products: [] | any;
+    responsiveOptions: any[] | undefined;
+    showLoader = false;
+    isLoaderAvailable: boolean = false;
+    componant = 'inqComp'; 
 
-  rowData = [
-    { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-    { make: "Ford", model: "F-Series", price: 33850, electric: false }
+    rowData = [
+      { make: "Tesla", model: "Model Y", price: 64950, electric: true },
+      { make: "Ford", model: "F-Series", price: 33850, electric: false }
 
-  ];
- 
-  colDefs: ColDef[] = [
-    { field: "make" },
-    { field: "model" },
-    { field: "price" },
-    { field: "electric" }
-  ];
+    ];
+  
+    colDefs: ColDef[] = [
+      { field: "make" },
+      { field: "model" },
+      { field: "price" },
+      { field: "electric" }
+    ];
+
     selectedCustID: any;
     allIQuot: any;
-  selecetedQIItem: any;
-  quatationAvailable: any;
-  invoiceAvailable: any;
-  selectedForInq = [] as any;
-  selectedProduct: any;
+    selecetedQIItem: any;
+    quatationAvailable: any;
+    invoiceAvailable: any;
+    selectedForInq = [] as any;
+    selectedProduct: any;
+    addEmpDisabled: boolean = true;
 
-  constructor(private communicationService: AppService, private extApi : ExtApiService){
+    constructor(private communicationService: AppService, private extApi : ExtApiService){
 
   }
 
@@ -108,65 +110,64 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
       console.log(e.error)
       this.CommonLoaderComponent.hide();
     }
-}
+  }
 
-async bindCutomerData(custData: any){
+  async bindCutomerData(custData: any){
 
-    this.CommonLoaderComponent.show();
-    this.selectedCustID = custData.id;
+      this.CommonLoaderComponent.show();
+      this.selectedCustID = custData.id;
 
-    try {
-        
-        let custAddress = await this.extApi.CustomerAddresses(custData.id);
+      try {
+          
+          let custAddress = await this.extApi.CustomerAddresses(custData.id);
 
-        let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
-        this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
+          let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
+          this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
 
-        await this.getAllQout();
-        await this.getAllemployees();
+          await this.getAllQout();
 
-        this.CommonLoaderComponent.hide();
+          this.CommonLoaderComponent.hide();
 
-    } catch (error) {
-        
-        alert("There is a problem when getting an address for this customer. Please check if this customer has default address")
-        this.CommonLoaderComponent.show();
-    }
+      } catch (error) {
+          
+          alert("There is a problem when getting an address for this customer. Please check if this customer has default address")
+          this.CommonLoaderComponent.show();
+      }
 
-}
+  }
 
-async getAllQout(){
+  async getAllQout(){
 
-    return new Promise(async (resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
 
-        try {
-            
-            let quotRes = await this.extApi.GetQuotation({"custID" : this.selectedCustID});
+          try {
+              
+              let quotRes = await this.extApi.GetQuotation({"custID" : this.selectedCustID});
 
-            quotRes.data.forEach((el: any) => {
-                
-                el.quotDate = moment(el.quotDate).format('YYYY/MM/DD');
-            });
+              quotRes.data.forEach((el: any) => {
+                  
+                  el.quotDate = moment(el.quotDate).format('YYYY/MM/DD');
+              });
 
-            
-            this.allIQuot = quotRes.data.filter((el: any) => el.status === 0);
-            quotRes.data.forEach((el: any) => el.isSelected = false)
+              
+              this.allIQuot = quotRes.data.filter((el: any) => el.status === 0);
+              quotRes.data.forEach((el: any) => el.isSelected = false)
 
-            this.CommonLoaderComponent.hide();
-            resolve(1)
-    
-        } catch (e: any) {
-            
-            alert("error")
+              this.CommonLoaderComponent.hide();
+              resolve(1)
+      
+          } catch (e: any) {
+              
+              alert("error")
 
-            this.CommonLoaderComponent.hide();
-            reject(0)
-        }
-    })
+              this.CommonLoaderComponent.hide();
+              reject(0)
+          }
+      })
 
-}
+  }
 
-  selectItem(event: any){
+  async selectItem(event: any){
 
     this.selecetedQIItem = event;
     this.formViewer.viewSelectedInvoice(event)
@@ -174,6 +175,11 @@ async getAllQout(){
     this.allIQuot.forEach((product: any) => product.isSelected = false);
 
     event.isSelected = true;
+
+    this.addEmpDisabled = false;
+
+    await this.GetQuotationHasEmployeeToConfirm();
+    await this.getAllemployees();
   }
 
   onPage(event: any){}
@@ -186,7 +192,6 @@ async getAllQout(){
       this.CommonLoaderComponent.hide();
   }
 
-  
   async removeQuatation(){
 
     this.CommonLoaderComponent.show();
@@ -271,7 +276,6 @@ async getAllQout(){
     }
   }
 
-
   bindEmployeeData(event: any){
 
     this.isLoaderAvailable = true;
@@ -332,20 +336,23 @@ async getAllQout(){
     }
   }
 
-  async selectInqSelectedEmp(emp : any){
+  async sendSelectedEmpToAdd(){
 
-    let reqFields = {
-     
-    }
+      this.formViewer.UpdateQuotationHasEmployeeToConfirm(this.selectedForInq)
+  }
+
+  async GetQuotationHasEmployeeToConfirm(){
 
     try {
       
-      // let getEmpByInq = await this.extApi.GetCustomerInqHasEmp(reqFields);
+      debugger
+      let res = await this.extApi.GetQuotationHasEmployeeToConfirm({quotID: this.selecetedQIItem.id});
 
-    
+      console.log(res.data)
+      // this.selectedForInq = res.data
 
-    }catch(e: any){
-      console.log(e)
+    } catch (error) {
+      alert(error)
     }
   }
 }

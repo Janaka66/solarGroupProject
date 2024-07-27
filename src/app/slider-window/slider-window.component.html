@@ -839,6 +839,62 @@
                 
             </mat-expansion-panel>
 
+            <mat-expansion-panel [expanded]="step() === 10" (opened)="setStep(10)" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Profile Mode </mat-panel-title>
+                  <div class="moduleLoader-container">
+                    <img *ngIf="isLoaderAvailableForprofile" src="../../../../assets/loader.gif">
+                </div>
+                </mat-expansion-panel-header>
+            
+                <div class="profileContainer">
+
+
+                    <div class="topContainer">
+                
+                        <div class="inputs">
+                
+                            <form [formGroup]="profile">
+                
+                                <mat-form-field>
+                                    <mat-label>profile</mat-label>
+                                    <input matInput formControlName="modeDesc" required>
+                                </mat-form-field>
+                                
+                            </form>
+                    
+                        </div>
+                
+                        <div class="btn">
+                
+                            <mat-icon (click)="addProfile()">add_box</mat-icon>
+                            
+                        </div>
+                    </div>
+                
+                    <div #actionBtnContainerForprofile class="results-container">
+            
+                        <div class="result" *ngFor="let profile of allSavedprofiles; let i = index">
+                
+                            <div class="top" (click)="bindprofileDataToUI(profile, i)">
+    
+                                <div>
+                                    {{profile.modeDesc}}
+                                </div>
+    
+                            </div>
+                            <div class="bottom" [id] = "i" (click)="removeUpdateOpt(profile.btnTxt, i, 'profile')">
+                                {{removeUpdateTextForProfile}}
+                            </div>
+                
+                        </div>
+    
+                    </div>
+
+                </div>
+                
+            </mat-expansion-panel>
+
           </mat-accordion>
     </div>
 

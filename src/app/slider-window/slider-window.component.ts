@@ -56,6 +56,7 @@ export class SliderWindowComponent implements OnInit {
   removeUpdateTextForStage: any = 'REMOVE';
   removeUpdateTextForItems: any = 'REMOVE';
   removeUpdateTextForManuFac: any = 'REMOVE';
+  removeUpdateTextForProfile: any = 'REMOVE';
 
   isLoaderAvailableForBrand: boolean = false;
   isLoaderAvailableForCompany: boolean = false;
@@ -106,6 +107,10 @@ export class SliderWindowComponent implements OnInit {
   disableDocTypeRemoveIcon: boolean = false;
 
   flag: any;
+  isLoaderAvailableForprofile: boolean = false;
+  profile: any;
+  allSavedprofiles: any;
+  actionBtnContainerForprofile: any;
 
   constructor(private formBuilder: FormBuilder, private extApi: ExtApiService, private communicationService: AppService, private router: Router){
     this.brand = this.formBuilder.group({
@@ -172,6 +177,9 @@ export class SliderWindowComponent implements OnInit {
       stagDesc:    ['', Validators.required],
     });
 
+    this.profile = this.formBuilder.group({
+      modeDesc:    ['', Validators.required],
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -206,6 +214,7 @@ export class SliderWindowComponent implements OnInit {
     await this.loadAllIManufatureItems();
     await this.loadAllItems();
     await this.loaAllStages();
+    await this.loaAllprofiles();
 
     this.isLoading = false;
     
@@ -1742,6 +1751,142 @@ export class SliderWindowComponent implements OnInit {
 
   }
 
+    //profile
+    async addProfile(){
+
+      this.isLoaderAvailableForprofile = true;
+  
+      if(this.profile.value.stagDesc === ''){
+        this.isLoaderAvailableForprofile = false;
+        alert("profile is empty")
+        return
+      }
+  
+      if(this.allSavedprofiles.find((el: any) => el.modeDesc === this.profile.value.modeDesc)){
+  
+        this.isLoaderAvailableForprofile = false;
+        alert("profile is already added")
+        return
+      }
+  
+      let reqFields = [
+        {
+          "id": "string",
+          "modeDesc": this.profile.value.modeDesc,
+          "status": 0
+        }
+      ]
+  
+      try {
+  
+        let addprofileRes = await this.extApi.AddUserMode(reqFields);
+        console.log(addprofileRes)
+  
+        this.allSavedprofiles.push({
+          "id": "string",
+          "modeDesc": this.profile.value.modeDesc,
+          "status": 0
+        })
+        
+        this.profile.reset();
+        this.isLoaderAvailableForprofile = false;
+  
+      } catch (e: any) {
+        
+        console.log(e)
+        this.isLoaderAvailableForprofile = false;
+      }
+  
+    }
+  
+    async loaAllprofiles(){
+  debugger
+      try {
+        
+        let profiles = await this.extApi.GetUserMode();
+        this.allSavedprofiles = profiles.data.filter((el: any) => el.status === 0);
+  
+      } catch (e: any) {
+        
+        console.log(e)
+      }
+    }
+  
+    async removeprofile(i: any){
+  
+      this.isLoaderAvailableForprofile = true;
+  
+      try {
+        
+        let removeprofile = await this.extApi.UpdateUserMode([{id: this.allSavedprofiles[i].id, modeDesc: this.allSavedprofiles[i].modeDesc, status: 1}])
+        console.log(removeprofile)
+  
+        this.allSavedprofiles.splice(i, 1);
+        this.isLoaderAvailableForprofile = false;
+  
+      } catch (e:any) {
+        console.log(e)
+        this.isLoaderAvailableForprofile = false;
+        
+      }
+  
+    }
+  
+    async updateprofile(i: any){
+  
+      this.isLoaderAvailableForprofile = true;
+  
+      try {
+        
+        let updateprofileRes = await this.extApi.UpdateUserMode({id: this.allSavedprofiles[i].id, modeDesc: this.profile.value.modeDesc, status: 0})
+        console.log(updateprofileRes)
+  
+        this.loaAllprofiles();
+        this.profile.reset();
+  
+        this.isLoaderAvailableForprofile = false;
+  
+      } catch (e:any) {
+        console.log(e)
+        this.isLoaderAvailableForprofile = false;
+        
+      }
+  
+    }
+  
+    bindprofileDataToUI(data: any, i: any){
+  
+      
+      
+      let allBottomClzElements = this.actionBtnContainerForprofile.nativeElement.querySelectorAll('.bottom')
+  
+      allBottomClzElements.forEach((el:any, idx: any) => {
+        
+        el.classList.remove('remove')
+        el.classList.remove('update')
+  
+        if(parseInt(el.id) === i){
+          el.classList.remove('remove')
+          el.classList.add('update')
+          el.innerHTML = "UPDATE"
+  
+          this.allSavedprofiles[idx]['btnTxt'] = 'update'
+  
+        }else{
+          el.innerHTML = 'REMOVE';
+          el.classList.add('remove');
+          this.allSavedprofiles[idx]['btnTxt'] = 'remove'
+        }
+  
+      });
+  
+      this.profile.setValue({
+        modeDesc: data.modeDesc,
+      })
+  
+  
+    }
+
   //common
   async removeUpdateOpt(txt:any, i: any, sec: any){
     
@@ -1866,6 +2011,18 @@ export class SliderWindowComponent implements OnInit {
         }
 
         break;
+
+      case 'profile':
+
+        if(txt === 'remove' || !txt){
+          
+          await this.removeprofile(i)
+        }
+        else{
+          await this.updateprofile(i)
+        }
+
+        break;
     }
   }
 
@@ -1892,6 +2049,7 @@ export class SliderWindowComponent implements OnInit {
     this.removeUpdateTextForStage = 'REMOVE';
     this.removeUpdateTextForItems = 'REMOVE';
     this.removeUpdateTextForManuFac = 'REMOVE';
+    this.removeUpdateTextForProfile = 'REMOVE'
 
     this.isLoaderAvailableForBrand = false;
     this.isLoaderAvailableForCompany = false;
@@ -1940,5 +2098,9 @@ export class SliderWindowComponent implements OnInit {
     this.stage.reset();
     this.allSavedStages = [];
     this.disableDocTypeRemoveIcon = false;
+
+    //profile
+    this.profile.reset();
+    this.allSavedprofiles = [];
   }
 }

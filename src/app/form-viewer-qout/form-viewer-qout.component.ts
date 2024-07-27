@@ -72,6 +72,8 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
   allProductsForCustomer:any  = [];
   allCustProdForDropDown: any = [];
   quataionItems: any = [];
+  quatationIsRejected: any;
+  quatationIsConfirmed: any;
 
   constructor( private communicationService: AppService, private extApi: ExtApiService, private cdr: ChangeDetectorRef){
     this.subscription = this.communicationService.data$.subscribe((data: any) => {
@@ -275,7 +277,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
 
   // =========================View Selected Quot==========================
     public async viewSelectedInvoice(invoice: any){
-
+debugger
     // if(invoice.quotNumber){
 
       console.log('===============all products=============')
@@ -294,6 +296,8 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
       this.quatationTot = invoice.totalAmount
       this.quatationvalidUntil = invoice.validUntil
       this.totalAmount = this.quatationTot
+      this.quatationIsConfirmed = invoice.isConfirmed,
+      this.quatationIsRejected = invoice.isSelected,
 
       this.updateBtnEnabled = false;
       this.addBtnEnabled = true;
@@ -574,6 +578,42 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
         }
       }
 
+  async UpdateQuotationHasEmployeeToConfirm(selectedEmp: any){
+    debugger
+    
+        let QuotItems = [] as any;
+
+        selectedEmp.forEach((el: any) => {
+          
+          QuotItems.push({
+            "id": "string",
+            "quotID": this.quatationPrimeID,
+            "empID": el.id,
+            "status": 0,
+            "isConfirmed": this.quatationIsConfirmed,
+            "isRejected": this.quatationIsRejected,
+            "hierarchyLevel": 0,
+            "confirmedOn": "2024-07-27T07:43:15.548Z",
+            "rejectedOn": "2024-07-27T07:43:15.548Z",
+            "employeeNote": "string"
+          })
+        });
+    
+        let reqFields = {
+          "quotID": this.quatationPrimeID,
+          "quotConfirmEmpItem": QuotItems
+        }
+    
+        try {
+          
+          let quotEmpAddRes = await this.extApi.UpdateQuotationHasEmployeeToConfirm(reqFields);
+    
+          console.log(quotEmpAddRes);
+    
+        } catch (error) {
+          
+        }
+      }
   // =========================select customer and send to viewr==========================
   //     async setSelectedCustData(selectedCustData: any){
   // 

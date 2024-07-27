@@ -70,13 +70,14 @@
                             </ng-template>
                         </p-carousel>
 
-                    
-
+                
                     </div>
 
                     <div class="assignedEmpSec">
                          
                         <div class="emp">
+
+                            <h4>All Employees</h4>
 
                             <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"></app-employee-search>
 
@@ -84,7 +85,9 @@
 
                         <div class="assignedEmp">
 
-                            <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq" (click)="selectInqSelectedEmp(selectedIngEmp)">
+                            <h4>Assigned Employees</h4>
+
+                            <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq">
     
                                 <mat-card-header>
                                   <mat-card-title-group>
@@ -95,6 +98,11 @@
                             </mat-card>
                             
                         </div>
+
+                    </div>
+
+                    <div class="empAdd">
+                        <button mat-raised-button color="primary" (click)="sendSelectedEmpToAdd()" [disabled]="addEmpDisabled">Add Employees</button>
                     </div>
     
                 </div>

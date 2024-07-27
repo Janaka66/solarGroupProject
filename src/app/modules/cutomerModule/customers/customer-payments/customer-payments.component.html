@@ -28,7 +28,36 @@
 
                 <div class="container">
 
-                    <h1>Customer Payments</h1>
+                    <div class="header">
+
+                        <div class="title">
+                            
+                        </div>
+
+                        <div class="select-options">
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Product Name</mat-label>
+                                <mat-select [(ngModel)]="prodForSearch">
+                                    <mat-option *ngFor="let product of allProducts" [value]="product.id">
+                                    {{ product.productName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Quatation NO</mat-label>
+                                <mat-select [(ngModel)]="quotForSearch">
+                                    <mat-option *ngFor="let quot of allIQuot" [value]="quot.id">
+                                    {{ quot.quotNumber }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <button mat-raised-button color="primary" [disabled]="!isButtonEnabled()" (click)="getCustPayments()">Search</button>
+
+                        </div>
+                    </div>
                   
                     <div class="paymntinputView">
                         

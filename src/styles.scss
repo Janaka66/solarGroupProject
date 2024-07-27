@@ -197,3 +197,13 @@ p-carousel .selected-item {
     border: 2px solid #007BFF; /* Example color for selection */
     background-color: #E0F7FA; /* Example background color for selection */
 } 
+
+
+@media screen and (max-width: 425px) {
+    
+    p-carousel .surface-border{
+
+        display: flex;
+        flex-direction: column;
+    }
+}
