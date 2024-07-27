@@ -6,6 +6,7 @@ import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/cust
 import { ExtApiService } from 'src/app/ext-api.service';
 import { FormViewerComponent } from 'src/app/form-viewer/form-viewer.component';
 import * as moment from 'moment';
+import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
 
 @Component({
   selector: 'app-customer-invoices',
@@ -17,6 +18,7 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
   @ViewChild('printArea') printArea: ElementRef | any;
   @ViewChild('customerSearch') CustomerSearchComponent: CustomerSearchComponent | any;
   @ViewChild('formViewer') formViewer: FormViewerComponent | any;
+  @ViewChild('loader') CommonLoaderComponent: CommonLoaderComponent | any;
   
   flag: boolean = false;
   panelOpenState = false;
@@ -103,6 +105,8 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
     async bindCutomerData(custData: any){
 
+      this.CommonLoaderComponent.show();
+
         this.selectedCustID = custData.id;
 
         try {
@@ -117,6 +121,8 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
         } catch (error) {
             
             alert("There is a problem when getting an address for this customer. Please check if this customer has default address")
+
+            this.CommonLoaderComponent.hide();
         }
 
     }
@@ -138,13 +144,19 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
                 this.allInvoices = invoiceRes.data;
 
+                this.CommonLoaderComponent.hide();
+
                 resolve(1)
         
+
+
             } catch (e: any) {
                 
                 alert("error")
-
+                this.CommonLoaderComponent.hide();
                 reject(0)
+
+                
             }
         })
   
@@ -158,11 +170,16 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
     loaderHandle(event: any){
 
-        this.isLoaderAvailable = event;
+      if(event)
+        this.CommonLoaderComponent.show();
+      else
+        this.CommonLoaderComponent.hide();
     }
 
     async removeInvoice(event: any){
         
+      this.CommonLoaderComponent.show();
+
         this.selecetedQIItem = event
 
         let reqFields = [
@@ -182,7 +199,7 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
           await this.getAllInvoices();
           
         } catch (error) {
-    
+          this.CommonLoaderComponent.hide();
           alert("error")
     
         }

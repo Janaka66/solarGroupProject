@@ -14,7 +14,7 @@ export class ExtApiService {
     
   }
 
-  getAllCustomers(reqData = ''): Promise<any> {
+  getAllCustomers(reqData = {}): Promise<any> {
     return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/Customer/Customers', reqData).toPromise();
     
   }
@@ -421,4 +421,18 @@ export class ExtApiService {
 
   }
 
+  GetCustPayment(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/GetCustPayment`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  AddCustomerPayment(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/AddCustomerPayment`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
+
+  UpdateCustPayment(reqFields?: any): Promise<any> {
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/UpdateCustPayment`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+    
+  }
 }

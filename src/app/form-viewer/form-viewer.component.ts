@@ -385,7 +385,8 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
           "qty": parseFloat(el.quantity),
           "unitPrice": parseFloat(el.rate),
           "totalPrice": parseFloat(el.price),
-          "status": 0
+          "status": 0,
+          "flag":"saved"
         })
       });
 
@@ -427,9 +428,6 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   //     // await this.getCustProducts();
 
   //   }
-
-
-
 
     clear(){
       this.items = [];

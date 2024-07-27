@@ -23,6 +23,7 @@ import { CustomerProductsComponent } from './customers/customer-products/custome
 import { CustomerProfileComponent } from './customers/customer-profile/customer-profile.component';
 import { SharedModule } from 'src/app/sharedComp/shared.module';
 import { FormViewerQoutComponent } from 'src/app/form-viewer-qout/form-viewer-qout.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { FormViewerQoutComponent } from 'src/app/form-viewer-qout/form-viewer-qo
     CarouselModule,
     AgGridModule,
     MatStepperModule,
+    MatTableModule
   ]
 })
 export class CustomersModule { }

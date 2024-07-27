@@ -77,8 +77,8 @@
           <tr *ngFor="let item of invoiceItems; let i = index">
             <td>
               <a class="cut" (click)="removeItem(i)">-</a>
-              <select [(ngModel)]="item.invItem" (change)="onItemChangeInvoice(i)">
-                <option *ngFor="let option of allItems" [value]="option.id">{{option.itemName}}</option>
+              <select [(ngModel)]="item.invItem" (change)="onItemChangeInvoice(i)" [disabled]="item.flag === 'saved'">
+                <option *ngFor="let option of allItems" [value]="option.id">{{ option.itemName }}</option>
               </select>
             </td>
             <td>

@@ -150,25 +150,25 @@ export class CustomersComponent implements OnInit, AfterViewInit{
   
   async registerCustomer(section: any){
 
-    this.isLoaderAvailable = true;
+          this.CommonLoaderComponent.show();
 
     if((!this.customerNameDetails.value.firstName || !this.customerNameDetails.value.middleName || !this.customerNameDetails.value.lastName || !this.customerNameDetails.value.surName || !this.customerNameDetails.value.initials || !this.customerNameDetails.value.nic) && (this.phoneNumbers.length === 1 && this.emails.length === 1)){
 
       this.notifyMessage("Register Customer", "Please fill customer details section",NotificationType.warn)
 
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
       return
     }
 
     if((!this.customerNameDetails.value.firstName || !this.customerNameDetails.value.middleName || !this.customerNameDetails.value.lastName || !this.customerNameDetails.value.surName || !this.customerNameDetails.value.initials || !this.customerNameDetails.value.nic) && (this.phoneNumbers.length === 0 || this.emails.length === 0)){
       this.notifyMessage("Register Customer", "Please fill customer details section",NotificationType.warn)
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
       return
     }
 
     if(this.addresses.length > 0 && this.addresses.some((obj: any) => !obj.addLine1 || !obj.addLine2 || !obj.addLine3)){
       this.notifyMessage("Register Customer", "Please fill customer details section",NotificationType.warn)
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
       return
     }
 
@@ -425,7 +425,7 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
         } catch (error) {
           this.openSnackBar('Something went wrong while uploading profile picture')
-          this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();
         }
       }
 
@@ -445,7 +445,7 @@ export class CustomersComponent implements OnInit, AfterViewInit{
         } catch (error) {
           
           console.log(error)
-          this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();
         }
 
       }
@@ -457,11 +457,11 @@ export class CustomersComponent implements OnInit, AfterViewInit{
       this.imgAvailable = false;
       this.custImgAvailable = false;
 
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
 
     } catch (e: any) {
       console.log(e)
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
     }
 
   }
@@ -520,7 +520,7 @@ export class CustomersComponent implements OnInit, AfterViewInit{
   //get the data after select the customer......................
   async bindCutomerData(custData :any){
     
-    this.isLoaderAvailable = true;
+          this.CommonLoaderComponent.show();
 
     this.newCustomer();
 
@@ -618,7 +618,7 @@ export class CustomersComponent implements OnInit, AfterViewInit{
     this.bindingData['custAddresses'] = this.clonedCustAddersses;
     this.bindingData['custDocuments'] = this.copyOfDocuments;
 
-    this.isLoaderAvailable = false;
+          this.CommonLoaderComponent.hide();
   }
 
   newCustomer(){
@@ -988,7 +988,7 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
   async deletePdf(doc: any){
 
-    this.isLoaderAvailable = true;
+          this.CommonLoaderComponent.show();
 
     let findDoc = this.selectedCustomerAllDocCloned.find((el: any) => el.docName === doc);
 
@@ -1038,18 +1038,18 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
       }
 
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
 
     } catch (e: any) {
       console.log(e)
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
     }
     
   }
 
   async UpdateDocData(){
 
-    this.isLoaderAvailable = true;
+          this.CommonLoaderComponent.show();
 
     let findDoc = this.selectedCustomerAllDocCloned.find((el: any) => el.docName === this.documentDetails.value.docName);
 
@@ -1073,13 +1073,13 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
       this.documentDetails.reset();
       
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
       this.documents = [];
       this.copyOfDocuments = [];
 
     } catch (e: any) {
       console.log(e)
-      this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
     }
   }
 

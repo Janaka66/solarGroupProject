@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { FormViewerComponent } from 'src/app/form-viewer/form-viewer.component';
 import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/customer-search.component';
 import { ExtApiService } from 'src/app/ext-api.service';
+import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
 
 @Component({
   selector: 'app-customer-quotations',
@@ -17,6 +18,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     @ViewChild('printArea') printArea: ElementRef | any;
     @ViewChild('customerSearch') CustomerSearchComponent: CustomerSearchComponent | any;
     @ViewChild('formViewer') formViewer: FormViewerComponent | any;
+    @ViewChild('loader') CommonLoaderComponent: CommonLoaderComponent | any;
     
   flag: boolean = false;
   products: [] | any;
@@ -76,6 +78,9 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
   }
 
   async ngAfterViewInit(): Promise<void> {
+
+    this.CommonLoaderComponent.show();
+    
     await this.getAllCustomers()
 }
   
@@ -93,13 +98,16 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
       let result = await this.extApi.getAllCustomers();
       this.CustomerSearchComponent.showCustomers(result.data[0]);
 
+      this.CommonLoaderComponent.hide();
     } catch (e: any) {
       console.log(e.error)
+      this.CommonLoaderComponent.hide();
     }
 }
 
 async bindCutomerData(custData: any){
 
+    this.CommonLoaderComponent.show();
     this.selectedCustID = custData.id;
 
     try {
@@ -111,9 +119,12 @@ async bindCutomerData(custData: any){
 
         await this.getAllQout();
 
+        this.CommonLoaderComponent.hide();
+
     } catch (error) {
         
         alert("There is a problem when getting an address for this customer. Please check if this customer has default address")
+        this.CommonLoaderComponent.show();
     }
 
 }
@@ -134,12 +145,14 @@ async getAllQout(){
             
             this.allIQuot = quotRes.data.filter((el: any) => el.status === 0);
 
+            this.CommonLoaderComponent.hide();
             resolve(1)
     
         } catch (e: any) {
             
             alert("error")
 
+            this.CommonLoaderComponent.hide();
             reject(0)
         }
     })
@@ -161,7 +174,7 @@ async getAllQout(){
   
   async removeQuatation(){
 
-    
+    this.CommonLoaderComponent.show();
 
     console.log(this.selecetedQIItem)
 
@@ -188,6 +201,7 @@ async getAllQout(){
       
     } catch (error) {
 
+      this.CommonLoaderComponent.hide();
       alert("error")
 
     }
@@ -230,6 +244,7 @@ async getAllQout(){
 
   async removeQuatOrInvoice(event: any){
 
+    this.CommonLoaderComponent.show();
 
     if(event.quotNumber){
 
@@ -237,6 +252,7 @@ async getAllQout(){
 
       await this.removeQuatation()
 
+      this.CommonLoaderComponent.hide();
     }
   }
 }
