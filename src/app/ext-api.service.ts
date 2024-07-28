@@ -39,7 +39,9 @@ export class ExtApiService {
   }
 
   getAllCustomers(reqData = {}): Promise<any> {
-    return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/Customer/Customers', reqData,).toPromise();
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + '/api/Customer/Customers', reqData,{
+      headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+    }).toPromise();
     
   }
 

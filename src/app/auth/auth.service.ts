@@ -4,6 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { ExtApiService } from '../ext-api.service';
 import { AppService } from '../app.service';
+import { NotificationDialogComponent, NotificationType } from '../sharedComp/notification-dialog/notification-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class AuthService {
     public handler : HttpBackend, 
     public extApi: ExtApiService,
     private router: Router,
-    private appService: AppService
+    private appService: AppService,
+    private dialog: MatDialog
   ) { 
 
   }
@@ -43,14 +46,16 @@ export class AuthService {
 
         }else{
 
-          console.log("login failed. Token not recevied")
+          this.notifyMessage("Login", "Login Faild" ,NotificationType.warn)
+
           reject(true)
 
         }
 
       } catch (error) {
         
-        console.log("error during login: ", error)
+        this.notifyMessage("Login", "error during login" ,NotificationType.warn)
+
         reject(false)
       }
       
@@ -73,7 +78,14 @@ export class AuthService {
     this.router.navigate(['/login']);
     
   }
-  
+ 
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
+  }
 }
 
 export async function tokenGetter(): Promise<any> {
@@ -81,3 +93,5 @@ export async function tokenGetter(): Promise<any> {
   return localStorage.getItem('token');
 
 }
+
+

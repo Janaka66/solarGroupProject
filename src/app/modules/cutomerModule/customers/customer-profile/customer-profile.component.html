@@ -150,18 +150,22 @@
                         <input type="text" [(ngModel)]="userName">
                     </div>
 
-                    <div class="right">
+                    <div class="right"> 
 
-                        <button mat-raised-button color="primary" (click)="getVerificationCode()">Get verification Code</button>
+                        <button mat-raised-button color="primary" (click)="getVerificationCode()" [ngClass]="{'verified': verified, 'not-verified': !verified}">Verified</button>
 
                     </div>
 
                 </div>
 
-                <div class="code">
+                <div class="code sec-1">
 
-                    <label>Verification Code</label>
-                    <input type="text" [(ngModel)]="verificationCode">
+                    <div class="email userData">
+
+                        <label>Password</label>
+                        <input type="text" [(ngModel)]="userResetPassword" [disabled]="isEnabledUserPasswords">
+
+                    </div>
 
                 </div>
 
@@ -169,8 +173,8 @@
 
                     <div class="email userData">
 
-                        <label>New Password</label>
-                        <input type="text" [(ngModel)]="newPassword">
+                        <label>Confirm Password</label>
+                        <input type="text" [(ngModel)]="userResetPasswordForConfirm" [disabled]="isEnabledUserPasswords">
                         
                     </div>
 
@@ -179,7 +183,7 @@
             </div>
 
             <div class="btn">
-                <button mat-raised-button color="primary" (click)="updatePrivacy()">Update</button>
+                <button mat-raised-button color="primary" (click)="updatePrivacy()">Reset</button>
             </div>
        </div>
 

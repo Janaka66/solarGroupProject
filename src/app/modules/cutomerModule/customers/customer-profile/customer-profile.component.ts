@@ -39,7 +39,12 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
   allEmployees: any;
   allUsers : any = [];
   UserID: any;
-
+  verified: boolean = false;
+  tokenForResetPassword: any = '';
+  isEnabledUserPasswords: boolean = true;
+  userResetPasswordForConfirm : any = '';
+  userResetPassword : any = '';
+  
   constructor(private communicationService: AppService, public cdr: ChangeDetectorRef, private extApi : ExtApiService, private dialog: MatDialog){
     window.onresize = this.enableButtonsDependOnScreenSize.bind(this);
   }
@@ -102,7 +107,7 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
 
   async getVerificationCode(){
 
-    if(!this.userName && !this.email){
+    if(!this.userName || !this.email){
       this.notifyMessage("Get Verification Code", "Please provide user name and email" ,NotificationType.warn)
     }else{
 
@@ -116,7 +121,14 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
   
         let resCode = await this.extApi.RequestResetPassword(req);
 
-        console.log(resCode)
+        if(resCode.data[0]){
+
+          this.verified = true;
+          this.tokenForResetPassword = resCode.data[0];
+          this.isEnabledUserPasswords = false;
+        }
+        else
+          this.verified = false
         
       } catch (error) {
         console.log(error)
@@ -128,7 +140,7 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
 
   async updatePrivacy(){
 
-    if(!this.verificationCode){
+    if(!this.tokenForResetPassword){
       this.notifyMessage("Update Password", "Please get the verification code" ,NotificationType.warn)
     }else{
 
@@ -136,7 +148,7 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
         "userName": this.userName,
         "email": this.email,
         "password": this.newPassword,
-        "token": this.verificationCode
+        "token": this.tokenForResetPassword
       }
 
       try {

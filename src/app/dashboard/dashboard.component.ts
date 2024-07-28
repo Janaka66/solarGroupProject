@@ -14,16 +14,46 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     
     flag: boolean = false;
 
-    inquiries = [] as any;
-    complains = [] as any;
-    reminders = [] as any;
-
-    pendingIncomeChartData: any;
-    monthlyIncomChartData: any;
-    pendingIncomeChartOptions: any;
-    monthlyIncomChartOption: any;
     subscription: Subscription;
-    showLoader = false;
+
+    duePayments = [
+        { id: '000001', custId: '000001', amount: 500 },
+        // Add more dummy data or fetch from your service
+      ];
+    
+      complaints = [
+        {
+          compId: '000001',
+          custId: '000001',
+          cfTypeId: '000010',
+          complainedAt: '2024-06-28T05:11:49.4261945',
+          completedAt: '2024-07-17T08:40:05.44278',
+          cfStatusId: '000002',
+          description: 'stringxxxxxxxxxx',
+          isHandled: true,
+          status: 0
+        },
+        // Add more dummy data or fetch from your service
+      ];
+    
+      inquiries = [
+        {
+          cInqId: '000001',
+          custId: '000001',
+          cfTypeId: '000007',
+          cfStatusId: '000001',
+          inquiryAddeddAt: '2024-07-15T18:04:23.071',
+          rejectedAt: '2024-07-17T07:56:49.9674647',
+          completedAt: '2024-07-23T14:46:31.0469596',
+          description: 'string',
+          isrejected: false,
+          isAccepted: true,
+          rejectedBy: '000001',
+          status: 0
+        },
+        // Add more dummy data or fetch from your service
+      ];
+    
     
   constructor(private communicationService: AppService, private cdr: ChangeDetectorRef){
 
@@ -39,94 +69,13 @@ export class DashboardComponent implements OnInit, AfterViewInit{
         this.cdr.detectChanges();
     }
   
-  ngOnInit(){
+    ngOnInit(){
 
-    this.loadMonthlyIncomeChart();  
-    this.loadPendingIncomeChart();
-  }
+    }
 
-  handleLeftBar() {
-    
-    this.communicationService.sendData({ flag: false });
-  }
+    handleLeftBar() {
+        
+        this.communicationService.sendData({ flag: false });
+    }
 
-  loadMonthlyIncomeChart(){
-    this.monthlyIncomChartData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep','Oct','Nov','Dec'],
-      datasets: [
-          {
-              type: 'line',
-              label: 'Dataset 1',
-              
-              borderWidth: 2,
-              fill: false,
-              tension: 0.4,
-              data: [50, 25, 12, 48, 56, 76, 42, 25, 12, 48, 56, 76, 42],
-              borderColor: 'blue',
-              backgroundColor: 'red'
-          },
-          {
-              type: 'bar',
-              label: 'Dataset 2',
-              data: [21, 84, 24, 75, 37, 65, 34, 25, 12, 48, 56, 76, 42],
-              borderColor: 'white',
-              borderWidth: 2,
-              backgroundColor: 'green'
-          }
-      ]
-  };
-  
-  this.monthlyIncomChartOption = {
-      maintainAspectRatio: true,
-      plugins: {
-          legend: {
-              labels: {
-                  color: 'black'
-              }
-          }
-      },
-      scales: {
-          x: {
-              ticks: {
-                  color: 'black'
-              },
-              grid: {
-                  color: 'gray'
-              }
-          },
-          y: {
-              ticks: {
-                  color: 'black'
-              },
-              grid: {
-                  color: 'gray'
-              }
-          }
-      }
-  };
-  }
-
-  loadPendingIncomeChart(){
-    this.pendingIncomeChartData = {
-      labels: ['A', 'B'],
-      datasets: [
-          {
-              data: [540, 325],
-              backgroundColor: ['blue', 'green'],
-              hoverBackgroundColor: ['lightblue', 'lightgreen']
-          }
-      ]
-  };
-
-  this.pendingIncomeChartOptions = {
-    maintainAspectRatio: true,
-      plugins: {
-          legend: {
-              labels: {
-                  color: 'black'
-              }
-          }
-      }
-  };
-  }
 }
