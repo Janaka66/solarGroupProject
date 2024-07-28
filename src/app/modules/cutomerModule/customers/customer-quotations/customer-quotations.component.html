@@ -28,6 +28,30 @@
 
                 <div class="add-show-invoice-section">
 
+                    <div class="filter">
+
+                        <mat-form-field>
+                            <mat-label>Product Name</mat-label>
+                            <mat-select [(ngModel)]="prodNameforItems" (selectionChange)="onProductNameChange($event)">
+                              <mat-option *ngFor="let data of loadcustomerProductsDropDown" [value]="data.prodID">
+                                {{ data.productName }}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Product Ref</mat-label>
+                            <mat-select [(ngModel)]="prodRefNumber" (selectionChange)="onRefCHange()">
+                              <mat-option *ngFor="let data of prodRefNumbers" [value]="data.refNu">
+                                {{ data.refNu }}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" (click)="getQuatations()">Get Quatations</button>
+
+                    </div>
+
                     <div class="show-customer-invoices">
     
                         <p-carousel 

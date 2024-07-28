@@ -40,6 +40,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
   custID : any;
   updateBtnEnabled: boolean = true;
   addBtnEnabled: boolean = true;
+  addNewBtnEnabled: boolean = true;
   invoicePrimeID: any;
   product: any
   prodRef: any
@@ -208,7 +209,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
 
   // =========================invoice Item qty rate change==========================
   onItemChangeQuot(index: number) {
-    
+    debugger
     const selectedItem = this.allItems.find((item: any) => item.id === this.quataionItems[index].itemId);
     if (selectedItem) {
       this.quataionItems[index].unitPrice = selectedItem.unitPrice;
@@ -256,7 +257,6 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
 
     this.custID = selectedCustData.custID;
 
-    this.addBtnEnabled = false;
     this.updateBtnEnabled = true;
     this.isDisabledProdSelect = false;
 
@@ -266,6 +266,9 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
     this.selectedDate = '';
     this.quataionItems = [];
     this.totalAmount = 0;
+
+    this.quatationProdRefNu = '' 
+    this.quatationPrimeID = ''
 
     this.clearQuatData();
     await this.getprodutsByCustomer()
@@ -279,6 +282,9 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
     public async viewSelectedInvoice(invoice: any){
 debugger
     // if(invoice.quotNumber){
+
+    this.quatationProdRefNu = ''; 
+    this.quatationPrimeID = ''
 
       console.log('===============all products=============')
       console.log(this.allProducts)
@@ -302,9 +308,10 @@ debugger
       this.updateBtnEnabled = false;
       this.addBtnEnabled = true;
 
-      this.selectedProduct = this.allProducts.find((el: any) => el.id === this.selectedQuotProdId).id
+      this.selectedProduct = this.allProducts.filter((el: any) => el.id === this.selectedQuotProdId).id
 
-      await this.getprodutsByCustomer();
+      // await this.getprodutsByCustomer();
+      await this.getQuatationItems();
       this.cdr.detectChanges()
       
       // await this.onProductChange(this.selectedProduct)
@@ -362,7 +369,7 @@ debugger
   }
 
   async getprodutsByCustomer(){
-
+debugger
     this.allCustProdForDropDown = [];
     this.quatDropdownItems = [];
 
@@ -381,15 +388,18 @@ debugger
       console.log('=======allProductsForCustomer=============')
       console.log(this.allProductsForCustomer)
 
+      console.log('=======allProducts=============')
+      console.log(this.allProducts);
+
       this.allProductsForCustomer.forEach((el: any) => {
 
-        let findProductData = this.allProducts.find((elProd: any) => elProd.id === el.prodId)
+        let findProductData = this.allProducts.filter((elProd: any) => elProd.id === el.prodId)
 
         if(Object.keys(findProductData).length > 0){
 
           this.allCustProdForDropDown.push({
-            productPrimeID: findProductData.id,
-            productName: findProductData.productName,
+            productPrimeID: findProductData[0].id,
+            productName: findProductData[0].productName,
             customerProdPrimeID: el.id,
             prodRef: el.refNu
           })
@@ -400,7 +410,7 @@ debugger
 
       this.allCustProdForDropDown = this.removeDuplicates(this.allCustProdForDropDown);
 
-      this.onProductChange(this.selectedProduct);
+      // this.onProductChange(this.selectedProduct);
 
       console.log('===========allCustProdForDropDown===========')
       console.log(this.allCustProdForDropDown)
@@ -429,40 +439,45 @@ debugger
 }
 
   // Get product Items by selected qouatation 
-    async onProductChange(selectedProduct: any){
+  async loadQuatationItems(reqFields: any){
 
+      this.addBtnEnabled = false;
       this.quatDropdownItems = []
-
-      if(!selectedProduct){
-        return
-      }
-      
-      let selectedProd = this.allProducts.find((el: any) => el.id === selectedProduct)
+      this.quatationProdRefNu = reqFields.prodRefNu; 
+      this.quatationPrimeID = reqFields.prodId
 
       let req = {
-        "refNu": selectedProd.prodRef
+        "custId": reqFields.custID,
+        "prodId": reqFields.prodId,
+        "refNu": reqFields.prodRefNu
       }
 
       let itemTypes = await this.extApi.GetCustomerProdcutItem(req);
 
       itemTypes.data[0].forEach((el:any) => {
         
-        let getItemName = this.allItems.find((elItem: any) => elItem.id === el.itemId)?.itemName;
-
-        if(getItemName){
-          el.itemName = getItemName
-        }
+        el.itemName = this.allItems.find((elItem: any) => elItem.id === el.itemId)?.itemName,
+        el.unitPrice = this.allItems.find((elItem: any) => elItem.id === el.itemId)?.unitPrice 
+        el.rowDisabled = true,
+        el.totalPrice = 0,
+        el.quantity = 0
       });
 
       this.quatDropdownItems = itemTypes.data[0].filter((el: any) => el.status === 0)
-
+      this.quataionItems = this.quatDropdownItems;
       
       this.quatDropdownItems = this.removeDuplicatesByItemId(this.quatDropdownItems)
 
+      this.allItems.forEach((el: any) => {
+        
+        el.itemId = el.id
+      });
+
       console.log('===========GetCustomerProdcutItem========')
       console.log(this.quatDropdownItems);
+      console.log(this.allItems)
 
-      await this.getQuatationItems();
+      // await this.getQuatationItems();
     
   }
 
@@ -477,10 +492,16 @@ debugger
 
       try {
 
-        
-        
         let quatItems = await this.extApi.GetQuotationItem(reqData);
         this.quataionItems = quatItems.data;
+
+        quatItems.data.forEach((el:any) => {
+          el.itemName = this.allItems.find((elItem: any) => elItem.id === el.itemId)?.itemName,
+          el.rowDisabled = true
+        });
+
+        this.quatDropdownItems = quatItems.data.filter((el: any) => el.status === 0)
+        this.quataionItems = this.quatDropdownItems;
 
         console.log('==========GetQuotationItem==============')
         console.log(quatItems)
@@ -493,92 +514,135 @@ debugger
       }
     }
 
-      async addQuatation(){
-    
-        this.loaderEnableDesabled.emit(true);
+    async addQuatation(){
+  
+      this.loaderEnableDesabled.emit(true);
 
-        let momentDate = moment(this.selectedDate, 'YYYY/MM/DD');
+      let momentDate = moment(this.selectedDate, 'YYYY/MM/DD');
 
-        this.selectedDate = momentDate.toISOString();
+      this.selectedDate = momentDate.toISOString();
 
-        let reqFields = 
-          {
-            "id": "string",
-            "custId": this.custID,
-            "prodId": this.selectedProduct,
-            "prodRefNu": this.allProductsForCustomer.find((el: any) => el.prodId === this.selectedProduct).refNu,
-            "quotNumber": "string",
-            "jobNumber": "string",
-            "quotDate": "2024-07-24T03:22:26.844Z",
-            "validUntil": "2024-07-24T07:53:23.815Z",
-            "totalAmount": 0,
-            "notes": "string",
-            "isConfirmed": false,
-            "preparedBy": "string",
-            "status": 0
-          }
-        
-        
-        try {
-
-          let invoiceAddRes =  await this.extApi.AddQuotation(reqFields)
-
-          await this.updateQuatationItems(invoiceAddRes.data[0]);
-
-          // await this.updateInvoice();
-          
-          this.loaderEnableDesabled.emit(false);
-
-        } catch (error) {
-          alert("error")
-          this.loaderEnableDesabled.emit(false);
+      let reqFields = 
+        {
+          "id": "string",
+          "custId": this.custID,
+          "prodId": this.quatationPrimeID,
+          "prodRefNu": this.quatationProdRefNu,
+          "quotNumber": "string",
+          "jobNumber": "string",
+          "quotDate": "2024-07-24T03:22:26.844Z",
+          "validUntil": "2024-07-24T07:53:23.815Z",
+          "totalAmount": 0,
+          "notes": "string",
+          "isConfirmed": false,
+          "preparedBy": "string",
+          "status": 0
         }
-      }
+      
+      try {
 
-        async updateQuatationItems(quatationID: any = ''){
+        let invoiceAddRes =  await this.extApi.AddQuotation(reqFields)
 
-        let updateItemObj = 
-          {
-            "quotId": this.quatationPrimeID || quatationID,
-            "items": [] as any
-          }
+        await this.addQuatationItems(invoiceAddRes.data[0]);
+
+        // await this.updateInvoice();
         
-        this.loaderEnableDesabled.emit(true);
+        this.loaderEnableDesabled.emit(false);
 
-        this.quataionItems.forEach((el: any) => {
-          
-          updateItemObj['items'].push({
-            "id": this.quatDropdownItems.find((elq: any) => elq.itemId === el.itemId).id,
-            "quotId": this.quatationPrimeID || quatationID,
-            "itemId": this.quatDropdownItems.find((elq: any) => elq.itemId === el.itemId).itemId,
-            "quantity": parseFloat(el.quantity),
-            "unitPrice": parseFloat(el.unitPrice),
-            "totalPrice": parseFloat(el.totalPrice),
-            "status": 0
-          })
-        });
-
-        try {
-
-          let invoiceAddRes =  await this.extApi.UpdateQuotationItems(updateItemObj)
-
-          this.loaderEnableDesabled.emit(false);
-
-          await this.loadQuataionBack.emit();
-
-          this.totalAmount = 0
-          this.quataionItems = [];
-          this.quatationNumber = ''
-          this.quatationqDate = ''
-          this.selectedDate = '';
-
-        } catch (error) {
-          alert("error")
-          this.loaderEnableDesabled.emit(false);
-        }
+      } catch (error) {
+        alert("error")
+        this.loaderEnableDesabled.emit(false);
       }
+    }
 
-  async UpdateQuotationHasEmployeeToConfirm(selectedEmp: any){
+    async updateQuatationItems(quatationID: any = ''){
+
+      let updateItemObj = 
+        {
+          "quotId": this.quatationPrimeID || quatationID,
+          "items": [] as any
+        }
+      
+      this.loaderEnableDesabled.emit(true);
+
+      console.log(this.quataionItems)
+      this.quataionItems.forEach((el: any) => {
+        
+        updateItemObj['items'].push({
+          "id": el.id || 'string',
+          "quotId": this.quatationPrimeID || quatationID,
+          "itemId": el.rowDisabled ? this.quatDropdownItems.find((elq: any) => elq.itemId === el.itemId).itemId : this.allItems.find((elq: any) => elq.itemId === el.itemId).itemId,
+          "quantity": parseFloat(el.quantity),
+          "unitPrice": parseFloat(el.unitPrice),
+          "totalPrice": parseFloat(el.totalPrice),
+          "status": 0
+        })
+      });
+
+      try {
+
+        let invoiceAddRes =  await this.extApi.UpdateQuotationItems(updateItemObj)
+
+        this.loaderEnableDesabled.emit(false);
+
+        await this.loadQuataionBack.emit();
+
+        this.totalAmount = 0
+        this.quataionItems = [];
+        this.quatationNumber = ''
+        this.quatationqDate = ''
+        this.selectedDate = '';
+
+      } catch (error) {
+        alert("error")
+        this.loaderEnableDesabled.emit(false);
+      }
+    }
+
+    async addQuatationItems(quatationID: any = ''){
+
+      let updateItemObj = 
+        {
+          "quotId":  quatationID,
+          "items": [] as any
+        }
+      
+      this.loaderEnableDesabled.emit(true);
+
+      this.quataionItems.forEach((el: any) => {
+        
+        updateItemObj['items'].push({
+          "id": "string",
+          "quotId": quatationID,
+          "itemId": el.rowDisabled ? this.quatDropdownItems.find((elq: any) => elq.itemId === el.itemId).itemId : this.allItems.find((elq: any) => elq.itemId === el.itemId).itemId,
+          "quantity": parseFloat(el.quantity),
+          "unitPrice": parseFloat(el.unitPrice),
+          "totalPrice": parseFloat(el.totalPrice),
+          "status": 0
+        })
+      });
+
+      try {
+
+        let invoiceAddRes =  await this.extApi.UpdateQuotationItems(updateItemObj)
+
+        this.loaderEnableDesabled.emit(false);
+
+        await this.loadQuataionBack.emit();
+
+        this.totalAmount = 0
+        this.quataionItems = [];
+        this.quatationNumber = ''
+        this.quatationqDate = ''
+        this.selectedDate = '';
+
+      } catch (error) {
+        alert("error")
+        this.loaderEnableDesabled.emit(false);
+      }
+    }
+
+    async UpdateQuotationHasEmployeeToConfirm(selectedEmp: any){
     debugger
     
         let QuotItems = [] as any;
@@ -613,7 +677,19 @@ debugger
         } catch (error) {
           
         }
-      }
+    }
+
+    addNewQuat(){
+
+      this.quatationNumber = '';
+      this.quatationqDate = '';
+      this.allCustProdForDropDown = [];
+      this.selectedDate = '';
+      this.quataionItems = [];
+      this.totalAmount = 0;
+      
+    }
+    
   // =========================select customer and send to viewr==========================
   //     async setSelectedCustData(selectedCustData: any){
   // 

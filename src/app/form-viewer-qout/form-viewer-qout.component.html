@@ -1,10 +1,9 @@
 <div class="actionContainer">
 
-    <div class="crudBtn">
-
-       
+    <div class="crudBtn">       
         <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" [disabled]="addBtnEnabled" (click)="addQuatation()">Add Quatation</button>
         <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;" [disabled]="updateBtnEnabled" (click)="updateQuatationItems()">Update Quatation</button>
+        <button mat-raised-button color="primary" *ngIf="!cutomerInvoice" style="margin-right: 10px;"  (click)="addNewQuat()">Add new Quatation</button>
     </div>
 
     <div class="company">
@@ -57,14 +56,6 @@
         <td><span contenteditable>{{quatationqDate}}</span></td>
       </tr>
       <tr>
-        <th><span contenteditable>Product</span></th>
-        <td>
-          <select [(ngModel)]="selectedProduct" (change)="onProductChange(selectedProduct)" [disabled]="isDisabledProdSelect">
-            <option *ngFor="let option of allCustProdForDropDown" [value]="option.productPrimeID">{{option.productName}}</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
         <th><span contenteditable>Valid</span></th>
         <td>
           <input id="datePicker" type="date" [(ngModel)]="selectedDate" >
@@ -85,9 +76,10 @@
         <tr *ngFor="let item of quataionItems; let i = index">
           <td>
             <a class="cut" (click)="removeQuotItem(i)">-</a>
-            <select [(ngModel)]="item.itemId" (change)="onItemChangeQuot(i)">
-              <option *ngFor="let option of quatDropdownItems" [value]="option.itemId">{{option.itemName}}</option>
+            <select [(ngModel)]="item.itemId" (change)="onItemChangeQuot(i)" [disabled]="item.rowDisabled">
+              <option  *ngFor="let option of item.rowDisabled ? quatDropdownItems : allItems" [value]="option.itemId">{{option.itemName}}</option>
             </select>
+
           </td>
           <td>
             <span data-prefix>$</span>

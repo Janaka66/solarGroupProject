@@ -8,6 +8,8 @@ import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/cust
 import { ExtApiService } from 'src/app/ext-api.service';
 import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
 import { EmployeeSearchComponent } from 'src/app/sharedComp/employee-search/employee-search.component';
+import { NotificationDialogComponent, NotificationType } from 'src/app/sharedComp/notification-dialog/notification-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-customer-quotations',
@@ -28,12 +30,12 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     showLoader = false;
     isLoaderAvailable: boolean = false;
     componant = 'inqComp'; 
-
-    rowData = [
-      { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-      { make: "Ford", model: "F-Series", price: 33850, electric: false }
-
-    ];
+    prodNameforItems: any = '';
+    prodRefNumber: any = '';
+    prodIdForGetItems: any;
+    prodRefNumbers: any = [];
+    
+    rowData = [] as any;
   
     colDefs: ColDef[] = [
       { field: "make" },
@@ -50,15 +52,17 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     selectedForInq = [] as any;
     selectedProduct: any;
     addEmpDisabled: boolean = true;
+  getAllProduct: any;
+  custAllproducts: any;
+  loadcustomerProductsDropDown = [] as any;
 
-    constructor(private communicationService: AppService, private extApi : ExtApiService){
+    constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
     this.communicationService.enableInvices({ flag: "quatation" })
-
     
     // this.getProductsSmall().then((products: any) => {
     //   this.products = products;
@@ -88,6 +92,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
     this.CommonLoaderComponent.show();
     
+    await this.getAllProducts();
     await this.getAllCustomers()
 }
   
@@ -117,14 +122,17 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
       this.CommonLoaderComponent.show();
       this.selectedCustID = custData.id;
 
+      this.selectedForInq = [];
+      await this.getAllemployees();
+      
       try {
           
+          await this.getProducts();
           let custAddress = await this.extApi.CustomerAddresses(custData.id);
 
           let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
           this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
 
-          await this.getAllQout();
 
           this.CommonLoaderComponent.hide();
 
@@ -140,9 +148,19 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
       return new Promise(async (resolve, reject) => {
 
-          try {
-              
-              let quotRes = await this.extApi.GetQuotation({"custID" : this.selectedCustID});
+        if(!this.selectedCustID && !this.prodNameforItems && !this.prodRefNumber){
+          this.notifyMessage("Qatations", "Please seleect customer , Product and refrence number of the product",NotificationType.warn)
+        }else{
+
+            try {
+                
+              let quotRes = await this.extApi.GetQuotation(
+                {
+                  "custID":  this.selectedCustID,
+                  "prodId": this.prodNameforItems,
+                  "prodRefNu": this.prodRefNumber,
+                }
+                );
 
               quotRes.data.forEach((el: any) => {
                   
@@ -163,6 +181,8 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
               this.CommonLoaderComponent.hide();
               reject(0)
           }
+
+        }
       })
 
   }
@@ -178,8 +198,9 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
     this.addEmpDisabled = false;
 
-    await this.GetQuotationHasEmployeeToConfirm();
     await this.getAllemployees();
+    
+    await this.GetQuotationHasEmployeeToConfirm();
   }
 
   onPage(event: any){}
@@ -313,15 +334,69 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
       
       let result = await this.extApi.GetEmployee();
 
+      // if(selectedIq.length > 0){
+
+      //   result.data.forEach((el: any) => {
+
+      //     let getInqdataIdx = selectedIq.findIndex((elIq: any) => elIq.empID === el.id)
+
+      //     if(getInqdataIdx !== -1){
+      //       el['checked'] = true
+      //       this.selectedForInq.push(el)
+      //     }
+      //     else
+      //       el['checked'] = false
+
+      //   })
+      // }
+
+      this.EmployeeSearchComponent.showEmployees(result.data);
+
+    } catch (e: any) {
+      console.log(e.error)
+    }
+  }
+
+  async sendSelectedEmpToAdd(){
+    this.formViewer.UpdateQuotationHasEmployeeToConfirm(this.selectedForInq)
+    this.selectedForInq = [];
+
+    await this.getAllemployees();
+  }
+
+  async GetQuotationHasEmployeeToConfirm(){
+debugger
+    try {
+      
+      debugger
+      let res = await this.extApi.GetQuotationHasEmployeeToConfirm({quotID: this.selecetedQIItem.id});
+
+      console.log(res.data)
+      this.selectedForInq = res.data
+
+      await this.getAllemployeesForSelecetedQuot(this.selectedForInq);
+
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  async getAllemployeesForSelecetedQuot(selectedIq = []){
+
+    debugger;
+
+    try {
+      
+      let result = await this.extApi.GetEmployee();
+
       if(selectedIq.length > 0){
 
         result.data.forEach((el: any) => {
 
-          let getInqdataIdx = selectedIq.findIndex((elIq: any) => elIq.empID === el.id)
+          let getInqdataIdx = selectedIq.findIndex((elIq: any) => elIq.id === el.id)
 
           if(getInqdataIdx !== -1){
             el['checked'] = true
-            this.selectedForInq.push(el)
           }
           else
             el['checked'] = false
@@ -336,23 +411,102 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     }
   }
 
-  async sendSelectedEmpToAdd(){
+  async onProductNameChange(event: any){
+debugger
+    console.log(this.custAllproducts)
+    this.prodRefNumbers = this.custAllproducts.filter((product: any) => product.prodId === this.prodNameforItems);
 
-      this.formViewer.UpdateQuotationHasEmployeeToConfirm(this.selectedForInq)
+    console.log(this.prodRefNumbers)
+
   }
 
-  async GetQuotationHasEmployeeToConfirm(){
+
+
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
+  }
+
+  async getProducts(){
+    debugger
+
+    this.loadcustomerProductsDropDown = []
+    try {
+
+      let allProdByCustomer = await this.extApi.GetCustomerProdcut({"custId": this.selectedCustID});
+      
+      this.custAllproducts = allProdByCustomer.data[0].filter((el: any) => el.status !== 1);
+
+      this.custAllproducts.forEach((el: any) => {
+        
+        this.getAllProduct.forEach((elp: any) => {
+
+          if(elp.id === el.prodId){
+
+              this.loadcustomerProductsDropDown.push({
+    
+                productName: elp['productName'],
+                prodRefNumber: el.refNu,
+                prodID : el.prodId
+    
+    
+              })
+            
+          }
+        })
+
+        
+
+      });
+
+      this.loadcustomerProductsDropDown = this.getUniqueProducts(this.loadcustomerProductsDropDown)
+          
+      
+    } catch (error) {
+      this.notifyMessage("Load Products", "Something went wrong while load products",NotificationType.warn)
+    }
+  }
+
+  async getQuatations(){
 
     try {
-      
-      debugger
-      let res = await this.extApi.GetQuotationHasEmployeeToConfirm({quotID: this.selecetedQIItem.id});
 
-      console.log(res.data)
-      // this.selectedForInq = res.data
+      await this.getAllQout();
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async getAllProducts(){
+    
+    try {
+
+      let allProcts = await this.extApi.getAllProducts();
+      this.getAllProduct = allProcts.data.filter((el: any) => el.status !== 1);
+      
+      console.log('=====getAllProducts=====')
+      console.log(this.getAllProduct)
 
     } catch (error) {
-      alert(error)
+      this.notifyMessage("Load Products", "Something went wrong while load products",NotificationType.warn)
     }
+  }
+
+  getUniqueProducts(allProducts: any) {
+
+    return [...new Map(allProducts.map((item: any) => [item.productName, item])).values()];
+    
+  }
+
+  onRefCHange(){
+    this.formViewer.loadQuatationItems({
+      "custID":  this.selectedCustID,
+      "prodId": this.prodNameforItems,
+      "prodRefNu": this.prodRefNumber,
+    })
   }
 }

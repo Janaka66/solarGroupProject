@@ -29,8 +29,11 @@ export class EmployeeSearchComponent implements OnInit, AfterViewInit {
   }
 
   showEmployees(employees: any){
-    
+    debugger
     this.searchResult =  employees
+
+    console.log('========show emp=========')
+    console.log(this.searchResult)
   }
 
   sendSelectedData(selectedData:any, event: any){

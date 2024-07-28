@@ -124,35 +124,50 @@
 
                 <h2>Change your password</h2>
 
-                <div class="sec-1">
+                <div class="email">
 
-                    <div class="userName userData">
+                    <label>New Email Address</label>
+                    <input type="text" [(ngModel)]="email">
 
-                        <label>Current Password</label>
-                        <input type="text">
+                </div>
 
+                <div class="userName">
+
+                    <div class="left">
+                        <label>User Name</label>
+                        <input type="text" [(ngModel)]="userName">
                     </div>
 
-                    <div class="email userData">
+                    <div class="right">
 
-                        <label>New Password</label>
-                        <input type="text">
+                        <button mat-raised-button color="primary" (click)="getVerificationCode()">Get verification Code</button>
                         
                     </div>
 
                 </div>
 
-                <div class="email">
+                <div class="code">
 
-                    <label>New Email Address</label>
-                    <input type="text">
+                    <label>Verification Code</label>
+                    <input type="text" [(ngModel)]="verificationCode">
+
+                </div>
+
+                <div class="sec-1">
+
+                    <div class="email userData">
+
+                        <label>New Password</label>
+                        <input type="text" [(ngModel)]="newPassword">
+                        
+                    </div>
 
                 </div>
 
             </div>
 
             <div class="btn">
-                <button mat-raised-button color="primary">Update</button>
+                <button mat-raised-button color="primary" (click)="updatePrivacy()">Update</button>
             </div>
        </div>
 

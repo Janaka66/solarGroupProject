@@ -1,5 +1,8 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AppService } from 'src/app/app.service';
+import { ExtApiService } from 'src/app/ext-api.service';
+import { NotificationDialogComponent, NotificationType } from 'src/app/sharedComp/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-customer-profile',
@@ -16,8 +19,14 @@ export class CustomerProfileComponent {
   accountSettingAvailable : boolean = true;
   securitySettingAvailable : boolean = false;
   enableIcons: boolean = false;
-  
-  constructor(private communicationService: AppService, public cdr: ChangeDetectorRef){
+  email = ''
+  verificationCode = ''
+  currenrtPassword = ''
+  newPassword = ''
+  userName: any; 
+
+
+  constructor(private communicationService: AppService, public cdr: ChangeDetectorRef, private extApi : ExtApiService, private dialog: MatDialog){
     window.onresize = this.enableButtonsDependOnScreenSize.bind(this);
   }
 
@@ -55,4 +64,67 @@ export class CustomerProfileComponent {
 
     this.cdr.detectChanges()
   }
+
+  async getVerificationCode(){
+
+    if(!this.userName && !this.email){
+      this.notifyMessage("Get Verification Code", "Please provide user name and email" ,NotificationType.warn)
+    }else{
+
+
+      let req = {
+        "userName": this.userName,
+        "email": this.email
+      }
+  
+      try {
+  
+        let resCode = await this.extApi.RequestResetPassword(req);
+
+        console.log(resCode)
+        
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+
+  }
+
+  async updatePrivacy(){
+
+    if(!this.verificationCode){
+      this.notifyMessage("Update Password", "Please get the verification code" ,NotificationType.warn)
+    }else{
+
+      let req = {
+        "userName": this.userName,
+        "email": this.email,
+        "password": this.newPassword,
+        "token": this.verificationCode
+      }
+
+      try {
+        
+        let resertPassRes = await this.extApi.ResetPassword(req);
+
+        console.log(resertPassRes);
+  
+        this.notifyMessage("Update Password", "Successfully reset the password" ,NotificationType.success)
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+  }
+
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
+  }
+
 }
