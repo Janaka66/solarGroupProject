@@ -39,7 +39,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
  
   paymentForm: FormGroup;
   payments: any[] = []; // Adjust type as needed
-  displayedColumns: string[] = ['custmoerName', 'productDisplayName', 'jobDescription', 'remark', 'payment', 'actions'];
+  displayedColumns: string[] = ['custmoerName', 'productDisplayName','quotedPrice', 'jobDescription', 'remark', 'payment', 'paymentPrecentage', 'paymentDate', 'recpNo', 'totalDue','balance', 'actions'];
 
   isLoaderAvailable: boolean = false;
   allProducts: any;
@@ -81,6 +81,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
   async bindCutomerData(event : any){
 
+
     this.CommonLoaderComponent.show();
 
     this.isBtnEnabaled = true;
@@ -93,7 +94,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
     await this.getAllQout();
     this.payments = [];
-    
+
     this.CommonLoaderComponent.hide();
 
   }
@@ -206,6 +207,8 @@ export class CustomerPaymentsComponent implements AfterViewInit {
       setTimeout(() => {
         el.quotationDisplayName = this.allIQuot.find((epq: any) => epq.id === el.quotId).quotNumber;
         el.quotationName = this.allIQuot.find((epq: any) => epq.id === el.quotId).id;
+        el.isConfirmed = this.allIQuot.find((epq: any) => epq.id === el.quotId).isConfirmed;
+
       }, 1000);
     });
     
@@ -236,7 +239,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
     try {
         
       let quotRes = await this.extApi.GetQuotation({"custID" : this.selectedCustID});
-      this.allIQuot = quotRes.data.filter((el: any) => el.status === 0);
+      this.allIQuot = quotRes.data.filter((el: any) => el.status === 0 && el.isConfirmed);
 
       console.log('===============custQuatation===========')
       console.log(this.allIQuot)
@@ -358,6 +361,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   }
 
   isButtonEnabled(){
+    debugger
     return !!this.selectedCustID && !!this.prodForSearch && !!this.quotForSearch;
   }
 }

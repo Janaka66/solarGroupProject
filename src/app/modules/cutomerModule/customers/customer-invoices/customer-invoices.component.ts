@@ -164,6 +164,8 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
     selectItem(event: any){
         this.formViewer.viewSelectedInvoice(event)
+
+        event.isSelected = true;
     }
 
     onPage(event: any){}

@@ -119,22 +119,22 @@
                                 <table mat-table [dataSource]="payments" class="mat-elevation-z8">
                                     <!-- Column Definitions -->
                                     <ng-container matColumnDef="custmoerName">
-                                        <th mat-header-cell *matHeaderCellDef> Customer Name </th>
+                                        <th mat-header-cell *matHeaderCellDef> Name </th>
                                         <td mat-cell *matCellDef="let payment"> {{payment.custmoerName}} </td>
                                     </ng-container>
                             
                                     <ng-container matColumnDef="productDisplayName">
-                                        <th mat-header-cell *matHeaderCellDef> Product Name </th>
+                                        <th mat-header-cell *matHeaderCellDef> Prod Name </th>
                                         <td mat-cell *matCellDef="let payment"> {{payment.productDisplayName}} </td>
                                     </ng-container>
                             
-                                    <ng-container matColumnDef="quotationDisplayName">
-                                        <th mat-header-cell *matHeaderCellDef> Quotation Name </th>
-                                        <td mat-cell *matCellDef="let payment"> {{payment.quotationDisplayName}} </td>
+                                    <ng-container matColumnDef="quotedPrice">
+                                        <th mat-header-cell *matHeaderCellDef> Quot Price </th>
+                                        <td mat-cell *matCellDef="let payment"> {{payment.quotedPrice}} </td>
                                     </ng-container>
                             
                                     <ng-container matColumnDef="jobDescription">
-                                        <th mat-header-cell *matHeaderCellDef> Job Description </th>
+                                        <th mat-header-cell *matHeaderCellDef> Job Desc </th>
                                         <td mat-cell *matCellDef="let payment"> {{payment.jobDescription}} </td>
                                     </ng-container>
                             
@@ -147,14 +147,39 @@
                                         <th mat-header-cell *matHeaderCellDef> Payment </th>
                                         <td mat-cell *matCellDef="let payment"> {{payment.payment | currency}} </td>
                                     </ng-container>
+
+                                    <ng-container matColumnDef="paymentPrecentage">
+                                        <th mat-header-cell *matHeaderCellDef> Payment(%) </th>
+                                        <td mat-cell *matCellDef="let payment"> {{payment.paymentPrecentage}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="paymentDate">
+                                        <th mat-header-cell *matHeaderCellDef> Payment Date </th>
+                                        <td mat-cell *matCellDef="let payment"> {{payment.paymentDate}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="recpNo">
+                                        <th mat-header-cell *matHeaderCellDef> Recep NO </th>
+                                        <td mat-cell *matCellDef="let payment"> {{payment.recpNo}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="totalDue">
+                                        <th mat-header-cell *matHeaderCellDef> Due </th>
+                                        <td mat-cell *matCellDef="let payment"> {{payment.totalDue}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="balance">
+                                        <th mat-header-cell *matHeaderCellDef> Balance </th>
+                                        <td mat-cell *matCellDef="let payment"> {{payment.balance}} </td>
+                                    </ng-container>
                             
                                     <ng-container matColumnDef="actions">
                                         <th mat-header-cell *matHeaderCellDef> Actions </th>
                                         <td mat-cell *matCellDef="let payment; let i = index; let last = last">
-                                            <button mat-icon-button color="primary" *ngIf="last" (click)="editPayment(payment)">
+                                            <button mat-icon-button color="primary" *ngIf="last && payment.isConfirmed" (click)="editPayment(payment)">
                                                 <mat-icon>edit</mat-icon>
                                             </button>
-                                            <button mat-icon-button color="warn" (click)="deletePayment(payment)">
+                                            <button mat-icon-button color="warn" *ngIf="last" (click)="deletePayment(payment)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </td>
