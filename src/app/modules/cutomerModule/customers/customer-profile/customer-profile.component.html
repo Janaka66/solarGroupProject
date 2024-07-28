@@ -163,7 +163,7 @@
                     <div class="email userData">
 
                         <label>Password</label>
-                        <input type="text" [(ngModel)]="userResetPassword" [disabled]="isEnabledUserPasswords">
+                        <input type="text" [(ngModel)]="userResetPassword" [disabled]="isEnabledUserPasswords" (keyup)="checkPasswordMatch()">
 
                     </div>
 
@@ -174,10 +174,17 @@
                     <div class="email userData">
 
                         <label>Confirm Password</label>
-                        <input type="text" [(ngModel)]="userResetPasswordForConfirm" [disabled]="isEnabledUserPasswords">
+                        <input type="text" [(ngModel)]="userResetPasswordForConfirm" [disabled]="isEnabledUserPasswords" (keyup)="checkPasswordMatch()">
                         
                     </div>
 
+                </div>
+
+                <div *ngIf="passwordsMatch === false" class="password-message">
+                    <span>Passwords do not match</span>
+                </div>
+                <div *ngIf="passwordsMatch === true" class="password-message">
+                    <span>Passwords match</span>
                 </div>
 
             </div>

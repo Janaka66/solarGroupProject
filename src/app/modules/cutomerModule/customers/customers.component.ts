@@ -230,6 +230,8 @@ export class CustomersComponent implements OnInit, AfterViewInit{
   
             })
 
+            debugger
+
             let updatePhoneRes = await this.extApi.updateCustPhones(deleteDataSet);
 
             if(updatePhoneRes.type === 'Success')
@@ -772,72 +774,68 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
   setDefault(type: any, index: number, event: any){
 
+    console.log(this.clonedPhoneNum)
+
     switch (type) {
 
       case "phoneNum":
+      
+        this.phoneNumbers.forEach((phoneNumber: any, i: any) => {
+            phoneNumber.isDefault = 0;
+            let foundPhoneObjPhone = this.clonedPhoneNum.findIndex((cstMl: any) => cstMl.phone === phoneNumber.phone);
+            if (foundPhoneObjPhone !== -1) {
+                this.clonedPhoneNum[foundPhoneObjPhone].isDefault = 0;
+            }
+        });
 
-      if(event.target.checked)
-        this.phoneNumbers[index]['isDefault'] = 1;
-      else
-        this.phoneNumbers[index]['isDefault'] = 0;
+          this.phoneNumbers[index].isDefault = 1;
+          let foundPhoneObjPhone = this.clonedPhoneNum.findIndex((cstMl: any) => cstMl.phone === this.phoneNumbers[index].phone);
+          if (foundPhoneObjPhone !== -1) {
+              this.clonedPhoneNum[foundPhoneObjPhone].isDefault = 1;
 
-        let foundPhoneObj = this.clonedPhoneNum.findIndex((cstMl : any) => cstMl.phone === this.phoneNumbers[index].phone);
-
-        if(foundPhoneObj !== -1){
-          
-          if(event.target.checked){
-            this.clonedPhoneNum[foundPhoneObj]['isDefault'] = 1;
-          }else{
-            this.clonedPhoneNum[foundPhoneObj]['isDefault'] = 0;
           }
-        }
-         
+          
+          this.phoneNumUpdated = true;
+          this.setDefPhone = true;
 
-        this.phoneNumUpdated = true;
-        this.setDefPhone = true;
         break;
 
       case "email":
 
-        if(event.target.checked)
-          this.emails[index]['isDefault'] = 1
-        else
-          this.emails[index]['isDefault'] = 0
+          this.emails.forEach((email: any, i: any) => {
+            email.isDefault = 0;
+            let foundPhoneObjEmail = this.clonedEmails.findIndex((cstMl: any) => cstMl.email === email.email);
+            if (foundPhoneObjEmail !== -1) {
+                this.clonedEmails[foundPhoneObjEmail].isDefault = 0;
+            }
+          });
 
-        let foundEmailObj = this.clonedEmails.findIndex((cstMl : any) => cstMl.email === this.emails[index].email);
-        
-        if(foundEmailObj !== -1){
+          this.emails[index].isDefault = 1;
+          let foundPhoneObjEmail = this.clonedEmails.findIndex((cstMl: any) => cstMl.email === this.emails[index].email);
+          if (foundPhoneObjEmail !== -1) {
+              this.clonedEmails[foundPhoneObjEmail].isDefault = 1;
 
-          if(event.target.checked){
-            this.clonedEmails[foundEmailObj]['isDefault'] = 1;
-          }else{
-            this.clonedEmails[foundEmailObj]['isDefault'] = 0;
           }
-        }
-
-
+          
         this.emailUpdated = true;
         this.setDefEmail = true;
         break;
 
       case "address":
-
-      if(event.target.checked)
-        this.addresses[index]['isDefault'] = 1
-      else
-        this.addresses[index]['isDefault'] = 0
-
-      let foundAddressObj = this.clonedCustAddersses.findIndex((cstMl : any) => cstMl.addLine1 === this.addresses[index].addLine1 && cstMl.addLine2 === this.addresses[index].addLine2);
+            this.addresses.forEach((address, i) => {
+              address.isDefault = 0;
+              let foundAddressObj = this.clonedCustAddersses.findIndex((cstMl: any) => cstMl.addLine1 === address.addLine1 && cstMl.addLine2 === address.addLine2);
+              if (foundAddressObj !== -1) {
+                  this.clonedCustAddersses[foundAddressObj].isDefault = 0;
+              }
+          });
       
-      if(foundAddressObj !== -1){
-
-        if(event.target.checked){
-          this.clonedCustAddersses[foundAddressObj]['isDefault'] = 1;
-        }else{
-          this.clonedCustAddersses[foundAddressObj]['isDefault'] = 0;
-        }
-      }
-
+      
+          this.addresses[index].isDefault = 1;
+          let foundAddressObj = this.clonedCustAddersses.findIndex((cstMl: any) => cstMl.addLine1 === this.addresses[index].addLine1 && cstMl.addLine2 === this.addresses[index].addLine2);
+          if (foundAddressObj !== -1) {
+              this.clonedCustAddersses[foundAddressObj].isDefault = 1;
+          }
           this.addressUpdate = true;
           this.setDefAddress = true;
         break;

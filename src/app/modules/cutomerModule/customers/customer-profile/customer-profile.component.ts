@@ -44,7 +44,9 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
   isEnabledUserPasswords: boolean = true;
   userResetPasswordForConfirm : any = '';
   userResetPassword : any = '';
-  
+  passwordsMatch: boolean | null = null;
+  confirmPassword: any;
+
   constructor(private communicationService: AppService, public cdr: ChangeDetectorRef, private extApi : ExtApiService, private dialog: MatDialog){
     window.onresize = this.enableButtonsDependOnScreenSize.bind(this);
   }
@@ -147,7 +149,7 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
       let req = {
         "userName": this.userName,
         "email": this.email,
-        "password": this.newPassword,
+        "password": this.userResetPassword,
         "token": this.tokenForResetPassword
       }
 
@@ -165,6 +167,11 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
 
     }
   }
+
+  checkPasswordMatch() {
+    this.passwordsMatch = this.userResetPassword === this.userResetPasswordForConfirm;
+  }
+  
 
   async loaAllprofiles(){
         try {
