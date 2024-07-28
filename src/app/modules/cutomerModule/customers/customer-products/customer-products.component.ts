@@ -55,7 +55,7 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
   prodDescription: any = '';
   remark: any = '';
   custProducts: any = [];
-  allItems: any = [];
+  allItems: any = []; //dont
   itemName: any = '';
 
   custProdName: any = '';
@@ -147,7 +147,7 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
 
       let reqFields = [
         {
-          "id": "string",
+          "id": this.prodId,
           "productName": this.prodName,
           "shortCode": this.shortCode,
           "status": 0
@@ -251,6 +251,19 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
 
     await this.getCustProducts();
 
+      this.itemName = '';
+      this.custProdName = '';
+      this.selectedCustProdData = '';
+      this.prodNameforItems = '';
+      this.prodRefNumber = '';
+      this.allCustProducts = '';
+      this.prodIdForGetItems = '';
+      this.prodName = '';
+      this.shortCode = '';
+      this.prodId;
+      this.prodDescription = '';
+      this.remark = '';
+
   }
 
   async getAllCustomers(){
@@ -322,6 +335,8 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
       let allCustomerProdData = await this.extApi.GetCustomerProdcut(reqFields);
 
       allCustomerProdData.data[0] = allCustomerProdData.data[0].filter((clNum: any) => clNum.status === 0);
+
+      console.log(this.rowData)
 
       allCustomerProdData.data[0].forEach((el: any) => {
         
@@ -641,12 +656,13 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
 
   async filterProdAndItems(event: any){
 
-    if(!this.customerAllProducts || !this.customerAllProducts?.length || this.customerAllProducts.length === 0){
-      this.notifyMessage("Filter", "Please select the customer first",NotificationType.warn)
-    }else{
+    console.log(this.customerAllProducts)
+    // if(!this.custProducts || !this.custProducts?.length || this.custProducts.length === 0){
+    //   this.notifyMessage("Filter", "Please select the customer first",NotificationType.warn)
+    // }else{
 
       this.custProducts = this.customerAllProducts.filter((el: any) => el.prodId === event.value.id)      
-    }
+    // }
 
   }
 

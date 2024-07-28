@@ -167,13 +167,10 @@
                                     <mat-label>Short Code</mat-label>
                                     <input matInput [(ngModel)]="shortCode" name="statusCode">
                                   </mat-form-field>
-        
-                                  <button mat-raised-button (click)="generateUniqueCode()">genarate Shortcode</button>
-    
                               </div>
     
                               <button mat-raised-button (click)="onButtonClick()">{{buttonText}}</button>
-                              <button mat-raised-button (click)="removeProduct()">Remove</button>
+                              <button mat-raised-button (click)="removeProduct()" style="margin-left: 10px;">Remove</button>
                               
                         </div>
     
