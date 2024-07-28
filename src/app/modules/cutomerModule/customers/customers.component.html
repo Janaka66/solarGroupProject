@@ -304,7 +304,8 @@
                                             
                                             <div class="docBtn">
 
-                                                <button   mat-flat-button color="primary" (click)="UpdateDocData()" [disabled]="!updateDocBtnDisabled">Update</button>
+                                                <button   mat-flat-button color="primary" (click)="newDocument()" [disabled]="!updateDocBtnDisabled">New Doc</button>
+                                                <button   mat-flat-button color="primary" (click)="UpdateDocData()" [disabled]="updateDocBtnDisabled">Update</button>
                                                 <button   mat-flat-button color="primary" (click)="clearDoc()">Clear</button>
 
                                             </div>
@@ -330,7 +331,6 @@
                                                 <img *ngIf="!fileAvailable" src="../../../../assets/folder.png" (click)="getFiles(doc.id)">
                                                 <img (click)="loadDataToInputs(doc)" *ngIf="fileAvailable" src="../../../../assets/pdfIcon.png">
                                                 <h4>{{doc.name}}</h4>
-    
     
                                                 <button mat-flat-button color="primary"  *ngIf="fileAvailable" (click)="deletePdf(doc)">Delete</button>
                                             </div>

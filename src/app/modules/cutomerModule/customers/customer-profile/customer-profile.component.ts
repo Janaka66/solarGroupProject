@@ -38,6 +38,7 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
   selectedEmployeeForRegUser: any = '';
   allEmployees: any;
   allUsers : any = [];
+  UserID: any;
 
   constructor(private communicationService: AppService, public cdr: ChangeDetectorRef, private extApi : ExtApiService, private dialog: MatDialog){
     window.onresize = this.enableButtonsDependOnScreenSize.bind(this);
@@ -257,7 +258,7 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
       
       let reqFields = 
         {
-          "id": "string",
+          "id": this.UserID,
           "dispname": this.displayName,
           "regID": this.selectedEmployeeForRegUser,
           "userName": this.userNameForRegister,
@@ -301,7 +302,8 @@ export class CustomerProfileComponent implements OnInit, AfterViewInit {
       this.emailForRegUser = user.email;
       this.phoneNmberForRegUser = user.phoneNumber;
       this.selectedUserMode = user.userModeId;
-      this.selectedEmployeeForRegUser = user.regID
+      this.selectedEmployeeForRegUser = user.regID;
+      this.UserID = user.id
     }
 
   private notifyMessage(title: string, message: string, notificationType: NotificationType) {

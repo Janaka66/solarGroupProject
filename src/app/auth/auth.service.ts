@@ -21,18 +21,24 @@ export class AuthService {
 
   }
 
-  login(email: any, password: any) {
+  login(userName: any, password: any) {
 
     return new Promise(async (resolve, reject) => {
 
+
+      let reqFields = {
+        "userName": userName,
+        "password": password
+      }
+
       try {
 
-        let token = await this.extApi.getToken(email, password);
+        let token = await this.extApi.validateUserLogin(reqFields);
 
-        if(token){
+        if(token.data[0]){
 
-          localStorage.setItem("token", token);
-          this.appService.currentUser = email;
+          localStorage.setItem("token", token.data[0]);
+          this.appService.currentUser = userName;
           resolve(true);
 
         }else{

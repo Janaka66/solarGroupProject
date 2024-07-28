@@ -596,7 +596,9 @@ export class CustomersComponent implements OnInit, AfterViewInit{
         return acc;
       }, {});
 
+      console.log(this.documentTypes)
       console.log(this.documents)
+      console.log(filterNotDeletedDocData)
       this.copyOfDocuments = {...this.documents};
       this.selectedCustomerAllDocCloned = [...filterNotDeletedDocData];
     }
@@ -963,18 +965,47 @@ export class CustomersComponent implements OnInit, AfterViewInit{
       this.fileAvailable = true;
 
       return doc;
+
     } else if (typeof doc === 'object' && doc !== null) {
 
       this.fileAvailable = false;
 
       if(Object.keys(doc).length !== 0){
-        return this.documentTypes.filter((el:any, idx: any) => el.id === Object.keys(doc)[idx]).map((el:any) => ({ id: el.id, name: el.name }));
+       
+        console.log(this.documentTypes)
+
+        // let A = this.documentTypes.filter((el:any, idx: any) => el.id === Object.keys(doc)[idx].toString())
+        // console.log(A)
+
+        // Get the array of IDs from the keys of the doc object
+        let docKeys = Object.keys(doc);
+
+        // Filter documentTypes based on these IDs
+        let A = this.documentTypes.filter((el: any) => docKeys.includes(el.id));
+
+        console.log(A);
+
+
+        let B = A.map((el:any) => ({ id: el.id, name: el.name }))
+        return B
+
+
       }
       else
-        return Object.keys(doc);
+        console.log(Object.keys(doc));
     }
 
     return 
+  }
+
+
+  newDocument(){
+
+    this.documentDetails.reset();
+    this.uploadedDoc = '';
+    this.updateDocBtnDisabled = false;
+    this.documents = [];
+
   }
 
   getFiles(docID: any){
@@ -1049,38 +1080,45 @@ export class CustomersComponent implements OnInit, AfterViewInit{
 
   async UpdateDocData(){
 
-          this.CommonLoaderComponent.show();
+    this.CommonLoaderComponent.show();
 
     let findDoc = this.selectedCustomerAllDocCloned.find((el: any) => el.docName === this.documentDetails.value.docName);
 
-    let reqFields = [
-      {
-        "id": findDoc.id,
-        "docTypeId": this.documentTypes.find((el: any) => el.name === this.documentDetails.value.docType).id,
-        "displayFileName": findDoc.displayFileName,
-        "remark": this.documentDetails.value.remark,
-        "status": 0,
-        "custId": findDoc.custId
+    if(!findDoc){
+      this.notifyMessage("Document Update", "Please select an document to update" ,NotificationType.warn)
+      this.CommonLoaderComponent.hide();
+    }else{
+
+      let reqFields = [
+        {
+          "id": findDoc.id,
+          "docTypeId": this.documentTypes.find((el: any) => el.name === this.documentDetails.value.docType).id,
+          "displayFileName": findDoc.displayFileName,
+          "remark": this.documentDetails.value.remark,
+          "status": 0,
+          "custId": findDoc.custId
+        }
+      ]
+  
+      try {
+        
+        let updateDocRes = await this.extApi.UpdateCustomerDoc(reqFields);
+  
+        if(updateDocRes.type === 'Success')
+          this.notifyMessage("Document Update", "Successfully update the PDF" ,NotificationType.warn)
+  
+        this.documentDetails.reset();
+        
+        this.CommonLoaderComponent.hide();
+        this.documents = [];
+        this.copyOfDocuments = [];
+  
+      } catch (e: any) {
+        console.log(e)
+        this.CommonLoaderComponent.hide();
       }
-    ]
-
-    try {
-      
-      let updateDocRes = await this.extApi.UpdateCustomerDoc(reqFields);
-
-      if(updateDocRes.type === 'Success')
-        this.notifyMessage("Document Update", "Successfully update the PDF" ,NotificationType.warn)
-
-      this.documentDetails.reset();
-      
-            this.CommonLoaderComponent.hide();
-      this.documents = [];
-      this.copyOfDocuments = [];
-
-    } catch (e: any) {
-      console.log(e)
-            this.CommonLoaderComponent.hide();
     }
+
   }
 
   loadDataToInputs(doc: any){
