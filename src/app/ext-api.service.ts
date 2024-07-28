@@ -471,4 +471,17 @@ export class ExtApiService {
   ResetPassword(reqFields?: any): Promise<any> {
     return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/User/ResetPassword`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
   }
+
+  RegisterUsers(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/User/RegisterUsers`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+  }
+
+  GetUsers(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/User/GetUsers`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+  }
+
+  UpdateUsers(reqFields?: any): Promise<any> {
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/User/UpdateUsers`, reqFields, {headers: new HttpHeaders().set('Content-Type', 'application/json')},).toPromise();
+  }
+
 }

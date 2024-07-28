@@ -24,96 +24,108 @@
                 <mat-icon *ngIf="enableIcons">security</mat-icon>
             </div>
 
+            <div class="userReg card" (click)="changeUserProfileView('user-register')">
+                <label *ngIf="!enableIcons"><mat-icon >security</mat-icon>User Register</label>
+                <mat-icon *ngIf="enableIcons">security</mat-icon>
+            </div>
+
        </div>
 
        <div *ngIf="accountSettingAvailable" class="account-setting-content">
 
-            <div class="user-profile-section card">
+        <div class="user-info card">
 
-                <div class="profile-img">
+            <h2>Register User</h2>
 
-                </div>
-                <div class="user-data">
+            <div class="displayName">
 
-                    <label>User Name</label>
-                    <label>User Roll</label>
+                <label>Display Name</label>
+                <input type="text" [(ngModel)]="displayName">
 
-                </div>
-                <div class="upload-btn">
-                    <button mat-raised-button color="primary">Upload</button>
-                </div>
             </div>
 
-            <div class="user-info card">
+            <div class="userName">
 
-                <h2>Change your informations here</h2>
+                <label>User Name</label>
+                <input type="text" [(ngModel)]="userNameForRegister">
 
-                <div class="sec-1">
+            </div>
 
-                    <div class="userName userData">
+            <div class="email">
 
-                        <label>Full Name</label>
-                        <input type="text">
-    
-                    </div>
-    
-                    <div class="email userData">
-    
-                        <label>Email Address</label>
-                        <input type="text">
-                        
-                    </div>
+                <label>Email</label>
+                <input type="text" [(ngModel)]="emailForRegUser">
 
-                </div>
+            </div>
 
-                <div class="address">
+            <div class="password">
 
-                    <label>Address</label>
-                    <input type="text">
-                    
-                </div>
+                <label>Password</label>
+                <input type="text" [(ngModel)]="newPasswordForRegUser" [disabled]="true">
 
-                <div class="sec-2">
+            </div>
 
-                    <div class="city userData">
+            <div class="phoneNumber">
 
-                        <label>City</label>
-                        <input type="text">
-                        
-                    </div>
+                <label>Phone Number</label>
+                <input type="text" [(ngModel)]="phoneNmberForRegUser">
 
-                    <div class="state userData">
+            </div>
 
-                        <label>State</label>
-                        <input type="text">
-                        
-                    </div>
+            <div class="userMode">
 
-                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>User Modes</mat-label>
+                    <mat-select [(ngModel)]="selectedUserMode">
+                        <mat-option *ngFor="let mode of allUserMods" [value]="mode.id">
+                        {{ mode.modeDesc }}
+                        </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
 
+            <div class="employees">
 
-                <div class="sec-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Employees</mat-label>
+                    <mat-select [(ngModel)]="selectedEmployeeForRegUser">
+                        <mat-option *ngFor="let emp of allEmployees" [value]="emp.id">
+                        {{ emp.fname }}
+                        </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
 
-                    <div class="zip userData">
+        </div>
 
-                        <label>Zip Code</label>
-                        <input type="text">
-                        
-                    </div>
+            <div class="useres">
 
-                    <div class="country userData">
+                <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Display Name</th>
+                          <th>Email</th>
+                          <th>Phone number</th>
+                          <th>User Name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let user of allUsers"  (click)="loadUserData(user)">
+                          <td>{{ user.dispname }}</td>
+                          <td>{{ user.email }}</td>
+                          <td>{{ user.phoneNumber }}</td>
+                          <td>{{ user.userName }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-                        <label>Contry</label>
-                        <input type="text">
-                        
-                    </div>
-
-                </div>
-
+                  
             </div>
             
             <div class="btn">
-                <button mat-raised-button color="primary">Update</button>
+                <button mat-raised-button color="primary" (click)="updateUser()">Update</button>
             </div>
 
        </div>
@@ -141,7 +153,7 @@
                     <div class="right">
 
                         <button mat-raised-button color="primary" (click)="getVerificationCode()">Get verification Code</button>
-                        
+
                     </div>
 
                 </div>
@@ -170,6 +182,160 @@
                 <button mat-raised-button color="primary" (click)="updatePrivacy()">Update</button>
             </div>
        </div>
+
+       <div *ngIf="regsterUserAvailable" class="security-setting-content">
+
+        <div class="user-info card">
+
+            <h2>Register User</h2>
+
+            <div class="displayName">
+
+                <label>Display Name</label>
+                <input type="text" [(ngModel)]="displayName">
+
+            </div>
+
+            <div class="userName">
+
+                <label>User Name</label>
+                <input type="text" [(ngModel)]="userNameForRegister">
+
+            </div>
+
+            <div class="email">
+
+                <label>Email</label>
+                <input type="text" [(ngModel)]="emailForRegUser">
+
+            </div>
+
+            <div class="password">
+
+                <label>Password</label>
+                <input type="text" [(ngModel)]="newPasswordForRegUser">
+
+            </div>
+
+            <div class="phoneNumber">
+
+                <label>Phone Number</label>
+                <input type="text" [(ngModel)]="phoneNmberForRegUser">
+
+            </div>
+
+            <div class="userMode">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>User Modes</mat-label>
+                    <mat-select [(ngModel)]="selectedUserMode">
+                        <mat-option *ngFor="let mode of allUserMods" [value]="mode.id">
+                        {{ mode.modeDesc }}
+                        </mat-option>
+                </mat-select>
+                </mat-form-field>
+
+                <div class="showAllUsers">
+
+                    <div class="allUsers">
+        
+                        <div *ngFor="let user of allUsers" (click)="register()">Register</div>
+                        
+                    </div>
+
+                    <!-- <div class="btn">
+                        <button mat-raised-button color="primary" (click)="getUserByMode()">Show Users</button>
+                    </div> -->
+        
+                </div>
+            </div>
+
+            <div class="employees">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Employees</mat-label>
+                    <mat-select [(ngModel)]="selectedEmployeeForRegUser">
+                        <mat-option *ngFor="let emp of allEmployees" [value]="emp.id">
+                        {{ emp.fname }}
+                        </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        
+        <div class="btn">
+            <button mat-raised-button color="primary" (click)="register()">Register</button>
+        </div>
+   </div>
+
+       <!-- <div *ngIf="regsterUserAvailable" class="registerUser-content">
+
+        <div class="regUserInfo card">
+
+            <h2>Register User</h2>
+
+            <div class="displayName">
+
+                <label>Display Name</label>
+                <input type="text" [(ngModel)]="displayName">
+
+            </div>
+
+            <div class="userName">
+
+                <div class="left">
+                    <label>User Name</label>
+                    <input type="text" [(ngModel)]="userNameForRegister">
+                </div>
+
+            </div>
+
+            <div class="email">
+
+                <label>Email</label>
+                <input type="text" [(ngModel)]="emailForRegUser">
+
+            </div>
+
+            <div class="sec-1">
+
+                <div class="email userData">
+
+                    <label>Password</label>
+                    <input type="text" [(ngModel)]="newPasswordForRegUser">
+                    
+                </div>
+
+            </div>
+
+            <div class="phoneNumber">
+
+                <label>Phone Number</label>
+                <input type="text" [(ngModel)]="phoneNmberForRegUser">
+
+            </div>
+
+            <div class="userMode">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>User Modes</mat-label>
+                    <mat-select [(ngModel)]="selectedUserMode">
+                        <mat-option *ngFor="let mode of allUserMods" [value]="mode.id">
+                        {{ mode.modeDesc }}
+                        </mat-option>
+                </mat-select>
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+        <div class="btn">
+            <button mat-raised-button color="primary" (click)="updatePrivacy()">Update</button>
+        </div>
+   </div> -->
 
     </div>
 
