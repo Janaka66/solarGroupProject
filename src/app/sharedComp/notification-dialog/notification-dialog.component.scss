@@ -1,5 +1,15 @@
 .notification-dialog {
 
+    .title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        div{
+            width: 100%;
+        }
+    }
     font-family: Roboto, "Helvetica Neue", sans-serif;
     h1 {
         margin: 0;
@@ -21,6 +31,7 @@
         &.content {
             padding: 10px;
             padding-bottom: 5px;
+            height: 100%;
 
             .subject-info-dialog-msg-container{
 
@@ -33,6 +44,27 @@
             .contentTitle{
                 font-size: 17px;
                 font-weight: 500;
+            }
+
+            .assignedEmpSec{
+                height: 100%;
+                overflow: auto;
+                display: flex;
+                flex-direction: row;
+
+                .emp{
+                    height: 100%;
+                    width: 50%;
+                }
+
+                .assignedEmp{
+                    height: 100%;
+                    width: 50%;
+                }
+
+                .empAdd{
+                    padding-top: 10px;
+                }
             }
         }
 

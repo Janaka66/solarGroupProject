@@ -122,8 +122,7 @@ export class LeftPanelComponent {
 
   logout(){
     localStorage.removeItem("token");
-    localStorage.removeItem("userData");
-    window.location.reload();
+    this.router.navigate(['/login']);
   }
 
   getSliderwindow(){
@@ -131,4 +130,6 @@ export class LeftPanelComponent {
     this.appService.sendMsgToSetupSlider('slider')
 
   }
+
+
 }

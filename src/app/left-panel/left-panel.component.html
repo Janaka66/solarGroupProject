@@ -39,8 +39,18 @@
             </ng-container>
         </mat-nav-list>
     
-        <div class="setupIcon" (click)="getSliderwindow()">
-            <img src="../../assets/setup.png">
+        <div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+            </div>
+
+            <div>
+                <div class="setupIcon" (click)="getSliderwindow()">
+                    <img src="../../assets/setup.png">
+                </div>
+            </div>
         </div>
+       
     </div>
 </div>

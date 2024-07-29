@@ -861,4 +861,27 @@ export class ExtApiService {
 
     return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/User/validateUserLogin`, reqFields, {headers}).toPromise();
   }
+
+  GetEmployeeAssignedInquiries(reqFields?: any): Promise<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+  
+    const options = { headers, params: reqFields };
+  
+    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedInquiries`, options).toPromise();
+  }
+  
+  GetEmployeeAssignedComplains(reqFields?: any): Promise<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+  
+    const options = { headers, params: reqFields };
+  
+    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedComplains`, options).toPromise();
+  }
+  
 }

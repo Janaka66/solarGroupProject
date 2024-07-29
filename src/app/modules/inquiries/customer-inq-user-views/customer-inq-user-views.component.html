@@ -20,25 +20,28 @@
                     <mat-card-title>Inquiry Details</mat-card-title>
                   </mat-card-header>
                   <mat-card-content>
-                    <p><strong>Inquiry Added At:</strong> {{ inquiry.iquiryAddeddAt | date: 'medium' }}</p>
-                    <p><strong>Rejected At:</strong> {{ inquiry.rejectedAt ? (inquiry.rejectedAt | date: 'medium') : 'Not Rejected' }}</p>
-                    <p><strong>Completed At:</strong> {{ inquiry.completedAt ? (inquiry.completedAt | date: 'medium') : 'Not Completed' }}</p>
-                    <p><strong>Description:</strong> {{ inquiry.description }}</p>
+                    <p><strong>Inquiry Added At:</strong> {{ inquiry.dispName }}</p>
+                    <p><strong>Inquiry Added At:</strong> {{ inquiry.inqiquiryAddeddAt | date: 'medium' }}</p>
+                    <p><strong>Rejected At:</strong> {{ inquiry.inqrejectedAt ? (inquiry.inqrejectedAt | date: 'medium') : 'Not Rejected' }}</p>
+                    <p><strong>Completed At:</strong> {{ inquiry.inqcompletedAt ? (inquiry.inqcompletedAt | date: 'medium') : 'Not Completed' }}</p>
+                    <p><strong>Description:</strong> {{ inquiry.inqdescription }}</p>
                     <p><strong>Status:</strong> 
-                      <span *ngIf="inquiry.isAccepted && !inquiry.isrejected" class="status accepted">Accepted</span>
-                      <span *ngIf="inquiry.isrejected" class="status rejected">Rejected by {{ inquiry.rejectedBy }}</span>
-                      <span *ngIf="!inquiry.isAccepted && !inquiry.isrejected" class="status pending">Pending</span>
+                      <span *ngIf="inquiry.isAccepted && !inquiry.isRejected" class="status accepted">Accepted</span>
+                      <span *ngIf="!inquiry.isAccepted && inquiry.isRejected" class="status rejected">Rejected</span>
+                      <span *ngIf="!inquiry.isAccepted && !inquiry.isRejected" class="status pending">Pending</span>
                     </p>
-                    <p><strong>Employees:</strong></p>
-                    <ul>
-                      <li *ngFor="let employee of inquiry.employees">
-                        {{ employee.name }} ({{ employee.email }})
-                      </li>
-                    </ul>
                   </mat-card-content>
-                  <mat-card-actions *ngIf="isAdmin">
-                    <button mat-raised-button color="primary" (click)="acceptInquiry(inquiry)">Accept</button>
-                    <button mat-raised-button color="warn" (click)="rejectInquiry(inquiry)">Reject</button>
+                  <mat-card-actions>
+
+                    <div>
+                      <button mat-raised-button color="primary" (click)="acceptInquiry(inquiry)">Accept</button>
+                      <button mat-raised-button color="warn" (click)="rejectInquiry(inquiry)" style="margin-left: 10px;">Reject</button>
+                    </div>
+
+                    <div>
+                      <button mat-raised-button color="warn" style="background-color: green;" (click)="update(inquiry)">Update</button>
+                    </div>
+
                   </mat-card-actions>
                 </mat-card>
               </ng-container>

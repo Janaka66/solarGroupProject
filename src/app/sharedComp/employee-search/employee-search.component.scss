@@ -46,7 +46,7 @@
     }
 
     .search-result{
-        height: 100%;
+        height: calc(100% - 55px);
         margin-top: 15px;
         overflow: auto;
 

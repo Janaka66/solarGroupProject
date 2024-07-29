@@ -68,7 +68,7 @@ export class CustomerInquiriesComponent implements OnInit, AfterViewInit{
   }
 
   async getCustomerInquiry(reqFields: any) {
-    
+    debugger
     this.isLoaderAvailable = true;
 
       try {
@@ -253,7 +253,7 @@ export class CustomerInquiriesComponent implements OnInit, AfterViewInit{
   }
 
   showClickedData(data: any){
-
+debugger
     this.description = data.description
     this.inqDate = data.iquiryAddeddAt
     this.completedDate = data.completedAt

@@ -12,6 +12,7 @@ export class AppService {
   data$ = this.dataSubject.asObservable();
   sliderInform$ = this.dataSlider.asObservable();
   currentUser: any;
+  selectedForInq = [] as any;
 
   constructor() { }
   

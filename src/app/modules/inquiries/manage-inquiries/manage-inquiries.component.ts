@@ -337,44 +337,60 @@ debugger
 
     let reqFields = [] as any
 
-    this.selectedForInq.forEach((el: any) => {
+    console.log(this.selectedForInq)
+    let updatedRes;
+
+    if(this.selectedForInq.length === 0){
+
+      updatedRes = await this.extApi.UpdateCustomerInquiryEmp({
+        "inqId": this.selectedInqData.cInqId,
+        "inqEmployees":[]
+
+      });
+
+    }else{
       
-      reqFields.push(
-        {
-          "cihempId": "string",
-          "custId": this.selectedCustID,
-          "inqId": this.selectedInqData.cInqId,
-          "empId": el.id,
-          "addedAt": this.selectedInqData.iquiryAddeddAt,
-          "completedAt": this.selectedInqData.completedAt,
-          "adminNotes": "string",
-          "employeeNotes": '',
-          "isAccepted": this.selectedInqData.isAccepted,
-          "isRejected": this.selectedInqData.isAccepted,
-          "status": 0
-        }
-      )
-    });
-    
-    try {
+      this.selectedForInq.forEach((el: any) => {
       
-      let updatedRes = await this.extApi.UpdateCustomerInquiryEmp({
-        "inqId": reqFields[0].inqId,
-        "inqEmployees":reqFields
+        reqFields.push(
+          {
+            "cihempId": "string",
+            "custId": this.selectedCustID,
+            "inqId": this.selectedInqData.cInqId,
+            "empId": el.id,
+            "addedAt": this.selectedInqData.iquiryAddeddAt,
+            "completedAt": this.selectedInqData.completedAt,
+            "adminNotes": "string",
+            "employeeNotes": '',
+            "isAccepted": false,
+            "isRejected": false,
+            "status": 0
+          }
+        )
       });
       
-      if(updatedRes.status === '200'){
-
-        alert('success')
-        this.clear()
-        this.getAllCustomers()
+      try {
+        
+        updatedRes = await this.extApi.UpdateCustomerInquiryEmp({
+          "inqId": reqFields[0].inqId,
+          "inqEmployees":reqFields
+        });
+        
+        if(updatedRes.status === '200'){
+  
+          alert('success')
+          this.clear()
+          this.getAllCustomers()
+        }
+  
+  
+      } catch (error) {
+        console.log(error)
       }
-
-
-    } catch (error) {
-      console.log(error)
     }
 
+    alert("success")
+    
   }
 
   async removeInquiry(){
@@ -410,7 +426,7 @@ debugger
   }
 
   showClickedData(inquire: any, container: HTMLElement){
-
+debugger
     this.selectedForInq = [];
 
     if (this.selectedContainer) {

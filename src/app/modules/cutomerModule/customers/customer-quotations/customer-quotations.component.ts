@@ -52,10 +52,11 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     selectedForInq = [] as any;
     selectedProduct: any;
     addEmpDisabled: boolean = true;
-  getAllProduct: any;
-  custAllproducts: any;
-  loadcustomerProductsDropDown = [] as any;
-
+    getAllProduct: any;
+    custAllproducts: any;
+    loadcustomerProductsDropDown = [] as any;
+    handleIconDisabled: boolean = false;
+    ;
     constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
 
   }
@@ -119,28 +120,34 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   async bindCutomerData(custData: any){
 
+      this.allIQuot = []
+      this.prodRefNumbers = [];
+
       this.CommonLoaderComponent.show();
       this.selectedCustID = custData.id;
 
       this.selectedForInq = [];
       await this.getAllemployees();
-      
-      try {
+      await this.getProducts();
+
+      this.CommonLoaderComponent.hide();
+
+      // try {
           
-          await this.getProducts();
-          let custAddress = await this.extApi.CustomerAddresses(custData.id);
 
-          let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
-          this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
+      //     //let custAddress = await this.extApi.CustomerAddresses(custData.id);
+
+      //     //let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
+      //     //this.formViewer.setSelectedCustQuotData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
 
 
-          this.CommonLoaderComponent.hide();
+        
 
-      } catch (error) {
+      // } catch (error) {
           
-          alert("There is a problem when getting an address for this customer. Please check if this customer has default address")
-          this.CommonLoaderComponent.show();
-      }
+      //     //alert("There is a problem when getting an address for this customer. Please check if this customer has default address")
+      //     this.CommonLoaderComponent.show();
+      // }
 
   }
 
@@ -187,7 +194,9 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   }
 
-  async selectItem(event: any){
+  async selectItem(event: any){ 
+
+    this.handleIconDisabled = true;
 
     this.selecetedQIItem = event;
     this.formViewer.viewSelectedInvoice(event)
@@ -299,7 +308,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   bindEmployeeData(event: any){
 
-    this.isLoaderAvailable = true;
+    this.CommonLoaderComponent.show();
 
     let existData = this.selectedForInq.filter((el: any) => el.id === event.selectedData.id);
 
@@ -325,7 +334,8 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     // else
     //   this.isSelectedInqDisabled = true;
 
-    this.isLoaderAvailable = false;
+   
+    this.CommonLoaderComponent.false();
   }
 
   async getAllemployees(selectedIq = []){
@@ -357,18 +367,19 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     }
   }
 
-  async sendSelectedEmpToAdd(){
-    this.formViewer.UpdateQuotationHasEmployeeToConfirm(this.selectedForInq)
+  async sendSelectedEmpToAdd(){ 
+    debugger
+    this.formViewer.UpdateQuotationHasEmployeeToConfirm(this.communicationService.selectedForInq)
     this.selectedForInq = [];
 
     await this.getAllemployees();
   }
 
   async GetQuotationHasEmployeeToConfirm(){
-debugger
+
     try {
       
-      debugger
+      
       let res = await this.extApi.GetQuotationHasEmployeeToConfirm({quotID: this.selecetedQIItem.id});
 
       console.log(res.data)
@@ -404,6 +415,7 @@ debugger
         })
       }
 
+      this
       this.EmployeeSearchComponent.showEmployees(result.data);
 
     } catch (e: any) {
@@ -428,6 +440,27 @@ debugger
       width: '300px',
       data: { title, message, notificationType}
     });
+  }
+
+
+  public async hadleAssignedEmp(event: any) {
+    event.stopPropagation();
+
+    await this.GetQuotationHasEmployeeToConfirm()
+
+    let userChoice = await this.dialog.open(NotificationDialogComponent, {
+      width: '600px',
+      data: {showEmp: true, quatID: this.selecetedQIItem.id}
+      
+    }).afterClosed().toPromise();
+  
+    if (userChoice){
+     debugger
+     this.sendSelectedEmpToAdd()
+    }
+    else{
+      debugger
+    }
   }
 
   async getProducts(){

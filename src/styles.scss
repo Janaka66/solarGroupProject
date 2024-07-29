@@ -207,3 +207,33 @@ p-carousel .selected-item {
         flex-direction: column;
     }
 }
+
+mat-dialog-container{
+
+    .mdc-dialog__container{
+
+        .mat-mdc-dialog-surface {
+            
+            overflow: hidden;
+            
+            app-notification-dialog{
+
+                .notification-dialog {
+                 
+                    .content{
+                        overflow: hidden;
+
+                        .assignedEmpSec{
+                            overflow: hidden;
+
+                            .emp{
+                                overflow: hidden;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

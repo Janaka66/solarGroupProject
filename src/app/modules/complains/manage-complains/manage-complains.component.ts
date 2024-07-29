@@ -296,50 +296,61 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
   }
 
   async updateInquiry(){
-
-              this.CommonLoaderComponent.hide();
+debugger
+    this.CommonLoaderComponent.hide();
 
     let reqFields = [] as any
 
-    this.selectedForInq.forEach((el: any) => {
-      
-      console.log(this.selectedInqData)
-      reqFields.push(
-        {
-          "ccheid": "string",
-          "custId": this.selectedCustID,
-          "ccid": this.selectedInqData.compId,
-          "empID": el.id,
-          "addedAt": this.selectedInqData.complainedAt,
-          "completedAt": this.selectedInqData.completedAt,
-          "adminNotes": "string",
-          "employeeNotes": "",
-          "isHandled": this.selectedInqData.isHandled,
-          "status": 0
-        }
-      )
-    });
-    
-    try {
-      
+
+    if(this.selectedForInq.length === 0){
+
       let updatedRes = await this.extApi.UpdateCustomerComplainEmp({
-        "compId": reqFields[0].ccid,
-        "list":reqFields
+        "compId": this.selectedInqData.compId,
+        "list":[]
+      });
+
+      alert('success')
+    }else{
+      this.selectedForInq.forEach((el: any) => {
+        
+        console.log(this.selectedInqData)
+        reqFields.push(
+          {
+            "ccheid": "string",
+            "custId": this.selectedCustID,
+            "ccid": this.selectedInqData.compId,
+            "empID": el.id,
+            "addedAt": this.selectedInqData.complainedAt,
+            "completedAt": this.selectedInqData.completedAt,
+            "adminNotes": "string",
+            "employeeNotes": "",
+            "isHandled": false,
+            "status": 0
+          }
+        )
       });
       
-      if(updatedRes.status === '200'){
+      try {
+        
+        let updatedRes = await this.extApi.UpdateCustomerComplainEmp({
+          "compId": reqFields[0].ccid,
+          "list":reqFields
+        });
+        
+        if(updatedRes.status === '200'){
 
-        this.notifyMessage("Compains", "Successfully updated" ,NotificationType.success)
+          this.notifyMessage("Compains", "Successfully updated" ,NotificationType.success)
 
-        this.clear()
-        await this.getAllCustomers()
+          this.clear()
+          await this.getAllCustomers()
+        }
+
+                  this.CommonLoaderComponent.hide();
+
+      } catch (error) {
+        console.log(error)
+                  this.CommonLoaderComponent.hide();
       }
-
-                this.CommonLoaderComponent.hide();
-
-    } catch (error) {
-      console.log(error)
-                this.CommonLoaderComponent.hide();
     }
 
   }
@@ -384,7 +395,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
           
           try {
             
-            let empData = await this.extApi.GetEmployee(JSON.stringify(el.empID));
+            let empData = await this.extApi.GetEmployee({"id": el.empID});
             
             el['initials'] = empData?.data[0]?.initials || 'Not'
             el['fName'] = empData?.data[0]?.fname || 'Found'

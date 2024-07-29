@@ -1,4 +1,4 @@
-<div class="notification-dialog" [ngClass]="{
+<div class="notification-dialog" *ngIf="!showEmpView" [ngClass]="{
     error: data.notificationType === notificationType.error, 
     warn: data.notificationType === notificationType.warn,
     success: data.notificationType === notificationType.success,
@@ -39,4 +39,57 @@
         </div>
         
       </div>
+</div>
+
+<div class="notification-dialog" *ngIf="showEmpView" style="display: flex ;height: 450px;flex-direction: column;">
+
+    <div class="title">
+
+      <div>
+        <h1 mat-dialog-title>
+      
+          Assign Employees to Quatation
+    
+        </h1>
+      </div>
+      <div>
+        <app-common-loader #loader></app-common-loader>
+      </div>
     </div>
+
+    <div class="content">
+
+      
+      <div class="assignedEmpSec">
+                         
+        <div class="emp">
+
+            <h4>All Employees</h4>
+
+            <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"></app-employee-search>
+
+        </div>
+
+        <div class="assignedEmp">
+
+            <h4>Assigned Employees</h4>
+
+            <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq">
+
+                <mat-card-header>
+                  <mat-card-title-group>
+                    <mat-card-title>{{selectedIngEmp.initials + ' ' + selectedIngEmp.fname}}</mat-card-title>
+                  </mat-card-title-group>
+                </mat-card-header>
+    
+            </mat-card>
+            
+        </div>
+
+        <button  mat-raised-button color="primary" (click)="dialogRef.close('yes')">Save</button>
+
+    </div>
+
+      
+    </div>
+  </div>

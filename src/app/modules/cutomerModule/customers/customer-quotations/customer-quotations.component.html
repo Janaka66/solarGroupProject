@@ -88,7 +88,7 @@
                                         </div>
 
                                         <button (click)="removeQuatOrInvoice(product); $event.stopPropagation()">Delete</button>
-
+                                        <mat-icon (click)="hadleAssignedEmp($event)" *ngIf="handleIconDisabled">group_add</mat-icon>
                                     </div>
                                 </div>
                             </ng-template>
