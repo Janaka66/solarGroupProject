@@ -28,18 +28,18 @@ export class sharedData{
     majorCompInfo = [
 
         {icon : "", title: "Dashboard",                     comp: DashboardComponent,   idx: 1,                 children: []} ,
-        {icon : "", title: "Products",                      comp: ProductsComponent,    idx: 2,                 children: []} ,
+        // {icon : "", title: "Products",                      comp: ProductsComponent,    idx: 2,                 children: []} ,
         {icon : "", title: "Customers",     idx: 0, children: [
             {icon : "", title: "Customers",                 comp: CustomersComponent,           idx: 3},
             {icon : "", title: "Customer Products",         comp: CustomerProductsComponent,    idx: 4},
             {icon : "", title: "Customer Invoices",         comp: CustomerInvoicesComponent,    idx: 5},
             {icon : "", title: "Customer Quotations",       comp: CustomerQuotationsComponent,  idx: 6},
             {icon : "", title: "Customer Payments",         comp: CustomerPaymentsComponent,    idx: 7},
-            {icon : "", title: "Customer Profiles",         comp: CustomerProfileComponent,     idx: 8}
+            // {icon : "", title: "Customer Profiles",         comp: CustomerProfileComponent,     idx: 8}
             
         ]} ,
-        {icon : "", title: "Completions",                   comp: CompleationsComponent,        idx: 9,         children: []} ,
-        {icon : "", title: "Vistors",                       comp: VisitorsComponent,            idx: 10,        children: []} ,
+        // {icon : "", title: "Completions",                   comp: CompleationsComponent,        idx: 9,         children: []} ,
+        //{icon : "", title: "Vistors",                       comp: VisitorsComponent,            idx: 10,        children: []} ,
         {icon : "", title: "Employees",     idx: 0, children: [
             {icon : "", title: "Add Employees",             comp: EmployeeComponent,            idx: 21}
         ]} ,
@@ -52,7 +52,8 @@ export class sharedData{
             {icon : "", title: "Customer Complains",        comp: CustomerComplainsComponent,   idx: 24},
             {icon : "", title: "Manage Complains",          comp: ManageComplainsComponent,     idx: 25},
             {icon : "", title: "cust Complain userMode",          comp: CustomerComplainUserViewComponent,     idx: 31},
-        ]} 
+        ]},
+        {icon : "", title: "Customer Profiles", comp: CustomerProfileComponent,   idx: 8, children: []} , 
     ]
     
 

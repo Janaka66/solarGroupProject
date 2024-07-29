@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 
 import { ColDef } from 'ag-grid-community'; 
@@ -56,7 +56,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   allProdReferanceForSearch = [] as any;
   allProductsForGetNames: any;
 
-  constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private dialog: MatDialog){
+  constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private dialog: MatDialog, private cdr: ChangeDetectorRef){
 
     this.paymentForm = this.fb.group({
       customerName: [{ value: '', disabled: true }, Validators.required],
@@ -78,6 +78,8 @@ export class CustomerPaymentsComponent implements AfterViewInit {
     await this.getProducts();
 
     this.CommonLoaderComponent.hide();
+
+    this.notifyMessage("Welcome to the payment view", "Please selecet the customoer first to load the products",NotificationType.success)
   }
 
   handleLeftBar() {
@@ -100,8 +102,15 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
     this.paymentForm.get('customerName')?.setValue(custName);
 
-    await this.GetCustomerProdcutForTwoProdDrops();
     this.payments = [];
+    this.prodForSearch = '';
+    this.selectedRefNum = ''
+    this.quotForSearch = '';
+    this.allProdReferance = [];
+    this.allQuatationForDrop = [];
+
+    await this.GetCustomerProdcutForTwoProdDrops();
+
 
     this.CommonLoaderComponent.hide();
 
@@ -189,10 +198,16 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
       payements.data[0] = payements.data[0].filter((el: any) => el.status === 0);
 
-      this.genaratePaymentData(payements.data[0])
+      if(!payements.data[0] || !payements.data[0]?.length || payements.data[0].length === 0){
+        this.notifyMessage("Paymnets", "Payemnts are not available",NotificationType.warn)
+      }else{
 
-      console.log("=====custpayments========")
-      console.log(payements.data[0])
+        this.genaratePaymentData(payements.data[0])
+
+        console.log("=====custpayments========")
+        console.log(payements.data[0])
+      }
+
 
       this.CommonLoaderComponent.hide();
 
@@ -261,7 +276,10 @@ debugger
       this.allProducts = this.removeDuplicates(allProducts[0])
 
       console.log('===============allProducts===========')
-      console.log(this.allProducts)
+      console.log(this.allProducts);
+
+      this.cdr.detectChanges();
+
     } catch (error) {
       this.notifyMessage("Get products", "Something went wrong while getting products",NotificationType.error)
     }
@@ -433,6 +451,8 @@ debugger
 
   async GetCustomerProdcut(){
 
+    this.allProdReferance = []
+
     try {
 
       let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.paymentForm.value.productName});
@@ -472,6 +492,8 @@ debugger
 
   async getQouatationByCust(){
     
+    this.allQuatationForDrop = [];
+
         try {
     
           let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.paymentForm.value.selectedRefNum});
@@ -508,7 +530,9 @@ debugger
       }
 
       async GetCustomerProdcutForSearch(){
-        debugger
+        
+        this.allProdReferanceForSearch = [];
+
             try {
         
               let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.prodForSearch});
@@ -543,7 +567,9 @@ debugger
       }
 
       async getQouatationByCustForSearchInput(){
-        debugger
+        
+        this.allQuatationForDropForSearch = []
+
             try {
         
               let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.selectedRefNum});
