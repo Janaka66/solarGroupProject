@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { AppService } from 'src/app/app.service';
 import { ExtApiService } from 'src/app/ext-api.service';
 import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
 import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/customer-search.component';
 import { EmployeeSearchComponent } from 'src/app/sharedComp/employee-search/employee-search.component';
+import { NotificationDialogComponent, NotificationType } from 'src/app/sharedComp/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-manage-complains',
@@ -55,7 +57,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
   isLoaderAvailable: boolean = false;
   showLoader = false;
 
-  constructor(private communicationService: AppService, private extApi : ExtApiService){
+  constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
     
   }
 
@@ -84,7 +86,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
   async getCustomerInquiry(reqFields: any) {
     
-    this.isLoaderAvailable = true;
+              this.CommonLoaderComponent.hide();
 
       try {
         
@@ -107,11 +109,11 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
           this.inquires = [];
         }
         
-        this.isLoaderAvailable = false;
+                  this.CommonLoaderComponent.hide();
 
       } catch (error) {
         console.log(error)
-        this.isLoaderAvailable = false;
+                  this.CommonLoaderComponent.hide();
       }
 
       this.employeNote = '';
@@ -209,6 +211,9 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
   async UpdateAssignedEmpForInq(){
 
+    
+    this.CommonLoaderComponent.show();
+
     let reqFields = [{
 
       "ccheid": this.selectedAssignedInqEmp.ccheid,
@@ -227,7 +232,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
       
       let res = await this.extApi.UpdateEmployeeAssignedComplain(reqFields);
 
-      alert('success');
+      this.notifyMessage("Compains", "Successfully updated" ,NotificationType.success)
 
       this.isDeclinedSelectedInqEmp = true;
       this.isAcceptedSelectedInqEmp = true;
@@ -236,8 +241,11 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
       this.employeNote = '';
       
+      this.CommonLoaderComponent.hide();
+
     } catch (e: any) {
-      console.log(e)
+      this.notifyMessage("Compains", "updated faild" ,NotificationType.error)
+      this.CommonLoaderComponent.hide();
     }
   }
 
@@ -284,7 +292,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
   async updateInquiry(){
 
-    this.isLoaderAvailable = true;
+              this.CommonLoaderComponent.hide();
 
     let reqFields = [] as any
 
@@ -316,16 +324,17 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
       
       if(updatedRes.status === '200'){
 
-        alert('success')
+        this.notifyMessage("Compains", "Successfully updated" ,NotificationType.success)
+
         this.clear()
         await this.getAllCustomers()
       }
 
-      this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();
 
     } catch (error) {
       console.log(error)
-      this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();
     }
 
   }
@@ -356,7 +365,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
   async getEmployeesInInq(){
 
-    this.isLoaderAvailable = true;
+              this.CommonLoaderComponent.hide();
 
     let reqFields = {"complains": [this.selectedInqData.compId]}
 
@@ -399,11 +408,11 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
         await this.getAllemployees(this.selectedForInq);
       }
 
-      this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();
 
     } catch (error) {
       console.log(error)
-      this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();
     }
 
   }
@@ -482,5 +491,13 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
     this.isDeclinedBtnDisabled = true;
     this.isVerifiedBtnDisabled = false;
 
+  }
+
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
   }
 }

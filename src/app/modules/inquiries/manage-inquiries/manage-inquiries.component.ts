@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { AppService } from 'src/app/app.service';
 import { ExtApiService } from 'src/app/ext-api.service';
 import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
 import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/customer-search.component';
 import { EmployeeSearchComponent } from 'src/app/sharedComp/employee-search/employee-search.component';
+import { NotificationDialogComponent, NotificationType } from 'src/app/sharedComp/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-manage-inquiries',
@@ -57,7 +59,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
   selectedAssignedInqEmp: any;
 
   
-  constructor(private communicationService: AppService, private extApi : ExtApiService){
+  constructor(private communicationService: AppService, private extApi : ExtApiService, private cdr: ChangeDetectorRef, private dialog: MatDialog){
     
   }
 
@@ -88,7 +90,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
   async getCustomerInquiry(reqFields: any) {
     
-    this.isLoaderAvailable = true;
+        this.CommonLoaderComponent.show();
 
       try {
         
@@ -111,17 +113,18 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
           this.inquires = [];
         }
         
-        this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();
+          
 
       } catch (error) {
         console.log(error)
-        this.isLoaderAvailable = false;
+            this.CommonLoaderComponent.hide();;
       }
   }
 
   bindEmployeeData(event: any){
 
-    this.isLoaderAvailable = true;
+        this.CommonLoaderComponent.show();;
 
     let existData = this.selectedForInq.filter((el: any) => el.id === event.selectedData.id);
 
@@ -147,7 +150,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
     else
       this.isSelectedInqDisabled = true;
 
-    this.isLoaderAvailable = false;
+        this.CommonLoaderComponent.hide();;
   }
 
   bindCutomerData(event : any){
@@ -161,7 +164,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
     this.isDeclinedSelectedInqEmp = true;
     this.isAcceptedSelectedInqEmp = true;
-    this.isTextAreaDesabled = true;
+            this.CommonLoaderComponent.hide();
 
     this.employeNote = '';
 
@@ -186,21 +189,32 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isAccepted;
         this.isDeclinedSelectedInqEmp = getEmpByInq.data[0][0].isRejected;
 
-        this.isPendingSelectedInqEmp = true;
+        this.isPendingSelectedInqEmp = false;
+
+        this.notifyMessage("Inquiries", "This has been accepted, You can Decline" ,NotificationType.warn)
       }
       else if(getEmpByInq.data[0][0].isRejected){
 
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isAccepted;
         this.isDeclinedSelectedInqEmp = getEmpByInq.data[0][0].isRejected;
 
-        this.isPendingSelectedInqEmp = true;
-      }else{
         this.isPendingSelectedInqEmp = false;
+
+        this.notifyMessage("Inquiries", "This has been rejected, You can Accept" ,NotificationType.warn)
+      }else{
+
+        this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isAccepted;
+        this.isDeclinedSelectedInqEmp = getEmpByInq.data[0][0].isRejected;
+        this.isPendingSelectedInqEmp = true;
+
+        this.notifyMessage("Inquiries", "This has been still pending, You can Accept or Reject" ,NotificationType.warn)
       }
 
       this.selectedAssignedInqEmp = getEmpByInq.data[0][0];
 
-      this.isTextAreaDesabled = false;
+              this.CommonLoaderComponent.hide();
+
+      this.cdr.detectChanges()
 
     }catch(e: any){
       console.log(e)
@@ -212,20 +226,32 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
   }
 
   verifyOrDecline(parm:any){
+debugger
+    if(parm && parm !== 'pending'){
 
-    if(parm){
       this.isAcceptedSelectedInqEmp = parm;
       this.isDeclinedSelectedInqEmp = !parm
 
       this.selectedAssignedInqEmp.isAccepted = parm;
       this.selectedAssignedInqEmp.isRejected = !parm;
+
+    }else if(!parm && parm !== 'pending'){
+
+      this.isAcceptedSelectedInqEmp = parm;
+      this.isDeclinedSelectedInqEmp = !parm
+
+      this.selectedAssignedInqEmp.isRejected = !parm;
+      this.selectedAssignedInqEmp.isAccepted = parm;
 
     }else{
-      this.isAcceptedSelectedInqEmp = parm;
-      this.isDeclinedSelectedInqEmp = !parm
 
-      this.selectedAssignedInqEmp.isRejected = !parm;
-      this.selectedAssignedInqEmp.isAccepted = parm;
+      this.isAcceptedSelectedInqEmp = false;
+      this.isDeclinedSelectedInqEmp = false
+
+      this.selectedAssignedInqEmp.isRejected = false;
+      this.selectedAssignedInqEmp.isAccepted = false;
+
+      this.isPendingSelectedInqEmp = true;
     }
 
   }
@@ -255,7 +281,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
       this.isDeclinedSelectedInqEmp = true;
       this.isAcceptedSelectedInqEmp = true;
-      this.isTextAreaDesabled = true;
+              this.CommonLoaderComponent.hide();
 
       this.employeNote = '';
 
@@ -404,7 +430,10 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
     this.isDeclinedSelectedInqEmp = true;
     this.isAcceptedSelectedInqEmp = true;
-    this.isTextAreaDesabled = true;
+    
+    this.isPendingSelectedInqEmp = true;
+
+            this.CommonLoaderComponent.hide();
 
     this.employeNote = '';
 
@@ -414,7 +443,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
   async getEmployeesInInq(){
 
-    this.isLoaderAvailable = true;
+        this.CommonLoaderComponent.show();;
 
     let reqFields = {"inquiries": [this.selectedInqData.cInqId]}
 
@@ -428,7 +457,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
           
           try {
             
-            let empData = await this.extApi.GetEmployee(JSON.stringify(el.empId));
+            let empData = await this.extApi.GetEmployee({"id": el.empId});
             
             el['initials'] = empData?.data[0]?.initials || 'Not'
             el['fName'] = empData?.data[0]?.fname || 'Found'
@@ -436,7 +465,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
           } catch (error) {
             
             console.log(error)
-            this.isLoaderAvailable = false;
+                this.CommonLoaderComponent.hide();;
 
           }
           
@@ -457,11 +486,11 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
         await this.getAllemployees(this.selectedForInq);
       }
 
-      this.isLoaderAvailable = false;
+          this.CommonLoaderComponent.hide();;
 
     } catch (error) {
       console.log(error)
-      this.isLoaderAvailable = false;
+          this.CommonLoaderComponent.hide();;
     }
 
   }
@@ -493,7 +522,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
     this.isDeclinedSelectedInqEmp = true;
     this.isAcceptedSelectedInqEmp = true;
-    this.isTextAreaDesabled = true;
+            this.CommonLoaderComponent.hide();
     this.isPendingSelectedInqEmp = false;
     
   }
@@ -540,5 +569,13 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
     this.isDeclinedBtnDisabled = true;
     this.isVerifiedBtnDisabled = false;
 
+  }
+
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
   }
 }

@@ -69,7 +69,7 @@
                                             <span class="text">Decline</span>
                                         </button>
 
-                                        <button class="icon-btn decline" mat-raised-button [disabled]="isPendingSelectedInqEmp">
+                                        <button class="icon-btn decline" mat-raised-button [disabled]="isPendingSelectedInqEmp" (click)="verifyOrDecline('pending')">
                                             <span class="icon">&#10007;</span>
                                             <span class="text">Pending</span>
                                         </button>
