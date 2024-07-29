@@ -38,9 +38,18 @@
 
                             <mat-form-field appearance="fill">
                                 <mat-label>Product Name</mat-label>
-                                <mat-select [(ngModel)]="prodForSearch">
-                                    <mat-option *ngFor="let product of allProducts" [value]="product.id">
+                                <mat-select [(ngModel)]="prodForSearch" (selectionChange)="prodChangeForSearch()">
+                                    <mat-option *ngFor="let product of allProducts" [value]="product.prodId">
                                     {{ product.productName }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            
+                            <mat-form-field appearance="fill">
+                                <mat-label>Referance</mat-label>
+                                <mat-select [(ngModel)]="selectedRefNum" (selectionChange)="refNameChangeForSearch()">
+                                    <mat-option *ngFor="let ref of allProdReferanceForSearch" [value]="ref.refNu">
+                                    {{ ref.refNu }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -48,8 +57,8 @@
                             <mat-form-field appearance="fill">
                                 <mat-label>Quatation NO</mat-label>
                                 <mat-select [(ngModel)]="quotForSearch">
-                                    <mat-option *ngFor="let quot of allIQuot" [value]="quot.id">
-                                    {{ quot.quotNumber }}
+                                    <mat-option *ngFor="let quot of allQuatationForDropForSearch" [value]="quot.id">
+                                    {{ quot.quatNum }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -73,18 +82,27 @@
                             
                                     <mat-form-field appearance="fill">
                                     <mat-label>Product Name</mat-label>
-                                    <mat-select formControlName="productName" [disabled]="!isBtnEnabaled">
+                                    <mat-select formControlName="productName" [disabled]="!isBtnEnabaled" (selectionChange)="prodChange($event)">
                                         <mat-option *ngFor="let product of allProducts" [value]="product.id">
                                         {{ product.productName }}
                                         </mat-option>
                                     </mat-select>
                                     </mat-form-field>
+
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Referance</mat-label>
+                                        <mat-select formControlName="selectedRefNum" (selectionChange)="refChange($event)">
+                                            <mat-option *ngFor="let ref of allProdReferance" [value]="ref.refNu">
+                                            {{ ref.refNu }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
                                     
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Quatation NO</mat-label>
-                                        <mat-select formControlName="quotationName" [disabled]="!isBtnEnabaled">
-                                            <mat-option *ngFor="let quot of allIQuot" [value]="quot.id">
-                                            {{ quot.quotNumber }}
+                                        <mat-label>Quatation</mat-label>
+                                        <mat-select formControlName="selectedQutNumber">
+                                            <mat-option *ngFor="let quot of allQuatationForDrop" [value]="quot.id">
+                                            {{ quot.quatNum }}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>

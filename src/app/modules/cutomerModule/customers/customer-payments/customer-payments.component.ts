@@ -49,13 +49,20 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   isSearchBtnEnabled: boolean = true;
   prodForSearch = '';
   quotForSearch = '';
+  selectedRefNum = '';
+  allProdReferance = [] as any
+  allQuatationForDrop = [] as any;
+  allQuatationForDropForSearch = [] as any;
+  allProdReferanceForSearch = [] as any;
+  allProductsForGetNames: any;
 
   constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private dialog: MatDialog){
 
     this.paymentForm = this.fb.group({
       customerName: [{ value: '', disabled: true }, Validators.required],
       productName: ['', Validators.required],
-      quotationName: ['', Validators.required],
+      selectedQutNumber: ['', Validators.required],
+      selectedRefNum: ['', Validators.required],
       jobDescription: ['', Validators.required],
       remark: [''],
       payment: [0, [Validators.required, Validators.min(0)]]
@@ -67,6 +74,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
     this.CommonLoaderComponent.show();
 
     await this.getAllCustomers();
+    await this.getProducts();
     await this.getProducts();
 
     this.CommonLoaderComponent.hide();
@@ -92,7 +100,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
     this.paymentForm.get('customerName')?.setValue(custName);
 
-    await this.getAllQout();
+    await this.GetCustomerProdcutForTwoProdDrops();
     this.payments = [];
 
     this.CommonLoaderComponent.hide();
@@ -118,7 +126,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
     this.CommonLoaderComponent.show();
 
-    if (this.paymentForm.valid) {
+
 
       const newPayment = this.paymentForm.value;
       let quatation;
@@ -137,22 +145,23 @@ export class CustomerPaymentsComponent implements AfterViewInit {
       let reqFields = {
         "id": "string",
         "custId": this.selectedCustID,
-        "refNu": quatation.data[0].prodRefNu,
+        "refNu": this.paymentForm.value.selectedRefNum,
         "prodId": this.paymentForm.value.productName,
-        "quotId": this.paymentForm.value.quotationName,
+        "quotId": this.paymentForm.value.selectedQutNumber,
         "jobDescription": this.paymentForm.value.jobDescription,
-        "remark": this.paymentForm.value.remark,
+        "remark": this.paymentForm.value.remark, 
         "payment": this.paymentForm.value.payment,
         "status": 0
       }
 
       try {
         
-        let res = await this.extApi.AddCustomerPayment(reqFields)
+       let res = await this.extApi.AddCustomerPayment(reqFields)
 
         this.notifyMessage("Add Paymnet", "Successfully added the payment",NotificationType.success)
     
-        await this.getCustPayments();
+       await this.getCustPayments();
+       this.CommonLoaderComponent.hide();
 
         
       } catch (error) {
@@ -160,13 +169,9 @@ export class CustomerPaymentsComponent implements AfterViewInit {
         this.CommonLoaderComponent.hide();
       }
 
-      this.paymentForm.reset();
+      //this.paymentForm.reset();
       
-    }else{
-
-      this.notifyMessage("Add Paymnet", "Please fill all the fields",NotificationType.warn)
-      this.CommonLoaderComponent.hide();
-    }
+    
   }
 
   async getCustPayments(){
@@ -174,7 +179,8 @@ export class CustomerPaymentsComponent implements AfterViewInit {
     let req = {
       "custId": this.selectedCustID,
       "prodId": this.prodForSearch,
-      "quotId": this.quotForSearch
+      "quotId": this.quotForSearch,
+      "refNu": this.selectedRefNum,
     }
 
     try {
@@ -225,13 +231,68 @@ export class CustomerPaymentsComponent implements AfterViewInit {
     try {
 
       let allProcts = await this.extApi.getAllProducts();
-      this.allProducts = allProcts.data.filter((el: any) => el.status !== 1);
+      this.allProductsForGetNames = allProcts.data.filter((el: any) => el.status !== 1);
       
+      console.log('===============allProducts===========')
+      console.log(this.allProductsForGetNames)
+    } catch (error) {
+      this.notifyMessage("Get products", "Something went wrong while getting products",NotificationType.error)
+    }
+  }
+
+  async GetCustomerProdcutForTwoProdDrops(){
+debugger
+    try {
+
+      let allProcts = await this.extApi.GetCustomerProdcut({"custId":this.selectedCustID});
+      let allProducts = allProcts.data.filter((el: any) => el.status !== 1);
+
+      allProducts[0].forEach((el: any) => {
+        
+        this.allProductsForGetNames.forEach((elx: any) => {
+          
+
+          if(el.prodId === elx.id)
+            el.productName = elx.productName
+          
+        });
+      });
+      
+      this.allProducts = this.removeDuplicates(allProducts[0])
+
       console.log('===============allProducts===========')
       console.log(this.allProducts)
     } catch (error) {
       this.notifyMessage("Get products", "Something went wrong while getting products",NotificationType.error)
     }
+  }
+
+   removeDuplicates(data: any[]): any[] {
+    const uniqueIds = new Set();
+    const uniqueData = [];
+
+    for (const item of data) {
+      if (!uniqueIds.has(item.prodId)) {
+        uniqueIds.add(item.prodId);
+        uniqueData.push(item);
+      }
+    }
+
+    return uniqueData;
+  }
+
+  removeDuplicatesRef(data: any[]): any[] {
+    const uniqueIds = new Set();
+    const uniqueData = [];
+
+    for (const item of data) {
+      if (!uniqueIds.has(item.quatNum)) {
+        uniqueIds.add(item.quatNum);
+        uniqueData.push(item);
+      }
+    }
+
+    return uniqueData;
   }
 
   async getAllQout(){
@@ -361,7 +422,150 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   }
 
   isButtonEnabled(){
-    debugger
+    
     return !!this.selectedCustID && !!this.prodForSearch && !!this.quotForSearch;
   }
+
+  async prodChange(event: any){
+    
+    await this.GetCustomerProdcut();
+  }
+
+  async GetCustomerProdcut(){
+
+    try {
+
+      let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.paymentForm.value.productName});
+
+      getcustomerProd.data[0].data = getcustomerProd.data[0].filter((el: any) => el.status === 0)
+
+      getcustomerProd.data[0].forEach((el: any) => {
+
+        this.allProdReferance.push({
+          'refNu': el.refNu,
+          'id': el.id
+        })
+
+      })
+
+      console.log('allProdReferance')
+      console.log(this.allProdReferance)
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+  async refChange(event: any){
+    
+    await this.getQouatationByCust();
+  }
+
+  async getQouatationByCust(){
+    
+        try {
+    
+          let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.paymentForm.value.selectedRefNum});
+    
+          getProdRef.data = getProdRef.data.filter((el: any) => el.status === 0)
+
+          getProdRef.data.forEach((el: any) => {
+    
+            this.allQuatationForDrop.push({
+              'quatNum': el.quotNumber,
+              'id': el.id
+            })
+    
+          })
+
+          this.allQuatationForDrop = this.removeDuplicatesRef(this.allQuatationForDrop)
+
+          console.log("allQuatationForDrop")
+          console.log(this.allQuatationForDrop)
+          
+        } catch (error) {
+          console.log(error)
+        }
+  }
+
+
+
+
+
+
+
+      async prodChangeForSearch(){
+        await this.GetCustomerProdcutForSearch();
+      }
+
+      async GetCustomerProdcutForSearch(){
+        debugger
+            try {
+        
+              let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.prodForSearch});
+        
+              getcustomerProd.data[0].data = getcustomerProd.data[0].filter((el: any) => el.status === 0)
+        
+              getcustomerProd.data[0].forEach((el: any) => {
+        
+                this.allProdReferanceForSearch.push({
+                  'refNu': el.refNu,
+                  'id': el.id
+                })
+        
+              })
+              
+
+            } catch (error) {
+              console.log(error)
+            }
+          }
+
+
+
+
+
+
+
+      async refNameChangeForSearch(){
+
+        await this.getQouatationByCustForSearchInput()
+
+      }
+
+      async getQouatationByCustForSearchInput(){
+        debugger
+            try {
+        
+              let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.selectedRefNum});
+        
+              getProdRef.data = getProdRef.data.filter((el: any) => el.status === 0)
+    
+              getProdRef.data.forEach((el: any) => {
+        
+                this.allQuatationForDropForSearch.push({
+                  'quatNum': el.quotNumber,
+                  'id': el.id
+                })
+        
+              })
+
+
+              
+              this.allQuatationForDropForSearch = this.removeDuplicatesRef(this.allQuatationForDropForSearch)
+              
+            } catch (error) {
+              console.log(error)
+          }
+      }
+
 }
