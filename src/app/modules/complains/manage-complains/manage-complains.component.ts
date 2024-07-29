@@ -176,11 +176,16 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isHandled;
         this.isPendingSelectedInqEmp = false;
+
+        this.notifyMessage("Compains", "This has been already handled" ,NotificationType.success)
+
       }
       else{
 
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isHandled;
         this.isPendingSelectedInqEmp = true;
+
+        this.notifyMessage("Compains", "This is still pending. Please wait ......" ,NotificationType.success)
       }
 
       this.selectedAssignedInqEmp = getEmpByInq.data[0][0];

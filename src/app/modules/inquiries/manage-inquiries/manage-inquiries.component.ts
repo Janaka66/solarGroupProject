@@ -191,7 +191,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
         this.isPendingSelectedInqEmp = false;
 
-        this.notifyMessage("Inquiries", "This has been accepted, You can Decline" ,NotificationType.warn)
+        this.notifyMessage("Inquiries", "This has been accepted" ,NotificationType.warn)
       }
       else if(getEmpByInq.data[0][0].isRejected){
 
@@ -200,7 +200,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
         this.isPendingSelectedInqEmp = false;
 
-        this.notifyMessage("Inquiries", "This has been rejected, You can Accept" ,NotificationType.warn)
+        this.notifyMessage("Inquiries", "This has been rejected" ,NotificationType.warn)
       }else{
 
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isAccepted;
