@@ -37,7 +37,7 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
     { headerName: 'Remark', field: 'remark', width: 115, resizable: true},
     { headerName: 'Description', field: 'description', width: 115, resizable: true},
     { headerName: 'Requested On', field: 'requestedOn', width: 115, resizable: true},
-    { headerName: 'Short Code', field: 'prodShortCode', width: 115, resizable: true},
+    { headerName: 'StageDescription', field: 'stagDesc', width: 115, resizable: true},
   ];
 
   colDefsForCustProdItems: ColDef[] = [
@@ -69,6 +69,8 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
   allCustProducts: any = '';
   customerAllProducts: any[] | any;
   prodIdForGetItems: any;
+  allSavedStages: any;
+  selectedStage: any = '';
 
   constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
 
@@ -250,6 +252,7 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
     this.selectedCustID = event.id;
 
     await this.getCustProducts();
+    await this.loaAllStages();
 
       this.itemName = '';
       this.custProdName = '';
@@ -323,7 +326,7 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
   }
 
   async getCustProducts(){
-    
+    debugger
     let custProdArray: any = [];
 
     let reqFields = {
@@ -355,7 +358,8 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
               custId: el.custId,
               id  : el.id,
               prodId: el.prodId,
-              stageId: el.stageId
+              stageId: el.stageId,
+              stagDesc : el.stage.stagDesc
   
             }
           )
@@ -655,14 +659,47 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
   }
 
   async filterProdAndItems(event: any){
+debugger
+    let reqFields = {
+      ...(this.selectedCustID ? { "custId": this.selectedCustID } : {}),
+      ...(this.allCustProducts ? { "prodId": this.allCustProducts } : {}),
+      ...(this.selectedStage ? { "stageId": this.selectedStage } : {})
+    }
 
-    console.log(this.customerAllProducts)
-    // if(!this.custProducts || !this.custProducts?.length || this.custProducts.length === 0){
-    //   this.notifyMessage("Filter", "Please select the customer first",NotificationType.warn)
-    // }else{
+    try {
+      
+      let res = await this.extApi.GetCustomerProdcut(reqFields);
 
-      this.custProducts = this.customerAllProducts.filter((el: any) => el.prodId === event.value.id)      
-    // }
+      res.data[0].forEach((el: any) => {
+        el.stagDesc = el.stage.stagDesc
+        el.productName= this.rowData.find((elx: any) => elx.id === el.prodId).productName,
+        el.isPaymentsDone= el.isPaymentsDone,
+        el.paymentDonePrecentage= el.paymentDonePrecentage,
+        el.prodShortCode= el.prodShortCode,
+        el.refNu= el.refNu,
+        el.remark= el.remark,
+        el.description= el.description,
+        el.requestedOn= el.requestedOn,
+        el.custId= el.custId,
+        el.id  = el.id,
+        el.prodId= el.prodId,
+        el.stageId= el.stageId,
+        el.stagDesc = el.stage.stagDesc
+      });
+
+      this.custProducts = res.data[0]
+
+    } catch (error) {
+      console.log(error)
+    }
+
+    // console.log(this.customerAllProducts)
+    // // if(!this.custProducts || !this.custProducts?.length || this.custProducts.length === 0){
+    // //   this.notifyMessage("Filter", "Please select the customer first",NotificationType.warn)
+    // // }else{
+
+    //   this.custProducts = this.customerAllProducts.filter((el: any) => el.prodId === event.value.id)      
+    // // }
 
   }
 
@@ -704,5 +741,18 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
     this.custProductsItems = items
     this.agGrid.api.redrawRows()
 
+  }
+
+  async loaAllStages(){
+debugger
+    try {
+      
+      let stages = await this.extApi.Stages();
+      this.allSavedStages = stages.data.filter((el: any) => el.status === 0);
+
+    } catch (e: any) {
+      
+      console.log(e)
+    }
   }
 }

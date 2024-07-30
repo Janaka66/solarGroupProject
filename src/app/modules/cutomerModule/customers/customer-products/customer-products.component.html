@@ -26,12 +26,24 @@
                     <mat-form-field>
                         <mat-label>Product Name</mat-label>
                         <mat-select [(ngModel)]="allCustProducts" (selectionChange)="filterProdAndItems($event)">
-                        <mat-option *ngFor="let data of rowData" [value]="data">
+                        <mat-option *ngFor="let data of rowData" [value]="data.id">
                             {{ data.productName }}
                         </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
+
+                <div class="filterDrop">
+                    <mat-form-field>
+                        <mat-label>Stages</mat-label>
+                        <mat-select [(ngModel)]="selectedStage" (selectionChange)="filterProdAndItems($event)">
+                        <mat-option *ngFor="let stage of allSavedStages" [value]="stage.id">
+                            {{ stage.stagDesc }}
+                        </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
 
                 <div class="addCutProdItem">
 
