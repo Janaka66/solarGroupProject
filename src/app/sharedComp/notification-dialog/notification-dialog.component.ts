@@ -7,7 +7,7 @@ import { CommonLoaderComponent } from '../common-loader/common-loader.component'
 import { FormViewerComponent } from 'src/app/form-viewer/form-viewer.component';
 import { AppService } from 'src/app/app.service';
 
-export enum NotificationDialogType { ntOk, ntOkCancel, ntYesNo,ntYesNoCancel, assignedEmp }
+export enum NotificationDialogType { ntOk, ntOkCancel, ntYesNo,ntYesNoCancel, assignedEmp, ntNoteOK }
 export enum NotificationDialogBtn { btNo, btYes, btOk, btCancel }
 export enum NotificationType { error, warn, success, confirm }; //stop, warnnig, notice, question
 
@@ -72,7 +72,7 @@ export class NotificationDialogComponent implements OnInit, AfterViewInit {
       
     }else if(this.data.getNote){
 
-      this.data.dialogType = NotificationDialogType.ntOk;
+      this.data.dialogType = NotificationDialogType.ntNoteOK;
 
     }else if(!this.data.dialogType){
 
@@ -112,7 +112,7 @@ export class NotificationDialogComponent implements OnInit, AfterViewInit {
   }
 
   bindEmployeeData(event: any){
-debugger
+
     let existData = this.selectedForInq.filter((el: any) => el.empID === event.selectedData.id);
 
     if(existData.length > 0 && !event.checked){

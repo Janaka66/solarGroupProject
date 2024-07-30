@@ -29,8 +29,15 @@
     
         <div mat-dialog-actions>
           <div class="note-container">
-            <span *ngIf="data.dialogType === dialogType.ntOk">
+            <span *ngIf="data.dialogType === dialogType.ntNoteOK">
               <input [(ngModel)]="regAcceptNote" placeholder="Please enter your note here..." class="note-input" /> 
+              <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial (click)="dialogRef.close(regAcceptNote)" class="note-button">
+                {{ (data.btnTxt && data.btnTxt.ok) ? data.btnTxt.ok : 'Ok' }}
+              </button>
+            </span>
+          </div>
+          <div class="note-container">
+            <span *ngIf="data.dialogType === dialogType.ntOk">
               <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial (click)="dialogRef.close(regAcceptNote)" class="note-button">
                 {{ (data.btnTxt && data.btnTxt.ok) ? data.btnTxt.ok : 'Ok' }}
               </button>
