@@ -87,6 +87,12 @@
                       <span *ngIf="!selectedIngEmp.isConfirmed && selectedIngEmp.isRejected" class="rejected">Rejected</span>
                       <span *ngIf="!selectedIngEmp.isConfirmed && !selectedIngEmp.isRejected" class="pending">Pending</span>
                     </div>
+
+                    <div class="status" *ngIf="selectedIngEmp.employeeNote" >
+                      <strong>Note:</strong> 
+                      <span class="pending">{{selectedIngEmp.employeeNote}}</span>
+                    </div>
+                    
                   </div>
                 </div>
               </div>

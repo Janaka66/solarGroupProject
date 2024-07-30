@@ -160,7 +160,7 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
     inquiry.isConfirmed = true;
     inquiry.isRejected = false;
 
-    inquiry.notes = '';
+    inquiry.employeeNote = '';
     
   }
 
@@ -171,7 +171,7 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
 
     let responce = await this.getConfirmOrRejectedNote();
 
-    inquiry.notes = responce;
+    inquiry.employeeNote = responce;
   }
 
   public async getConfirmOrRejectedNote() {
@@ -238,7 +238,7 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
   }
 
   async getAllQout(){
-
+debugger
       return new Promise(async (resolve, reject) => {
 
         if(!this.selectedCustID && !this.prodNameforItems && !this.prodRefNumber){
@@ -247,13 +247,7 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
 
             try {
                 
-              let quotRes = await this.extApi.GetQuotation(
-                {
-                  "custID":  this.selectedCustID,
-                  "prodId": this.prodNameforItems,
-                  "prodRefNu": this.prodRefNumber,
-                }
-                );
+              let quotRes = await this.extApi.GetEmployeeAssignedQuotationsForAccept();
 
               quotRes.data.forEach((el: any) => {
                   

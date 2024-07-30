@@ -361,7 +361,7 @@ debugger
       "hierarchyLevel": quatation.hierarchyLevel,
       "confirmedOn": quatation.confirmedOn,
       "rejectedOn": quatation.rejectedOn,
-      "employeeNote": quatation.quatjobNumber
+      "employeeNote": quatation.employeeNote
     }
 
     try {
