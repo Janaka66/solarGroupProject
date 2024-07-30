@@ -263,17 +263,13 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   async acceptQuat(product: any){
 
-    let responce = await this.getConfirmOrRejectedNote()
-
-    this.formViewer.quatationAccepted(product, true, false, responce)
+    this.formViewer.quatationAccepted(product, true, false)
   }
 
 
   async rejectQuat(product: any){
-
-    let responce = await this.getConfirmOrRejectedNote()
     
-    this.formViewer.quatationRejected(product, false, true, responce)
+    this.formViewer.quatationRejected(product, false, true)
   }
 
 
@@ -478,17 +474,6 @@ debugger
     else{
       debugger
     }
-  }
-
-  public async getConfirmOrRejectedNote() {
-
-    return await this.dialog.open(NotificationDialogComponent, {
-      width: '600px',
-      data: {getNote: true}
-      
-    }).afterClosed().toPromise();
-  
-   
   }
 
   async getProducts(){

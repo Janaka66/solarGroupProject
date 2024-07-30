@@ -56,6 +56,7 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
     custAllproducts: any;
     loadcustomerProductsDropDown = [] as any;
     handleIconDisabled: boolean = false;
+    employeRejectedNote: any = '';
     ;
     constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog, private cdr: ChangeDetectorRef){
 
@@ -154,18 +155,35 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
     }
   }
 
-  acceptInquiry(inquiry: any) {
+  async acceptInquiry(inquiry: any) {
  
     inquiry.isConfirmed = true;
     inquiry.isRejected = false;
+    
+    let responce = await this.getConfirmOrRejectedNote();
 
+    inquiry.notes = responce;
   }
 
-  rejectInquiry(inquiry: any) {
+  async rejectInquiry(inquiry: any) {
 
     inquiry.isConfirmed = false;
     inquiry.isRejected = true;
-    
+
+    let responce = await this.getConfirmOrRejectedNote();
+
+    inquiry.notes = responce;
+  }
+
+  public async getConfirmOrRejectedNote() {
+
+    return await this.dialog.open(NotificationDialogComponent, {
+      width: '600px',
+      data: {getNote: true}
+      
+    }).afterClosed().toPromise();
+  
+   
   }
 
   async update(quatation: any){

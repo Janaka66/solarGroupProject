@@ -692,18 +692,18 @@ debugger
       
     }
     
-    async quatationAccepted(event: any, isConf:any, isRej: any, responce: any){
+    async quatationAccepted(event: any, isConf:any, isRej: any){
 
-      await this.updateQuatation(event, isConf, isRej, responce);
+      await this.updateQuatation(event, isConf, isRej);
       
     }
   
-    async quatationRejected(event: any, isConf:any, isRej: any, responce: any){
+    async quatationRejected(event: any, isConf:any, isRej: any){
 
-      await this.updateQuatation(event, isConf, isRej, responce);
+      await this.updateQuatation(event, isConf, isRej);
     }
 
-    async updateQuatation(event: any, isConf:any, isRej: any, responce: any){
+    async updateQuatation(event: any, isConf:any, isRej: any){
  
       try {
         
@@ -715,7 +715,7 @@ debugger
           "quotNumber": event.quotNumber,
           "jobNumber": event.jobNumber,
           "totalAmount": event.totalAmount,
-          "notes": responce,
+          "notes": event.notes,
           "isConfirmed": isConf,
           "isRejected": isRej,
           "preparedBy": event.preparedBy,
