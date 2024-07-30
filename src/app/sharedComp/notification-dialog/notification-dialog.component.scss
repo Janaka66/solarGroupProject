@@ -138,6 +138,71 @@
                 color: #FFFFFF;
                 font-size: 1.2rem;
               }
+
+              div{
+
+                .note-container{
+
+                    .note-container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        padding: 20px;
+                        background-color: #f9f9f9;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                      }
+                      
+                      .note-input {
+                        width: 100%;
+                        max-width: 400px;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        font-size: 1rem;
+                        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                        transition: border-color 0.3s ease;
+                      }
+                      
+                      .note-input:focus {
+                        border-color: #00AFF0; /* Using the theme color for focus */
+                        outline: none;
+                      }
+                      
+                      .note-button {
+                        height: 50px;
+                        width: 100%;
+                        max-width: 150px;
+                        background-color: #00AFF0; /* Using the theme color for primary button */
+                        color: #FFFFFF;
+                        font-size: 1.2rem;
+                        border-radius: 4px;
+                        transition: background-color 0.3s ease;
+                      }
+                      
+                      .note-button:hover {
+                        background-color: #007ACC; /* Darker shade for hover effect */
+                      }
+                      
+                      @media (min-width: 600px) {
+                        .note-container {
+                          flex-direction: row;
+                          justify-content: center;
+                          align-items: center;
+                        }
+                      
+                        .note-input {
+                          margin-right: 20px;
+                          margin-bottom: 0;
+                        }
+                      
+                        .note-button {
+                          max-width: 100px;
+                        }
+                      }
+                }
+              }
               
         }
 

@@ -12,6 +12,7 @@ export enum NotificationDialogBtn { btNo, btYes, btOk, btCancel }
 export enum NotificationType { error, warn, success, confirm }; //stop, warnnig, notice, question
 
 export interface NotificationDialogData {
+  getNote: any;
   quatID: any;
   selectedQuoat: any;
   showEmp: any;
@@ -52,6 +53,7 @@ export class NotificationDialogComponent implements OnInit, AfterViewInit {
   selectedForInq = [] as any
   componant = 'inqComp';
   selectedQuoat: any;
+  regAcceptNote = '';
 
   constructor(
     public dialogRef: MatDialogRef<NotificationDialogComponent>,
@@ -68,10 +70,13 @@ export class NotificationDialogComponent implements OnInit, AfterViewInit {
 
       this.GetQuotationHasEmployeeToConfirm()
       
+    }else if(this.data.getNote){
+
+      this.data.dialogType = NotificationDialogType.ntOk;
+
     }else if(!this.data.dialogType){
 
       this.data.dialogType = NotificationDialogType.ntOk;
-      
     }
 
     if(this.data.html){

@@ -103,6 +103,11 @@
                                                     <span *ngIf="!product.isConfirmed && !product.isRejected" class="status pending">Pending</span>
                                                   </p>
                                             </div>
+
+                                            <div>
+                                                <p *ngIf="product.notes"><strong>Note:</strong> 
+                                                <span *ngIf="product.notes" class="status">{{product.notes}}</span>
+                                            </div>
                                         </div>
                                         
                                     </div>

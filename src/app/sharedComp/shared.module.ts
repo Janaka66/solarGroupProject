@@ -8,7 +8,7 @@ import { CommonLoaderComponent } from '../sharedComp/common-loader/common-loader
 import { NotificationDialogComponent } from './notification-dialog/notification-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogModule } from 'primeng/dialog';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [EmployeeSearchComponent, CustomerSearchComponent, CommonLoaderComponent, NotificationDialogComponent],
@@ -17,7 +17,8 @@ import { DialogModule } from 'primeng/dialog';
     MatCardModule,
     MatIconModule,
     MatDialogModule,
-    DialogModule
+    DialogModule,
+    FormsModule
   ],
   exports: [
     EmployeeSearchComponent,

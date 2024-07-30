@@ -28,10 +28,15 @@
         </div>
     
         <div mat-dialog-actions>
-          <span *ngIf="data.dialogType === dialogType.ntOk">
-            <button mat-raised-button  [mat-dialog-close]="true" cdkFocusInitial>{{ (data.btnTxt && data.btnTxt.ok)? data.btnTxt.ok : 'Ok' }}</button>
-          </span>
-          <span *ngIf="data.dialogType === dialogType.ntYesNo">        
+          <div class="note-container">
+            <span *ngIf="data.dialogType === dialogType.ntOk">
+              <input [(ngModel)]="regAcceptNote" placeholder="Please enter your note here..." class="note-input" /> 
+              <button mat-raised-button [mat-dialog-close]="true" cdkFocusInitial (click)="dialogRef.close(regAcceptNote)" class="note-button">
+                {{ (data.btnTxt && data.btnTxt.ok) ? data.btnTxt.ok : 'Ok' }}
+              </button>
+            </span>
+          </div>
+          <span *ngIf="data.dialogType === dialogType.ntYesNo">    
             <button mat-raised-button  (click)="dialogRef.close('yes')" [mat-dialog-close]="true" [attr.cdkFocusInitial]="(data.initialFocusBtn === buttons.btYes) ? '' : null">{{ (data.btnTxt && data.btnTxt.yes)? data.btnTxt.yes : 'Yes' }}</button>
             <button mat-raised-button  (click)="dialogRef.close('no')" [attr.cdkFocusInitial]="(data.initialFocusBtn !== buttons.btYes) ? '' : null">{{ (data.btnTxt && data.btnTxt.no)? data.btnTxt.no : 'No' }}</button>
           </span>

@@ -56,6 +56,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     custAllproducts: any;
     loadcustomerProductsDropDown = [] as any;
     handleIconDisabled: boolean = false;
+    confirmOrRejectNote: any = '';
     ;
     constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
 
@@ -260,14 +261,22 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   }
 
-  acceptQuat(product: any){
-    this.formViewer.quatationAccepted(product, true, false)
+  async acceptQuat(product: any){
+
+    let responce = await this.getConfirmOrRejectedNote()
+
+    this.formViewer.quatationAccepted(product, true, false, responce)
   }
 
 
-  rejectQuat(product: any){
-    this.formViewer.quatationRejected(product, false, true)
+  async rejectQuat(product: any){
+
+    let responce = await this.getConfirmOrRejectedNote()
+    
+    this.formViewer.quatationRejected(product, false, true, responce)
   }
+
+
 
   // async removeInvoice(){
     
@@ -469,6 +478,17 @@ debugger
     else{
       debugger
     }
+  }
+
+  public async getConfirmOrRejectedNote() {
+
+    return await this.dialog.open(NotificationDialogComponent, {
+      width: '600px',
+      data: {getNote: true}
+      
+    }).afterClosed().toPromise();
+  
+   
   }
 
   async getProducts(){
