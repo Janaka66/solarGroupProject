@@ -53,13 +53,21 @@
                             <div class="employeeDetails">
 
                                 <div class="empNote">
-                                    <span>Employee Note</span>
+                                    
+                                    <div class="status">
+
+                                        <div>Status: </div>&nbsp;
+                                        <div>{{Status}}</div>
+
+                                    </div>
+
+
                                     <textarea [(ngModel)]="employeNote" [disabled]="isTextAreaDesabled"></textarea>
                                 </div>
 
                                 <div class="status">
 
-                                    <div class="btnContainer">
+                                    <!-- <div class="btnContainer">
                                         <button class="icon-btn verify" mat-raised-button  [disabled]="isAcceptedSelectedInqEmp" (click)="verifyOrDecline(true)">
                                             <span class="icon">&#10003;</span>
                                             <span class="text">Accepted</span>
@@ -73,13 +81,13 @@
                                             <span class="icon">&#10007;</span>
                                             <span class="text">Pending</span>
                                         </button>
-                                    </div>
+                                    </div> -->
 
-                                    <div class="btnContainer">
+                                    <!-- <div class="btnContainer">
                                         <button class="icon-btn decline" mat-raised-button  (click)="UpdateAssignedEmpForInq()">
                                             <span class="text">Update</span>
                                         </button>
-                                    </div>
+                                    </div> -->
                 
                                 </div>
 

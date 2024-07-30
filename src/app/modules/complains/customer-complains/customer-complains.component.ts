@@ -278,7 +278,6 @@ export class CustomerComplainsComponent implements OnInit , AfterViewInit{
     this.selectedInqData = '';
 
     this.updateBtnDisabled = true;
-    this.isNewBtnDisabled = true;
     this.isRemoveBtnDisabled = true;
     this.isVerifiedBtnDisabled = true;
     this.isDeclinedBtnDisabled = true;

@@ -16,6 +16,7 @@ import { CustomerComplainsComponent } from './modules/complains/customer-complai
 import { ManageComplainsComponent } from './modules/complains/manage-complains/manage-complains.component';
 import { CustomerComplainUserViewComponent } from './modules/complains/customer-complain-user-view/customer-complain-user-view.component';
 import { CustomerInqUserViewsComponent } from './modules/inquiries/customer-inq-user-views/customer-inq-user-views.component';
+import { CustomerQuotationsConfirmation } from './modules/cutomerModule/customers/customer-quotations-confirmation/customer-quotations-confirmation.component';
 
 @Injectable({
     providedIn: 'root'
@@ -28,18 +29,27 @@ export class sharedData{
     majorCompInfo = [
 
         {icon : "", title: "Dashboard",                     comp: DashboardComponent,   idx: 1,                 children: []} ,
-        // {icon : "", title: "Products",                      comp: ProductsComponent,    idx: 2,                 children: []} ,
-        {icon : "", title: "Customers",     idx: 0, children: [
-            {icon : "", title: "Customers",                 comp: CustomersComponent,           idx: 3},
-            {icon : "", title: "Customer Products",         comp: CustomerProductsComponent,    idx: 4},
-            {icon : "", title: "Customer Invoices",         comp: CustomerInvoicesComponent,    idx: 5},
-            {icon : "", title: "Customer Quotations",       comp: CustomerQuotationsComponent,  idx: 6},
-            {icon : "", title: "Customer Payments",         comp: CustomerPaymentsComponent,    idx: 7},
-            // {icon : "", title: "Customer Profiles",         comp: CustomerProfileComponent,     idx: 8}
-            
+        {icon : "", title: "Customer",     idx: 0, children: [
+            {icon : "", title: "Customer Profile",                 comp: CustomersComponent,    idx: 3}
         ]} ,
-        // {icon : "", title: "Completions",                   comp: CompleationsComponent,        idx: 9,         children: []} ,
-        //{icon : "", title: "Vistors",                       comp: VisitorsComponent,            idx: 10,        children: []} ,
+
+        {icon : "", title: "Quotations",     idx: 0, children: [
+            {icon : "", title: "Customer Quotations",       comp: CustomerQuotationsComponent,  idx: 6},
+            {icon : "", title: "Quotations Confirmation",   comp: CustomerQuotationsConfirmation,  idx: 26},
+        ]},
+
+        {icon : "", title: "Invoices",     idx: 0, children: [
+            {icon : "", title: "Customer Invoices",         comp: CustomerInvoicesComponent,    idx: 5},
+        ]},
+
+        {icon : "", title: "Payments",     idx: 0, children: [
+            {icon : "", title: "Customer Payments",         comp: CustomerPaymentsComponent,    idx: 7},
+        ]},
+
+        {icon : "", title: "Products",     idx: 0, children: [
+            {icon : "", title: "Customer Products",         comp: CustomerProductsComponent,    idx: 4},
+        ]},
+
         {icon : "", title: "Employees",     idx: 0, children: [
             {icon : "", title: "Add Employees",             comp: EmployeeComponent,            idx: 21}
         ]} ,
@@ -53,7 +63,7 @@ export class sharedData{
             {icon : "", title: "Manage Complains",          comp: ManageComplainsComponent,     idx: 25},
             {icon : "", title: "cust Complain userMode",          comp: CustomerComplainUserViewComponent,     idx: 31},
         ]},
-        {icon : "", title: "Customer Profiles", comp: CustomerProfileComponent,   idx: 8, children: []} , 
+        {icon : "verified_user", title: "User", comp: CustomerProfileComponent,   idx: 8, children: []} , 
     ]
     
 

@@ -56,6 +56,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
 
   isLoaderAvailable: boolean = false;
   showLoader = false;
+  Status: any = ''
 
   constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
     
@@ -177,7 +178,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isHandled;
         this.isPendingSelectedInqEmp = false;
 
-        this.notifyMessage("Compains", "This has been already handled" ,NotificationType.success)
+        this.Status = 'Handled'
 
       }
       else{
@@ -185,7 +186,7 @@ export class ManageComplainsComponent implements OnInit, AfterViewInit{
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isHandled;
         this.isPendingSelectedInqEmp = true;
 
-        this.notifyMessage("Compains", "This is still pending. Please wait ......" ,NotificationType.success)
+        this.Status = 'Pending'
       }
 
       this.selectedAssignedInqEmp = getEmpByInq.data[0][0];

@@ -1,0 +1,99 @@
+<div class="customer-invoices">
+
+    <div class="title-bar">
+
+        <div (click)="handleLeftBar()">
+            <img src="../../../../assets/view-headlne.gif" height="30">
+            <app-common-loader #loader></app-common-loader>
+            <span class="text">Customers</span>
+        </div>
+
+        <div class="moduleLoader-container">
+            <img *ngIf="isLoaderAvailable" src="../../../../assets/loader.gif">
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="search-add-invoice-container">
+    
+            <div class="bottom-section">
+
+                <div class="add-show-invoice-section">
+
+                    <div class="show-customer-invoices">
+    
+                        <p-carousel 
+                            [value]="allIQuot" 
+                            [numVisible]="1" 
+                            [numScroll]="1" 
+                            orientation="vertical" 
+                            [showNavigators]="false"
+                            [responsiveOptions]="responsiveOptions"
+                            (onPage)="onPage($event)">
+                            <ng-template let-product pTemplate="item">
+                                <div class="border-1 surface-border border-round m-2 p-3" (click)="selectItem(product); $event.stopPropagation()">
+                                    <div class="mb-3">
+                                        <div class="relative mx-auto">
+                                            <img 
+                                                src="../../../../../assets/placeHolderInvoice.PNG"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="invoceDetails">
+
+                                        <div class="mb-3 font-medium">
+                                            <div>Quotation No :</div>
+                                            <div>{{ product.quatquotNumber }}</div>
+                                        </div>
+
+                                        <div class="mb-3 font-medium">
+                                            <div>Quotation Date :</div>
+                                            <div>{{ product.quatquotDate }}</div>
+                                        </div>
+
+                                        <div class="mb-3 font-medium">
+                                            <div>Quattotal Amount</div>
+                                            <div>{{ product.quattotalAmount }}</div>
+                                        </div>
+                                        
+                                        <div class="mb-3 font-medium">
+                                            <div>Quattotal Confirmed Date</div>
+                                            <div>{{ product.confirmedOn }}</div>
+                                        </div>
+
+                                        <div class="mb-3 font-medium">
+                                            <div>Status</div>
+                                            <span *ngIf="product.isConfirmed && !product.isRejected" class="status accepted">Accepted</span>
+                                            <span *ngIf="!product.isConfirmed && product.isRejected" class="status rejected">Rejected</span>
+                                            <span *ngIf="!product.isConfirmed && !product.isRejected" class="status pending">Pending</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button mat-raised-button color="primary" (click)="acceptInquiry(product); $event.stopPropagation()">Accept</button>
+                                        <button mat-raised-button color="warn" (click)="rejectInquiry(product); $event.stopPropagation()" style="margin-left: 10px;">Reject</button>
+                                        <button mat-raised-button color="warn" style="background-color: green;" (click)="update(product); $event.stopPropagation()" style="margin-left: 10px;">Update</button>
+                                    </div>
+
+                                </div>
+
+                            </ng-template>
+                        </p-carousel>
+                
+                    </div>
+    
+                </div>
+
+                <div class="show-selected-invoice">
+                    <app-form-viewer-qout-confirm #formViewer (loaderEnableDesabled)="loaderHandle($event)" (loadQuataionBack)="getAllQout()"></app-form-viewer-qout-confirm>
+                </div>
+
+            </div>
+
+        </div>
+       
+
+    </div>
+</div>

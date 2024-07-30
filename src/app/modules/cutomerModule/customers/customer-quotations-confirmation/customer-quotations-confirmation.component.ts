@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 
 import { ColDef } from 'ag-grid-community'; 
@@ -12,11 +12,11 @@ import { NotificationDialogComponent, NotificationType } from 'src/app/sharedCom
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-customer-quotations',
-  templateUrl: './customer-quotations.component.html',
-  styleUrls: ['./customer-quotations.component.scss']
+  selector: 'app-customer-quotations-confirmation',
+  templateUrl: './customer-quotations-confirmation.component.html',
+  styleUrls: ['./customer-quotations-confirmation.component.scss']
 })
-export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
+export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
 
     @ViewChild('printArea') printArea: ElementRef | any;
     @ViewChild('customerSearch') CustomerSearchComponent: CustomerSearchComponent | any;
@@ -45,7 +45,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     ];
 
     selectedCustID: any;
-    allIQuot: any;
+    allIQuot: any = [];
     selecetedQIItem: any;
     quatationAvailable: any;
     invoiceAvailable: any;
@@ -57,7 +57,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     loadcustomerProductsDropDown = [] as any;
     handleIconDisabled: boolean = false;
     ;
-    constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog){
+    constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog, private cdr: ChangeDetectorRef){
 
   }
 
@@ -93,8 +93,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
     this.CommonLoaderComponent.show();
     
-    await this.getAllProducts();
-    await this.getAllCustomers()
+    await this.GetEmployeeAssignedQuotationsForAccept()
 }
   
   handleLeftBar() {
@@ -104,6 +103,76 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     this.communicationService.sendData({ flag: !this.flag });
   }
 
+  
+  async GetEmployeeAssignedQuotationsForAccept() {
+    debugger
+
+    let UserallIQuot: { quatcustId: any; quatid: any; quatisConfirmed: any; quatjobNumber: any; quatnotes: any; quatpreparedBy: any; quatprodId: any; quatprodRefN: any; quatquotDate: any; quatquotNumber: any; quattotalAmount: any; quatvalidUntil: any; confirmedOn: any; empID: any; employeeNote: any; employeeProfile: any; hierarchyLevel: any; id: any; isConfirmed: any; isRejected: any; quotID: any; rejectedOn: any; }[] = [];
+    
+    try {
+      
+      let res = await this.extApi.GetEmployeeAssignedQuotationsForAccept();
+
+      console.log(res);
+
+      res.data[0].forEach((el: any) => {
+        
+        UserallIQuot.push({
+          quatcustId      : el.quotation.custId,
+          quatid          : el.quotation.id,
+          quatisConfirmed : moment(el.quotation.isConfirmed).format('YYYY-MM-DD'),
+          quatjobNumber   : el.quotation.jobNumber,
+          quatnotes       : el.quotation.notes,
+          quatpreparedBy  : el.quotation.preparedBy,
+          quatprodId      : el.quotation.prodId,
+          quatprodRefN    : el.quotation.prodRefNu,
+          quatquotDate    : moment(el.quotation.quotDate).format('YYYY-MM-DD'),
+          quatquotNumber  : el.quotation.quotNumber,
+          quattotalAmount : el.quotation.totalAmount,
+          quatvalidUntil  : moment(el.quotation.validUntil).format('YYYY-MM-DD'),
+          confirmedOn     : moment(el.confirmedOn).format('YYYY-MM-DD'),
+          empID           : el.empID, 
+          employeeNote    : el.employeeNote, 
+          employeeProfile : el.employeeProfile,
+          hierarchyLevel  : el.hierarchyLevel, 
+          id              : el.id, 
+          isConfirmed     : el.isConfirmed,
+          isRejected      : el.isRejected,
+          quotID          : el.quotID,
+          rejectedOn      : el.rejectedOn
+
+        })
+      });
+
+      this.allIQuot = UserallIQuot
+
+      console.log(this.allIQuot)
+      this.cdr.detectChanges();
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  acceptInquiry(inquiry: any) {
+ 
+    inquiry.isConfirmed = true;
+    inquiry.isRejected = false;
+
+  }
+
+  rejectInquiry(inquiry: any) {
+
+    inquiry.isConfirmed = false;
+    inquiry.isRejected = true;
+    
+  }
+
+  async update(quatation: any){
+
+    this.formViewer.updateQuotConfirm(quatation)
+  }
+  
   async getAllCustomers(){
 
     try {
@@ -308,6 +377,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   bindEmployeeData(event: any){
 
+    this.CommonLoaderComponent.show();
 
     let existData = this.selectedForInq.filter((el: any) => el.id === event.selectedData.id);
 
@@ -333,6 +403,8 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
     // else
     //   this.isSelectedInqDisabled = true;
 
+   
+    this.CommonLoaderComponent.false();
   }
 
   async getAllemployees(selectedIq = []){

@@ -57,6 +57,7 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
   isPendingSelectedInqEmp = true;
 
   selectedAssignedInqEmp: any;
+  Status: any = ''
 
   
   constructor(private communicationService: AppService, private extApi : ExtApiService, private cdr: ChangeDetectorRef, private dialog: MatDialog){
@@ -191,7 +192,8 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
         this.isPendingSelectedInqEmp = false;
 
-        this.notifyMessage("Inquiries", "This has been accepted" ,NotificationType.warn)
+        this.Status = 'Accepted';
+        
       }
       else if(getEmpByInq.data[0][0].isRejected){
 
@@ -200,14 +202,15 @@ export class ManageInquiriesComponent implements OnInit, AfterViewInit {
 
         this.isPendingSelectedInqEmp = false;
 
-        this.notifyMessage("Inquiries", "This has been rejected" ,NotificationType.warn)
+        this.Status = 'Rejected';
+
       }else{
 
         this.isAcceptedSelectedInqEmp = getEmpByInq.data[0][0].isAccepted;
         this.isDeclinedSelectedInqEmp = getEmpByInq.data[0][0].isRejected;
         this.isPendingSelectedInqEmp = true;
 
-        this.notifyMessage("Inquiries", "This has been still pending, You can Accept or Reject" ,NotificationType.warn)
+        this.Status = 'Pending';
       }
 
       this.selectedAssignedInqEmp = getEmpByInq.data[0][0];

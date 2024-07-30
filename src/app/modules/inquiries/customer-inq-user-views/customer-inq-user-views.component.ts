@@ -17,6 +17,9 @@ export class CustomerInqUserViewsComponent implements OnInit, AfterViewInit{
   @Input() isAdmin = true;
   flag: boolean = false;
 
+  employeIngNote: any = '';
+  isEmpNoteAvailbale: boolean = false;
+  
   constructor(private communicationService: AppService, private extApi : ExtApiService, private dialog: MatDialog ){
 
   }
@@ -38,6 +41,8 @@ export class CustomerInqUserViewsComponent implements OnInit, AfterViewInit{
 
     inquiry.isAccepted = true;
     inquiry.isRejected = false;
+
+    this.isEmpNoteAvailbale = false;
   }
 
   rejectInquiry(inquiry: any) {
@@ -47,6 +52,8 @@ export class CustomerInqUserViewsComponent implements OnInit, AfterViewInit{
 
     inquiry.isAccepted = false;
     inquiry.inqisrejected = true;
+
+    this.isEmpNoteAvailbale = true;
     
   }
 
@@ -98,6 +105,7 @@ export class CustomerInqUserViewsComponent implements OnInit, AfterViewInit{
 
       console.log(this.inquiries)
 
+
     } catch (error) {
       console.log(error)
     }
@@ -114,7 +122,7 @@ debugger
       "addedAt": inq.addedAt,
       "rejectedAt": inq.rejectedAt,
       "completedAt": inq.completedAt,
-      "adminNotes": inq.adminNotes,
+      "adminNotes": this.employeIngNote,
       "employeeNotes": inq.employeeNotes,
       "isRejected": inq.inqisrejected,
       "isAccepted": inq.inqisAccepted,
@@ -123,7 +131,7 @@ debugger
 
     try {
       
-      let result = await this.extApi.GetEmployeeAssignedInquiries(reqFields);
+      let result = await this.extApi.UpdateEmployeesAssignedInquiry(reqFields);
 
       console.log(result)
 
@@ -131,10 +139,16 @@ debugger
 
       await this.GetEmployeeAssignedInquiries();
       
+      
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
+
+  onEmployeeNotesChange(inq: any, newNotes: string) {
+    inq.employeeNotes = newNotes;
+  }
+
 
   private notifyMessage(title: string, message: string, notificationType: NotificationType) {
 

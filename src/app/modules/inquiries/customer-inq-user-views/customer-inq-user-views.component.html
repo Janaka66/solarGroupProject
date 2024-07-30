@@ -25,6 +25,7 @@
                     <p><strong>Rejected At:</strong> {{ inquiry.inqrejectedAt ? (inquiry.inqrejectedAt | date: 'medium') : 'Not Rejected' }}</p>
                     <p><strong>Completed At:</strong> {{ inquiry.inqcompletedAt ? (inquiry.inqcompletedAt | date: 'medium') : 'Not Completed' }}</p>
                     <p><strong>Description:</strong> {{ inquiry.inqdescription }}</p>
+                    <p><strong>Note:</strong> <input type="text" [(ngModel)]="inquiry.employeeNotes" (ngModelChange)="onEmployeeNotesChange(inquiry, $event)"></p>
                     <p><strong>Status:</strong> 
                       <span *ngIf="inquiry.isAccepted && !inquiry.isRejected" class="status accepted">Accepted</span>
                       <span *ngIf="!inquiry.isAccepted && inquiry.isRejected" class="status rejected">Rejected</span>

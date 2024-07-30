@@ -798,7 +798,7 @@ export class ExtApiService {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     });
 
-    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationConfirmEmployeeItem`, reqFields, {headers}).toPromise();
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/UpdateQuotationConfirmEmployeeItem`, reqFields, {headers}).toPromise();
   }
 
   RequestResetPassword(reqFields?: any): Promise<any> {
@@ -884,4 +884,14 @@ export class ExtApiService {
     return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedComplains`, options).toPromise();
   }
   
+  GetEmployeeAssignedQuotationsForAccept(reqFields?: any): Promise<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+  
+    const options = { headers, params: reqFields };
+  
+    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetEmployeeAssignedQuotationsForAccept`, options).toPromise();
+  }
 }

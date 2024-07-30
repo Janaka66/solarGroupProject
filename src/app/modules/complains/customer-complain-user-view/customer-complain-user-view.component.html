@@ -25,11 +25,12 @@
                     <p><strong>Completion Date:</strong> {{ complaint.comcompletedAt | date: 'medium' }}</p>
                     <p><strong>Description:</strong> {{ complaint.description }}</p>
                     <p><strong>Status:</strong> 
-                      <span [class.handled]="complaint.comisHandled"
-                            [class.pending]="!complaint.comisHandled">
-                        {{ !complaint.comisHandled ? 'Pending' : 'Handled' }}
+                      <span [class.handled]="complaint.isHandled"
+                            [class.pending]="!complaint.isHandled">
+                        {{ !complaint.isHandled ? 'Pending' : 'Handled' }}
                       </span>
                     </p>
+                    <p><strong>Note:</strong> <input type="text" [(ngModel)]="complaint.employeeNotes"  (ngModelChange)="onEmployeeNotesChange(complaint, $event)"></p>
                  
                   </mat-card-content>
                   <mat-card-actions>

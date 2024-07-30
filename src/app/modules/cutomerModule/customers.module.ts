@@ -24,6 +24,8 @@ import { CustomerProfileComponent } from './customers/customer-profile/customer-
 import { SharedModule } from 'src/app/sharedComp/shared.module';
 import { FormViewerQoutComponent } from 'src/app/form-viewer-qout/form-viewer-qout.component';
 import { MatTableModule } from '@angular/material/table';
+import { CustomerQuotationsConfirmation } from './customers/customer-quotations-confirmation/customer-quotations-confirmation.component';
+import { RormViewerQoutConfirm } from 'src/app/form-viewer-qout-confirm/form-viewer-qout-confirm.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { MatTableModule } from '@angular/material/table';
     CustomerPaymentsComponent,
     CustomerInvoicesComponent,
     FormViewerComponent,
-    FormViewerQoutComponent
+    FormViewerQoutComponent,
+    CustomerQuotationsConfirmation,
+    RormViewerQoutConfirm
   ],
   imports: [
     NgxPrintModule,

@@ -24,8 +24,8 @@
         <mat-nav-list>
             <ng-container *ngFor="let item of leftMenu">
                 <mat-list-item (click)="sendModuleName(item.comp, item.idx, $event)">
-                    <span class="full-width" *ngIf="isExpanded || isShowing">{{ item.title }}</span>
                     <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
+                    <span class="full-width" *ngIf="isExpanded || isShowing">{{ item.title }}</span>
                     <mat-icon class="menu-button" [ngClass]="{'rotated' : item.showSubmenu}" (click)="item.showSubmenu = !item.showSubmenu">expand_more</mat-icon>
                 </mat-list-item>
                 <div [ngClass]="{'expanded' : item.showSubmenu}" [@expandCollapse]="item.showSubmenu ? 'expanded' : 'collapsed'" class="submenu">
@@ -39,9 +39,9 @@
             </ng-container>
         </mat-nav-list>
     
-        <div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
 
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
                 <button mat-raised-button color="primary" (click)="logout()">Logout</button>
             </div>
 

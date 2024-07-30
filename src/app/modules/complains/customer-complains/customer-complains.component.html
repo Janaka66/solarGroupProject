@@ -81,7 +81,7 @@
                             </button>
                             <button class="icon-btn decline" mat-raised-button  [disabled]="isDeclinedBtnDisabled" (click)="declineInq()">
                                 <span class="icon">&#10007;</span>
-                                <span class="text">Decline</span>
+                                <span class="text">Pending</span>
                             </button>
                         </div>
 
@@ -95,8 +95,8 @@
     
                         <div class="btnContainer">
 
-                                <div class="new">
-                                    <button class="new" mat-raised-button color="warn" [disabled]="isNewBtnDisabled" (click)="addcomplain()">Add complain</button>
+                                <div class="neBtn">
+                                    <button class="newbtn" [disabled]="isNewBtnDisabled" mat-raised-button color="primary" (click)="addcomplain()">Add complain</button>
                                 </div>
         
                                 <div class="update">
@@ -146,7 +146,7 @@
                                     <textarea style="resize: none;">{{inquire.description}}</textarea>
                                 </div>
 
-                                <div class="status" [ngClass]="{ 'approved': inquire.isHandled === true, 'declined': inquire.isHandled === false}">  {{ inquire.isHandled === true ? 'Approved' : 'Declined' }}</div>
+                                <div class="status" [ngClass]="{ 'approved': inquire.isHandled === true, 'declined': inquire.isHandled === false}">  {{ inquire.isHandled === true ? 'Handled' : 'Pending' }}</div>
 
                             </div>
 

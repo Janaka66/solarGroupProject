@@ -108,6 +108,12 @@
                                     display: flex;
                                     flex-direction: column;
 
+                                    .status{
+
+                                        display: flex;
+                                        justify-content: flex-start;
+                                    }
+
                                     textArea{
                                         height: 100%;
                                         resize: none;

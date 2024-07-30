@@ -60,33 +60,37 @@
     <div class="content">
 
       
-      <div class="assignedEmpSec">
-                         
-        <div class="emp">
+      <div class="assignedEmpSec"  style="display: flex;flex-direction: column;">
+          
+        <div style="display: flex;flex-direction: row;">
 
-            <h4>All Employees</h4>
+            <div class="emp">
 
-            <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"></app-employee-search>
+              <h4>All Employees</h4>
+
+              <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"></app-employee-search>
+
+            </div>
+
+          <div class="assignedEmp">
+
+              <h4>Assigned Employees</h4>
+
+              <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq">
+
+                  <mat-card-header>
+                    <mat-card-title-group>
+                      <mat-card-title>{{selectedIngEmp.initials + ' ' + selectedIngEmp.fname}}</mat-card-title>
+                    </mat-card-title-group>
+                  </mat-card-header>
+      
+              </mat-card>
+              
+          </div>
 
         </div>
 
-        <div class="assignedEmp">
-
-            <h4>Assigned Employees</h4>
-
-            <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq">
-
-                <mat-card-header>
-                  <mat-card-title-group>
-                    <mat-card-title>{{selectedIngEmp.initials + ' ' + selectedIngEmp.fname}}</mat-card-title>
-                  </mat-card-title-group>
-                </mat-card-header>
-    
-            </mat-card>
-            
-        </div>
-
-        <button  mat-raised-button color="primary" (click)="dialogRef.close('yes')">Save</button>
+        <button  mat-raised-button color="primary" style="height: 50px;" (click)="dialogRef.close('yes')">Save</button>
 
     </div>
 

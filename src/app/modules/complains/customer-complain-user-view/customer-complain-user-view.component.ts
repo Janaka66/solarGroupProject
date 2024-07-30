@@ -13,10 +13,11 @@ import { NotificationDialogComponent, NotificationType } from 'src/app/sharedCom
 export class CustomerComplainUserViewComponent implements OnInit, AfterViewInit{
 
   
-  @Input() allCustomerInqs = [] as any
+  allCustomerInqs = [] as any
   
   @Input() isAdmin = true;
   flag: boolean = false;
+  employeCompNote: any = '';
 
   constructor(private communicationService: AppService, private extApi : ExtApiService , private dialog: MatDialog){
 
@@ -121,6 +122,10 @@ export class CustomerComplainUserViewComponent implements OnInit, AfterViewInit{
     } catch (error) {
       console.log(error)
     }
+  }
+
+  onEmployeeNotesChange(complaint: any, newNotes: string) {
+    complaint.employeeNotes = newNotes;
   }
 
   private notifyMessage(title: string, message: string, notificationType: NotificationType) {

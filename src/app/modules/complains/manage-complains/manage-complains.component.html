@@ -53,11 +53,18 @@
                             <div class="employeeDetails">
 
                                 <div class="empNote">
-                                    <span>Employee Note</span>
+                                    
+                                    <div class="status">
+
+                                        <div>Status: </div>&nbsp;
+                                        <div>{{Status}}</div>
+
+                                    </div>
+
                                     <textarea [(ngModel)]="employeNote" [disabled]="isTextAreaDesabled"></textarea>
                                 </div>
  
-                                <div class="status">
+                                <!-- <div class="status">
                                     <div class="btnContainer">
                                         <button class="icon-btn verify" mat-raised-button  [disabled]="isAcceptedSelectedInqEmp" (click)="verifyOrDecline(true)">
                                             <span class="icon">&#10003;</span>
@@ -76,7 +83,7 @@
                                         </button>
                                     </div>
                 
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -141,7 +148,7 @@
                                     <textarea style="resize: none;">{{inquire.description}}</textarea>
                                 </div>
 
-                                <div class="status" [ngClass]="{ 'approved': inquire.isHandled === true, 'declined': inquire.isHandled === false}">  {{ inquire.isHandled === true ? 'Approved' : 'Declined' }}</div>
+                                <div class="status" [ngClass]="{ 'approved': inquire.isHandled === true, 'declined': inquire.isHandled === false}">  {{ inquire.isHandled === true ? 'Handled' : 'Pending' }}</div>
 
                             </div>
 

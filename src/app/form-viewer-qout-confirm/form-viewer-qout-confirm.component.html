@@ -1,0 +1,108 @@
+<div class="actionContainer">
+
+    <div class="company">
+        <select [(ngModel)]="selectedOption" (change)="selectAddress()">
+            <option *ngFor="let option of allCompanyData" [ngValue]="option">
+            {{option.cmpName}}
+            </option>
+        </select>
+    </div>
+
+</div>  
+
+<div *ngIf="cutomerQuatationInvoice" id="quatation-print-section" class="customer-quotation">
+  <header>
+    <h1>Invoice</h1>
+
+    <div class="logo">
+      <img src="../../assets/invoiceLogo.png">
+    </div>
+
+    <address>
+      <h3>BG Solar Energy (Private)Ltd.</h3>
+      <p>{{comapnyAddress}}</p>
+      <p>Kurunegala, Sri Lanka</p>
+      <p>(PV 114860)</p>
+
+      <p>Tel : {{mobile}}</p>
+      <p>Fax : {{fax}}</p>
+      <p>E-mail : {{email}}</p>
+    </address>
+
+    <div [ngClass]="{'confirmed-true': isConfirmed, 'confirmed-false': !isConfirmed}">
+      {{isConfirmed}}
+    </div>
+
+  </header>
+  <article>
+    <table class="meta">
+      <tr>
+        <th><span>Quotation No</span></th>
+        <td><span>{{quatationNumber}}</span></td>
+      </tr>
+      <tr>
+        <th><span>Date</span></th>
+        <td><span>{{quatationqDate}}</span></td>
+      </tr>
+      <tr>
+        <th><span>Valid</span></th>
+        <td>
+
+          <span>{{quatationvalidUntil}}</span>
+          
+        </td>
+      </tr>
+    </table>
+    <table class="inventory">
+      <thead>
+        <tr>
+          <th><span>Item</span></th>
+          <th><span>Rate</span></th>
+          <th><span>Quantity</span></th>
+          <th><span>Amount</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of quataionItems; let i = index">
+          <td>
+            <a class="cut" (click)="removeQuotItem(i)">-</a>
+            <select [(ngModel)]="item.itemId" (change)="onItemChangeQuot(i)" [disabled]="item.rowDisabled">
+              <option  *ngFor="let option of item.rowDisabled ? quatDropdownItems : allItems" [value]="option.itemId">{{option.itemName}}</option>
+            </select>
+
+          </td>
+          <td>
+            <span data-prefix>$</span>
+            <span (blur)="updateRateQuot(item, $event)">{{item.unitPrice}}</span>
+          </td>
+          <td>
+            <span (blur)="updateQuantityQuot(item, $event)">{{item.quantity}}</span>
+          </td>
+          <td>
+            <span data-prefix>$</span>
+            <span>{{item.totalPrice}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="add" (click)="addItem()">+</a>
+    <table class="balance totalAmt">
+      <tr>
+        <th>Total</th>
+        <td>
+          <span data-prefix>$</span>
+          <span>{{totalAmount}}</span>
+        </td>
+      </tr>
+    </table>
+  </article>
+  <aside>
+    <h1><span>Thank you for the business</span></h1>
+    <div>
+      
+  <div class="invoiceBottom">
+      <img src="../../assets//invoiceBottom.png">
+  </div>
+  </div>
+  </aside>
+</div>
