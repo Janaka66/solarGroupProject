@@ -60,39 +60,39 @@
     <div class="content">
 
       
-      <div class="assignedEmpSec"  style="display: flex;flex-direction: column;">
-          
-        <div style="display: flex;flex-direction: row;">
-
-            <div class="emp">
-
-              <h4>All Employees</h4>
-
+      <div class="assignedEmpSec">
+        <div class="employee-container">
+          <div class="emp">
+            <h4>All Employees</h4>
+            <div class="employee-list">
               <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)" [compName]="componant"></app-employee-search>
-
             </div>
-
-          <div class="assignedEmp">
-
-              <h4>Assigned Employees</h4>
-
-              <mat-card class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq">
-
-                  <mat-card-header>
-                    <mat-card-title-group>
-                      <mat-card-title>{{selectedIngEmp.employeeProfile.initials + ' ' + selectedIngEmp.employeeProfile.fname}}</mat-card-title>
-                    </mat-card-title-group>
-                  </mat-card-header>
-      
-              </mat-card>
-              
           </div>
-
+      
+          <div class="assignedEmp">
+            <h4>Assigned Employees</h4>
+            <div class="assigned-employee-list">
+              <div class="search-result-card" *ngFor="let selectedIngEmp of selectedForInq">
+                <div class="card-header">
+                  <div class="card-title-group">
+                    <div class="card-title">{{selectedIngEmp.employeeProfile.initials + ' ' + selectedIngEmp.employeeProfile.fname}}</div>
+                    <div class="status">
+                      <strong>Status:</strong> 
+                      <span *ngIf="selectedIngEmp.isConfirmed && !selectedIngEmp.isRejected" class="accepted">Accepted</span>
+                      <span *ngIf="!selectedIngEmp.isConfirmed && selectedIngEmp.isRejected" class="rejected">Rejected</span>
+                      <span *ngIf="!selectedIngEmp.isConfirmed && !selectedIngEmp.isRejected" class="pending">Pending</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <button  mat-raised-button color="primary" style="height: 50px;" (click)="dialogRef.close('yes')">Save</button>
-
-    </div>
+      
+        <button mat-raised-button color="primary" class="save-button" (click)="dialogRef.close('yes')">Save</button>
+      </div>
+      
+      
 
       
     </div>

@@ -108,7 +108,7 @@ export class NotificationDialogComponent implements OnInit, AfterViewInit {
 
   bindEmployeeData(event: any){
 debugger
-    let existData = this.selectedForInq.filter((el: any) => el.empID || el.id === event.selectedData.id);
+    let existData = this.selectedForInq.filter((el: any) => el.empID === event.selectedData.id);
 
     if(existData.length > 0 && !event.checked){
 
