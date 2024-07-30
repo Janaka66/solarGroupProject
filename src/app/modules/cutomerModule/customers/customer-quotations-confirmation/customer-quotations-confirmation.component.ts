@@ -160,9 +160,6 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
     inquiry.isConfirmed = true;
     inquiry.isRejected = false;
     
-    let responce = await this.getConfirmOrRejectedNote();
-
-    inquiry.notes = responce;
   }
 
   async rejectInquiry(inquiry: any) {
