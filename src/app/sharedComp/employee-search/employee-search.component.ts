@@ -44,7 +44,7 @@ export class EmployeeSearchComponent implements OnInit, AfterViewInit {
   }
 
   selectEmpForInquiries(selectedData:any, event: any){
-
+debugger
     this.selectEmpInq.emit({selectedData: selectedData, checked: event.target.checked});
 
   }

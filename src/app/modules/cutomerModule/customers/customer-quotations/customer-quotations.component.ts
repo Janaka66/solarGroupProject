@@ -132,6 +132,8 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
       this.CommonLoaderComponent.hide();
 
+      this.formViewer.setSelectedCustQuotData({custID: this.selectedCustID})
+
       // try {
           
 
@@ -401,7 +403,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
         result.data.forEach((el: any) => {
 
-          let getInqdataIdx = selectedIq.findIndex((elIq: any) => elIq.id === el.id)
+          let getInqdataIdx = selectedIq.findIndex((elIq: any) => elIq.empID === el.id)
 
           if(getInqdataIdx !== -1){
             el['checked'] = true
