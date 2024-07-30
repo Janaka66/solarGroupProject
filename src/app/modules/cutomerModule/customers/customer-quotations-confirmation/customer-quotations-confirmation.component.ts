@@ -159,6 +159,8 @@ export class CustomerQuotationsConfirmation implements OnInit, AfterViewInit{
  
     inquiry.isConfirmed = true;
     inquiry.isRejected = false;
+
+    inquiry.notes = '';
     
   }
 
