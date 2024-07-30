@@ -87,8 +87,24 @@
                                             <div>{{ product.totalAmount }}</div>
                                         </div>
 
-                                        <button (click)="removeQuatOrInvoice(product); $event.stopPropagation()">Delete</button>
-                                        <mat-icon (click)="hadleAssignedEmp($event)" *ngIf="handleIconDisabled">group_add</mat-icon>
+                                        <div>
+
+                                            <div>
+                                                <button mat-raised-button color="primary" (click)="acceptQuat(product); $event.stopPropagation()">Accept</button>
+                                                <button mat-raised-button color="warn" (click)="rejectQuat(product); $event.stopPropagation()" style="margin-left: 10px;">Reject</button>
+                                                <button mat-raised-button color="warn" (click)="removeQuatOrInvoice(product); $event.stopPropagation()" style="margin-left: 10px;">Delete</button>
+                                                <button mat-raised-button (click)="hadleAssignedEmp($event)" *ngIf="handleIconDisabled" style="margin-left: 10px; background-color: green;">View Emp</button>
+                                            </div>
+
+                                            <div>
+                                                <p><strong>Status:</strong> 
+                                                    <span *ngIf="product.isConfirmed && !product.isRejected" class="status accepted">Accepted</span>
+                                                    <span *ngIf="!product.isConfirmed && product.isRejected" class="status rejected">Rejected</span>
+                                                    <span *ngIf="!product.isConfirmed && !product.isRejected" class="status pending">Pending</span>
+                                                  </p>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </ng-template>

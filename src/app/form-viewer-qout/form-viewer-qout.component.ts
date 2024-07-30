@@ -75,6 +75,8 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
   quataionItems: any = [];
   quatationIsRejected: any;
   quatationIsConfirmed: any;
+  quatationRejectedNow: any = false;
+  quatationAcceptedNow: any = false;
 
   constructor( private communicationService: AppService, private extApi: ExtApiService, private cdr: ChangeDetectorRef){
     this.subscription = this.communicationService.data$.subscribe((data: any) => {
@@ -690,6 +692,48 @@ debugger
       
     }
     
+    async quatationAccepted(event: any, isConf:any, isRej: any){
+
+      await this.updateQuatation(event, isConf, isRej);
+      
+    }
+  
+    async quatationRejected(event: any, isConf:any, isRej: any){
+
+      await this.updateQuatation(event, isConf, isRej);
+    }
+
+    async updateQuatation(event: any, isConf:any, isRej: any){
+ debugger
+      try {
+        
+        let reqFields = {
+          "id": event.id,
+          "custId": event.custId,
+          "prodId": event.prodId,
+          "prodRefNu": event.prodRefNu,
+          "quotNumber": event.quotNumber,
+          "jobNumber": event.jobNumber,
+          "totalAmount": event.totalAmount,
+          "notes": event.notes,
+          "isConfirmed": isConf,
+          "isRejected": isRej,
+          "preparedBy": event.preparedBy,
+          "status": 0
+
+        }
+  
+        let res = await this.extApi.UpdateQuotation(reqFields);
+        await this.loadQuataionBack.emit();
+        alert('success')
+
+        
+      } catch (error) {
+        alert('error')
+      }
+     
+    }
+
   // =========================select customer and send to viewr==========================
   //     async setSelectedCustData(selectedCustData: any){
   // 

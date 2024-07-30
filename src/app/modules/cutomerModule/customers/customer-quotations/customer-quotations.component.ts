@@ -260,6 +260,15 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
   }
 
+  acceptQuat(product: any){
+    this.formViewer.quatationAccepted(product, true, false)
+  }
+
+
+  rejectQuat(product: any){
+    this.formViewer.quatationRejected(product, false, true)
+  }
+
   // async removeInvoice(){
     
   //   let reqFields = {
