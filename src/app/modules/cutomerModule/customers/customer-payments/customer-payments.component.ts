@@ -257,6 +257,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
   async GetCustomerProdcutForTwoProdDrops(){
 debugger
+debugger
     try {
 
       let allProcts = await this.extApi.GetCustomerProdcut({"custId":this.selectedCustID});
@@ -450,12 +451,12 @@ debugger
   }
 
   async GetCustomerProdcut(){
-
+debugger
     this.allProdReferance = []
 
     try {
 
-      let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.paymentForm.value.productName});
+      let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.paymentForm.value.productName, "custId": this.selectedCustID});
 
       getcustomerProd.data[0].data = getcustomerProd.data[0].filter((el: any) => el.status === 0)
 
@@ -486,7 +487,7 @@ debugger
 
 
   async refChange(event: any){
-    
+    debugger
     await this.getQouatationByCust();
   }
 
@@ -496,7 +497,7 @@ debugger
 
         try {
     
-          let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.paymentForm.value.selectedRefNum});
+          let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.paymentForm.value.selectedRefNum, "prodId": this.paymentForm.value.productName, "custId":this.selectedCustID});
     
           getProdRef.data = getProdRef.data.filter((el: any) => el.status === 0)
 
@@ -530,12 +531,12 @@ debugger
       }
 
       async GetCustomerProdcutForSearch(){
-        
+        debugger
         this.allProdReferanceForSearch = [];
 
             try {
         
-              let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.prodForSearch});
+              let getcustomerProd = await this.extApi.GetCustomerProdcut({"prodId": this.prodForSearch, "custId":this.selectedCustID});
         
               getcustomerProd.data[0].data = getcustomerProd.data[0].filter((el: any) => el.status === 0)
         
@@ -572,7 +573,7 @@ debugger
 
             try {
         
-              let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.selectedRefNum});
+              let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.selectedRefNum, "prodId": this.prodForSearch, "custId":this.selectedCustID});
         
               getProdRef.data = getProdRef.data.filter((el: any) => el.status === 0)
     
