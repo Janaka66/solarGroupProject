@@ -26,6 +26,7 @@ import { FormViewerQoutComponent } from 'src/app/form-viewer-qout/form-viewer-qo
 import { MatTableModule } from '@angular/material/table';
 import { CustomerQuotationsConfirmation } from './customers/customer-quotations-confirmation/customer-quotations-confirmation.component';
 import { RormViewerQoutConfirm } from 'src/app/form-viewer-qout-confirm/form-viewer-qout-confirm.component';
+import { WarrantyComponent } from './customers/warranty/warranty.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { RormViewerQoutConfirm } from 'src/app/form-viewer-qout-confirm/form-vie
     FormViewerComponent,
     FormViewerQoutComponent,
     CustomerQuotationsConfirmation,
-    RormViewerQoutConfirm
+    RormViewerQoutConfirm,
+    WarrantyComponent
   ],
   imports: [
     NgxPrintModule,

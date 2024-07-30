@@ -17,6 +17,7 @@ import { ManageComplainsComponent } from './modules/complains/manage-complains/m
 import { CustomerComplainUserViewComponent } from './modules/complains/customer-complain-user-view/customer-complain-user-view.component';
 import { CustomerInqUserViewsComponent } from './modules/inquiries/customer-inq-user-views/customer-inq-user-views.component';
 import { CustomerQuotationsConfirmation } from './modules/cutomerModule/customers/customer-quotations-confirmation/customer-quotations-confirmation.component';
+import { WarrantyComponent } from './modules/cutomerModule/customers/warranty/warranty.component';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,8 @@ export class sharedData{
 
         {icon : "", title: "Dashboard",                     comp: DashboardComponent,   idx: 1,                 children: []} ,
         {icon : "", title: "Customer",     idx: 0, children: [
-            {icon : "", title: "Customer Profile",                 comp: CustomersComponent,    idx: 3}
+            {icon : "", title: "Customer Profile",                 comp: CustomersComponent,    idx: 3},
+            {icon : "", title: "Warrenty",                 comp: WarrantyComponent,    idx: 30}
         ]} ,
 
         {icon : "", title: "Quotations",     idx: 0, children: [

@@ -652,7 +652,7 @@ debugger
           QuotItems.push({
             "id": "string",
             "quotID": this.quatationPrimeID,
-            "empID": el.id,
+            "empID": el.empID || el.id,
             "status": 0,
             "isConfirmed": this.quatationIsConfirmed,
             "isRejected": this.quatationIsRejected,
