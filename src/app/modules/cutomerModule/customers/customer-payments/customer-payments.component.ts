@@ -503,10 +503,14 @@ debugger
 
           getProdRef.data.forEach((el: any) => {
     
-            this.allQuatationForDrop.push({
-              'quatNum': el.quotNumber,
-              'id': el.id
-            })
+            if(el.isConfirmed){
+
+              this.allQuatationForDrop.push({
+                'quatNum': el.quotNumber,
+                'id': el.id
+              })
+            }
+   
     
           })
 
