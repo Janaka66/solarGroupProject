@@ -258,8 +258,7 @@ debugger
   }
 
   async GetCustomerProdcutForTwoProdDrops(){
-debugger
-debugger
+
     try {
 
       let allProcts = await this.extApi.GetCustomerProdcut({"custId":this.selectedCustID});

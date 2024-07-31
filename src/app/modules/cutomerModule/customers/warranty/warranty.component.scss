@@ -7,8 +7,89 @@
     .content{
         height: calc(100% - 62px);
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         padding: 0px 5px 0px 5px;
 
+
+            .search-section{
+                height: 100%;
+                width: 300px;
+                flex-shrink: 0;
+            }
+    
+            .add-customer-section{
+                height: 100%;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                padding-left: 10px;
+
+                .top{
+
+                    height: 100px;
+                }
+
+                .bottom{
+
+                    flex: 1;
+                    display: flex;
+                    flex-direction: row;
+                    width: 100%;
+
+                    .left{
+                        width: 200px;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .middle{
+
+                        padding: 10px;
+
+                        .table {
+                            width: 100%;
+                            border-collapse: collapse;
+                          }
+                          
+                          .table th, .table td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                          }
+                          
+                          .table th {
+                            background-color: #f2f2f2;
+                            text-align: left;
+                          }
+                          
+                          .table tr:hover {
+                            background-color: #f5f5f5;
+                            cursor: pointer;
+                          }
+
+                    }
+
+                    .right{
+                        
+                    }
+
+                }
+
+            }
+
+            mat-card{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                div{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 50%;
+                }
+            }
+        
     }
 }

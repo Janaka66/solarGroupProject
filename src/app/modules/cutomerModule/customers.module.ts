@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CustomerQuotationsConfirmation } from './customers/customer-quotations-confirmation/customer-quotations-confirmation.component';
 import { RormViewerQoutConfirm } from 'src/app/form-viewer-qout-confirm/form-viewer-qout-confirm.component';
 import { WarrantyComponent } from './customers/warranty/warranty.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { WarrantyComponent } from './customers/warranty/warranty.component';
     CarouselModule,
     AgGridModule,
     MatStepperModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule
   ]
 })
 export class CustomersModule { }

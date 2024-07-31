@@ -13,7 +13,202 @@
 
     <div class="content">
 
-        <app-employee-search #employeeSearch (selectEmpInq)="bindEmployeeData($event)"></app-employee-search>
+        <div class="search-section">
+           
+            <app-customer-search #customerSearch (selcetedCustomerData)="bindCutomerData($event)"></app-customer-search>
+            
+        </div>
+
+        <div class="add-customer-section" >
+
+
+            <div class="top">
+
+                <mat-card class="payment-form">
+                    
+                    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()"> 
+                            
+                        <mat-form-field appearance="fill">
+                        <mat-label>Product Name</mat-label>
+                        <mat-select formControlName="productName" [disabled]="!isBtnEnabaled" (selectionChange)="prodChange($event)">
+                            <mat-option *ngFor="let product of allProducts" [value]="product.prodId">
+                            {{ product.productName }}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Referance</mat-label>
+                            <mat-select formControlName="selectedCustRefNum" [disabled]="!isBtnEnabaled" (selectionChange)="refChange($event)">
+                                <mat-option *ngFor="let ref of allProdReferance" [value]="ref.refNu">
+                                {{ ref.refNu }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        
+                        <button mat-raised-button color="primary" (click)="getAllWarrentyItems()">Get All warrenty Items</button>
+                                        
+                    </form>
+
+                    
+                  <div>
+
+                    <td>
+                       
+                        <mat-icon>home</mat-icon> <!-- Address Icon -->
+                        <p><strong>{{manufactureAddress}}</strong></p>
+
+                      </td>
+                      <td>
+                        <mat-icon>email</mat-icon> <!-- Email Icon -->
+                        <p><strong>{{manufactureEmail}}</strong></p>
+                      </td>
+                      <td>
+                        <mat-icon>person</mat-icon> <!-- Name Icon -->
+                        <p><strong>{{ManufactureName}}</strong></p>
+                      </td>
+                      <td>
+                        <mat-icon>phone</mat-icon> <!-- Phone Number Icon -->
+                        <p><strong>{{ManufactureCotact}}</strong></p>
+                      </td>
+
+                  </div>
+
+                  </mat-card>
+
+            </div>
+
+            <div class="bottom">
+
+                <div class="left">
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Product Name</mat-label>
+                        <mat-select [(ngModel)]="productNameIdForADD" [disabled]="disabledAll" (selectionChange)="allProductsForAddFunc($event)">
+                            <mat-option *ngFor="let product of allProductsForAdd" [value]="product.prodId">
+                            {{ product.productName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                        <mat-form-field appearance="fill">
+                            <mat-label>Referance</mat-label>
+                            <mat-select [(ngModel)]="selectedCustRefNumForADD" [disabled]="disabledAll"  (selectionChange)="refChnageForAddFunc($event)">
+                                <mat-option *ngFor="let ref of allProdReferanceForAdd" [value]="ref.refNu">
+                                {{ ref.refNu }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+    
+                    <mat-form-field appearance="fill">
+                        <mat-label>Customer Items</mat-label>
+                        <mat-select [(ngModel)]="selectedcustItemForADD" [disabled]="disabledAll" (selectionChange)="customerItemsChangeFunc($event)">
+                            <mat-option *ngFor="let ref of allCutsomerItemsLoadForAdd" [value]="ref.itemId">
+                            {{ ref.itemName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="fill">
+                        <mat-label>Actions</mat-label>
+                        <mat-select [(ngModel)]="selecetedWarrantyActionIdForAdd" [disabled]="warentyItemsDisabled">
+                            <mat-option *ngFor="let warrantyActon of allWarrentyActionsForAdd" [value]="warrantyActon.id">
+                            {{ warrantyActon.actionDesc}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Date recived From Custom</mat-label>
+                        <input matInput [matDatepicker]="fromCustPicker"  [(ngModel)]="fromCustPickerDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="fromCustPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #fromCustPicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Date Returned</mat-label>
+                        <input matInput [matDatepicker]="returnedPicker"  [(ngModel)]="returnedPickerDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="returnedPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #returnedPicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Date Repaired</mat-label>
+                        <input matInput [matDatepicker]="repairedPicker"  [(ngModel)]="repairedPickerDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="repairedPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #repairedPicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Date Recived from comp</mat-label>
+                        <input matInput [matDatepicker]="fromCompPicker"  [(ngModel)]="fromCompPickerDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="fromCompPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #fromCompPicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <p><Strong>Additional Description</Strong></p>
+                    <input type="text" [(ngModel)]="addionalDescForAdd">
+
+                    
+                    <p><Strong>Remark</Strong></p>
+                    <input type="text" [(ngModel)]="remarkForAdd">
+
+                    <button mat-raised-button color="primary" *ngIf="isupdateAddBtnEnabled" (click)="addWarrentyItems()">Add Warrenty Items</button>
+                    <button mat-raised-button color="primary" *ngIf="!isupdateAddBtnEnabled" (click)="upadteWarrantyItems()">Update Warrenty Items</button>
+                    <button mat-raised-button color="primary" style="margin-top: 10px;" (click)="clearAll()">Clear</button>
+    
+                </div>
+
+                <div class="middle">
+
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Brand Name</th>
+                            <th>Item Name</th>
+                            <th>Date Received from Customer</th>
+                            <th>Date Returned</th>
+                            <th>Date Repaired</th>
+                            <th>Date Received from Company</th>
+                            <th>Additional Notes</th>
+                            <th>Remarks</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of allwarrentyItemsForUiLoad">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.brandName }}</td>
+                            <td>{{ item.itemName }}</td>
+                            <td>{{ item.dateReceivedFromCust }}</td>
+                            <td>{{ item.dateReturned }}</td>
+                            <td>{{ item.dateRepaired }}</td>
+                            <td>{{ item.dateReceivedFromComp }}</td>
+                            <td>{{ item.additionalNotes }}</td>
+                            <td>{{ item.remarks }}</td>
+                            <td>
+                                <button mat-icon-button (click)="editRow(item, $event)">
+                                    <mat-icon>edit</mat-icon>
+                                  </button>
+                                  <button mat-icon-button (click)="viewRow(item, $event)">
+                                    <mat-icon>visibility</mat-icon>
+                                </button>
+
+                            </td>
+                          </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="right">
+
+                </div>
+                
+            </div>
+
+        </div>
 
     </div>
 

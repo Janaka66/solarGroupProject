@@ -939,6 +939,38 @@ export class ExtApiService {
     
   }
 
+  GetWarrentyItem(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Product/GetWarrentyItem`, reqFields, {headers}).toPromise();
+    
+  }
+
+  AddWarrentyItem(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Product/AddWarrentyItem`, reqFields, {headers}).toPromise();
+    
+  }
+
+  UpdateWarrentyItem(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Product/UpdateWarrentyItem`, reqFields, {headers}).toPromise();
+    
+  }
 
 
 }
