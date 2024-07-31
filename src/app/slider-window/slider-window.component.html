@@ -895,6 +895,62 @@
                 
             </mat-expansion-panel>
 
+            <mat-expansion-panel [expanded]="step() === 11" (opened)="setStep(11)" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Warrenty Items </mat-panel-title>
+                  <div class="moduleLoader-container">
+                    <img *ngIf="isLoaderAvailableForwarrenty" src="../../../../assets/loader.gif">
+                </div>
+                </mat-expansion-panel-header>
+            
+                <div class="warrentyContainer">
+
+
+                    <div class="topContainer">
+                
+                        <div class="inputs">
+                
+                            <form [formGroup]="warrenty">
+                
+                                <mat-form-field>
+                                    <mat-label>warrenty</mat-label>
+                                    <input matInput formControlName="actionDesc" required>
+                                </mat-form-field>
+                                
+                            </form>
+                    
+                        </div>
+                
+                        <div class="btn">
+                
+                            <mat-icon (click)="addwarrenty()">add_box</mat-icon>
+                            
+                        </div>
+                    </div>
+                
+                    <div #actionBtnContainerForwarrenty class="results-container"> 
+            
+                        <div class="result" *ngFor="let warrenty of allSavedwarrentys; let i = index">
+                
+                            <div class="top" (click)="bindwarrentyDataToUI(warrenty, i)">
+    
+                                <div>
+                                    {{warrenty.actionDesc}}
+                                </div>
+    
+                            </div>
+                            <div class="bottom" [id] = "i" (click)="removeUpdateOpt(warrenty.btnTxt, i, 'warrenty')">
+                                {{removeUpdateTextForwarrenty}}
+                            </div>
+                
+                        </div>
+    
+                    </div>
+
+                </div>
+                
+            </mat-expansion-panel>
+
           </mat-accordion>
     </div>
 

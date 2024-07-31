@@ -197,7 +197,7 @@ export class FormViewerQoutComponent implements OnInit, AfterViewInit{
       console.log(invoiceAddRes)
 
       this.clear();
-      await this.loadAllInvoicesBack.emit();
+      await this.loadQuataionBack.emit();
 
       this.loaderEnableDesabled.emit(false);
 
@@ -444,6 +444,7 @@ debugger
   async loadQuatationItems(reqFields: any){
 
       this.addBtnEnabled = false;
+      this.updateBtnEnabled = true;
       this.quatDropdownItems = []
       this.quatationProdRefNu = reqFields.prodRefNu; 
       this.quatationPrimeID = reqFields.prodId
@@ -681,7 +682,7 @@ debugger
         }
     }
 
-    addNewQuat(){
+    async addNewQuat(){
 
       this.quatationNumber = '';
       this.quatationqDate = '';
@@ -689,7 +690,10 @@ debugger
       this.selectedDate = '';
       this.quataionItems = [];
       this.totalAmount = 0;
-      
+      this.addBtnEnabled = true;
+      this.updateBtnEnabled = true;
+
+      await this.loadQuataionBack.emit();
     }
     
     async quatationAccepted(event: any, isConf:any, isRej: any){

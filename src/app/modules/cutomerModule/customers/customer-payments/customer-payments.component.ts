@@ -79,7 +79,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
     this.CommonLoaderComponent.hide();
 
-    this.notifyMessage("Welcome to the payment view", "Please selecet the customoer first to load the products",NotificationType.success)
+    //this.notifyMessage("Welcome to the payment view", "Please selecet the customoer first to load the products",NotificationType.success)
   }
 
   handleLeftBar() {
@@ -93,6 +93,8 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
 
     this.CommonLoaderComponent.show();
+
+    this.clearAll();
 
     this.isBtnEnabaled = true;
 
@@ -331,7 +333,7 @@ debugger
   }
 
   async updatePayamentData(){
-
+debugger
     this.CommonLoaderComponent.show();
 
     let reqFields = {
@@ -343,9 +345,9 @@ debugger
       "paymentPrecentage": this.productForUpdate.paymentPrecentage,
       "recpNo": this.productForUpdate.recpNo,
       "paymentDate": this.productForUpdate.paymentDate,
-      "jobDescription": this.productForUpdate.jobDescription,
-      "remark": this.productForUpdate.remark,
-      "payment": this.productForUpdate.payment,
+      "jobDescription": this.paymentForm.value.jobDescription,
+      "remark": this.paymentForm.value.remark,
+      "payment": this.paymentForm.value.payment,
       "balance": this.productForUpdate.balance,
       "quotedPrice": this.productForUpdate.quotedPrice,
       "totalDue": this.productForUpdate.totalDue,
@@ -412,14 +414,15 @@ debugger
   }
 
   editPayment(e:any){
-
+debugger
     this.paymentForm.setValue({
       customerName: e.custmoerName,
-      productName: e.productName,
-      quotationName: e.quotationName,
+      productName: e.custmoerName,
+      selectedQutNumber: e.quotId,
+      selectedRefNum: e.refNu,
       jobDescription: e.jobDescription,
       remark: e.remark,
-      payment: e.payment
+      payment: e.payment 
     });
 
     this.isBtnEnabaled = false;
@@ -599,4 +602,13 @@ debugger
           }
       }
 
+      clearAll(){
+        this.prodForSearch = '',
+        this.selectedRefNum = '',
+        this.quotForSearch = '',
+        this.paymentForm.reset();
+        this.payments = [],
+        this.isBtnEnabaled = false;
+      }
 }
+

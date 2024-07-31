@@ -2,6 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, 
 import { AppService } from '../app.service';
 import { Subscription } from 'rxjs';
 import { SliderWindowComponent } from '../slider-window/slider-window.component';
+import { ExtApiService } from '../ext-api.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,47 +17,19 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     flag: boolean = false;
 
     subscription: Subscription;
+    
+      inquiries = []
+    
+      complaints = []
+    
+      duePayments = [];
 
-    duePayments = [
-        { id: '000001', custId: '000001', amount: 500 },
-        // Add more dummy data or fetch from your service
-      ];
+      displayedColumnsInquiries: string[] = ['cInqId', 'description', 'iquiryAddeddAt', 'completedAt', 'dispName', 'isAccepted'];
+      displayedColumnsComplaints: string[] = ['compId', 'complainedAt', 'completedAt','dispName', 'description', 'isHandled', ];
+      displayedColumnsDuePayments: string[] = ['id', 'dueFrom','duePayment','isCleared', 'isMessageSent','dispName','productName'];
+      
     
-      complaints = [
-        {
-          compId: '000001',
-          custId: '000001',
-          cfTypeId: '000010',
-          complainedAt: '2024-06-28T05:11:49.4261945',
-          completedAt: '2024-07-17T08:40:05.44278',
-          cfStatusId: '000002',
-          description: 'stringxxxxxxxxxx',
-          isHandled: true,
-          status: 0
-        },
-        // Add more dummy data or fetch from your service
-      ];
-    
-      inquiries = [
-        {
-          cInqId: '000001',
-          custId: '000001',
-          cfTypeId: '000007',
-          cfStatusId: '000001',
-          inquiryAddeddAt: '2024-07-15T18:04:23.071',
-          rejectedAt: '2024-07-17T07:56:49.9674647',
-          completedAt: '2024-07-23T14:46:31.0469596',
-          description: 'string',
-          isrejected: false,
-          isAccepted: true,
-          rejectedBy: '000001',
-          status: 0
-        },
-        // Add more dummy data or fetch from your service
-      ];
-    
-    
-  constructor(private communicationService: AppService, private cdr: ChangeDetectorRef){
+  constructor(private communicationService: AppService, private cdr: ChangeDetectorRef, private extApi: ExtApiService){
 
     this.subscription = this.communicationService.data$.subscribe((data: any) => {
         
@@ -65,8 +39,12 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     });
   }
 
-    ngAfterViewInit(): void {
+    async ngAfterViewInit(): Promise<void> {
         this.cdr.detectChanges();
+
+        await this.GetCustomerInquiry()
+        await this.GetCustomerCompalin()
+        await this.GetCustDuePayments()
     }
   
     ngOnInit(){
@@ -76,6 +54,76 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     handleLeftBar() {
         
         this.communicationService.sendData({ flag: false });
+    }
+
+
+
+    async GetCustomerInquiry(){
+debugger
+      try {
+
+        let inqForDash = await this.extApi.GetCustomerInquiry()
+        console.log(inqForDash)
+
+        inqForDash.data.forEach((el: any) => {
+        
+          el.dispName = el.customerProfile.dispName
+          el.iquiryAddeddAt = moment(el.iquiryAddeddAt).format('YYYY-MM-DD')
+          el.completedAt = moment(el.completedAt).format('YYYY-MM-DD')
+        });
+
+        this.inquiries = inqForDash.data
+        
+      } catch (error) {
+        
+      }
+    }
+
+    async GetCustomerCompalin(){
+      
+      try {
+        
+        let complForDash = await this.extApi.GetCustomerCompalin()
+        console.log(complForDash)
+        
+        
+        complForDash.data.forEach((el: any) => {
+        
+          el.dispName = el.customerProfile.dispName
+          el.iquiryAddeddAt = moment(el.complainedAt).format('YYYY-MM-DD')
+          el.completedAt = moment(el.completedAt).format('YYYY-MM-DD')
+        });
+   
+        this.complaints = complForDash.data
+  
+
+      } catch (error) {
+        
+      }
+
+    }
+
+    async GetCustDuePayments(){
+      
+      try {
+        
+        let dueForDash = await this.extApi.GetCustDuePayments()
+        console.log(dueForDash)
+
+        dueForDash.data.forEach((el: any) => {
+        
+          el.dispName = el.customerProfile.dispName
+          el.dueFrom = moment(el.dueFrom).format('YYYY-MM-DD')
+          el.completedAt = moment(el.completedAt).format('YYYY-MM-DD')
+          el.productName = el.product.productName
+        });
+
+        this.duePayments = dueForDash.data
+
+      } catch (error) {
+        
+      }
+
     }
 
 }

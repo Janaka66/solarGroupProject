@@ -31,8 +31,8 @@
                 <div [ngClass]="{'expanded' : item.showSubmenu}" [@expandCollapse]="item.showSubmenu ? 'expanded' : 'collapsed'" class="submenu">
                     <ng-container *ngFor="let subItem of item.children">
                         <a mat-list-item href="" (click)="sendModuleName(subItem.comp, subItem.idx, $event); $event.preventDefault()">
-                            <span>{{ subItem.title }}</span>
                             <mat-icon>{{ subItem.icon }}</mat-icon>
+                            <span>{{ subItem.title }}</span>
                         </a>
                     </ng-container>
                 </div>

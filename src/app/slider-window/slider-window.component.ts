@@ -33,6 +33,7 @@ export class SliderWindowComponent implements OnInit {
   @ViewChild('actionBtnContainerForItems', { static: false }) actionBtnContainerForItems: ElementRef | any;
   @ViewChild('actionBtnContainerManufac', { static: false }) actionBtnContainerManufac: ElementRef | any;
   @ViewChild('actionBtnContainerForprofile', { static: false }) actionBtnContainerForprofile: ElementRef | any;
+  @ViewChild('actionBtnContainerForwarrenty', { static: false }) actionBtnContainerForwarrenty: ElementRef | any;
 
   isLoading: boolean = false;
   sliderWindowState: boolean = false;
@@ -58,6 +59,7 @@ export class SliderWindowComponent implements OnInit {
   removeUpdateTextForItems: any = 'REMOVE';
   removeUpdateTextForManuFac: any = 'REMOVE';
   removeUpdateTextForProfile: any = 'REMOVE';
+  removeUpdateTextForwarrenty = 'REMOVE'
 
   isLoaderAvailableForBrand: boolean = false;
   isLoaderAvailableForCompany: boolean = false;
@@ -107,10 +109,16 @@ export class SliderWindowComponent implements OnInit {
   allSavedStages = [] as any;
   disableDocTypeRemoveIcon: boolean = false;
 
+  //Profile
   flag: any;
   isLoaderAvailableForprofile: boolean = false;
   profile: any;
   allSavedprofiles: any;
+
+  //Warrenty
+  isLoaderAvailableForwarrenty: boolean = false;
+  warrenty: any;
+  allSavedwarrentys: any;
 
   constructor(private formBuilder: FormBuilder, private extApi: ExtApiService, private communicationService: AppService, private router: Router){
     this.brand = this.formBuilder.group({
@@ -180,6 +188,10 @@ export class SliderWindowComponent implements OnInit {
     this.profile = this.formBuilder.group({
       modeDesc:    ['', Validators.required],
     });
+
+    this.warrenty = this.formBuilder.group({
+      actionDesc:    ['', Validators.required],
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -187,7 +199,7 @@ export class SliderWindowComponent implements OnInit {
   }
 
   sliderEnableDisable(data: any){
-
+debugger
     this.sliderWindowState = true;
     
     this.clearAll();
@@ -215,6 +227,7 @@ export class SliderWindowComponent implements OnInit {
     await this.loadAllItems();
     await this.loaAllStages();
     await this.loaAllprofiles();
+    await this.loaAllwarrentys();
 
     this.isLoading = false;
     
@@ -289,6 +302,8 @@ export class SliderWindowComponent implements OnInit {
       
       let brandsTypes = await this.extApi.GetBrand();
       this.allBrandNames = brandsTypes.data[0].filter((el: any) => el.status === 0);
+
+      console.log(this.allBrandNames)
 
     } catch (e: any) {
       
@@ -420,6 +435,7 @@ export class SliderWindowComponent implements OnInit {
       let companyData = await this.extApi.GetCompany();
       this.allCompanyData = companyData.data[0].filter((el: any) => el.status === 0);
      
+      console.log(this.allCompanyData)
 
     } catch (e: any) {
       
@@ -452,7 +468,7 @@ export class SliderWindowComponent implements OnInit {
 
       console.log(removeItems)
 
-      this.loadCompany();
+      await this.loadCompany();
 
       this.isLoaderAvailableForCompany = false;
 
@@ -608,6 +624,8 @@ export class SliderWindowComponent implements OnInit {
       
       let feedbacksTypes = await this.extApi.GetEmployeeDesignation();
       this.alldesoignations = feedbacksTypes.data.filter((el: any) => el.status === 0);
+
+      console.log(this.alldesoignations)
 
     } catch (e: any) {
       
@@ -1805,6 +1823,138 @@ export class SliderWindowComponent implements OnInit {
   
     }
 
+      //warrenty
+      async addwarrenty(){
+
+        this.isLoaderAvailableForwarrenty = true;
+    
+        if(this.warrenty.value.actionDesc === ''){
+          this.isLoaderAvailableForwarrenty = false;
+          alert("warrenty is empty")
+          return
+        }
+    
+        if(this.allSavedwarrentys.find((el: any) => el.actionDesc === this.warrenty.value.actionDesc)){
+    
+          this.isLoaderAvailableForwarrenty = false;
+          alert("warrenty is already added")
+          return
+        }
+    
+        let reqFields = [
+          {
+            "id": "string",
+            "actionDesc": this.warrenty.value.actionDesc,
+            "status": 0
+          }
+        ]
+    
+        try {
+    
+          let addwarrentyRes = await this.extApi.AddWarrentyItemAction(reqFields);
+          console.log(addwarrentyRes)
+    
+          await this.loaAllwarrentys()
+          
+          this.warrenty.reset();
+          this.isLoaderAvailableForwarrenty = false;
+    
+        } catch (e: any) {
+          
+          console.log(e)
+          this.isLoaderAvailableForwarrenty = false;
+        }
+    
+      }
+    
+      async loaAllwarrentys(){
+    debugger
+        try {
+          
+          let warrentys = await this.extApi.GetWarrentyItemAction();
+          this.allSavedwarrentys = warrentys.data.filter((el: any) => el.status === 0);
+    
+        } catch (e: any) {
+          
+          console.log(e)
+        }
+      }
+    
+      async removewarrenty(i: any){
+    
+        this.isLoaderAvailableForwarrenty = true;
+    
+        try {
+          
+          let removewarrenty = await this.extApi.UpdateWarrentyItemAction([{id: this.allSavedwarrentys[i].id, actionDesc: this.allSavedwarrentys[i].actionDesc, status: 1}])
+          console.log(removewarrenty)
+    
+          await this.loaAllwarrentys()
+          this.isLoaderAvailableForwarrenty = false;
+    
+        } catch (e:any) {
+          console.log(e)
+          this.isLoaderAvailableForwarrenty = false;
+          
+        }
+    
+      }
+    
+      async updatewarrenty(i: any){
+    
+        this.isLoaderAvailableForwarrenty = true;
+    
+        try {
+          
+          let updatewarrentyRes = await this.extApi.UpdateWarrentyItemAction({id: this.allSavedwarrentys[i].id, actionDesc: this.warrenty.value.actionDesc, status: 0})
+          console.log(updatewarrentyRes)
+    
+          await this.loaAllwarrentys();
+          this.warrenty.reset();
+    
+          this.isLoaderAvailableForwarrenty = false;
+    
+        } catch (e:any) {
+          console.log(e)
+          this.isLoaderAvailableForwarrenty = false;
+          
+        }
+    
+      }
+    
+      bindwarrentyDataToUI(data: any, i: any){
+    
+        
+        
+        let allBottomClzElements = this.actionBtnContainerForwarrenty.nativeElement.querySelectorAll('.bottom')
+    
+        allBottomClzElements.forEach((el:any, idx: any) => {
+          
+          el.classList.remove('remove')
+          el.classList.remove('update')
+    
+          if(parseInt(el.id) === i){
+            el.classList.remove('remove')
+            el.classList.add('update')
+            el.innerHTML = "UPDATE"
+    
+            this.allSavedwarrentys[idx]['btnTxt'] = 'update'
+    
+          }else{
+            el.innerHTML = 'REMOVE';
+            el.classList.add('remove');
+            this.allSavedwarrentys[idx]['btnTxt'] = 'remove'
+          }
+    
+        });
+    
+        this.warrenty.setValue({
+          actionDesc: data.actionDesc,
+        })
+    
+    
+      }
+  
   //common
   async removeUpdateOpt(txt:any, i: any, sec: any){
     
@@ -1941,6 +2091,18 @@ export class SliderWindowComponent implements OnInit {
         }
 
         break;
+
+      case 'warrenty':
+
+        if(txt === 'remove' || !txt){
+          
+          await this.removewarrenty(i)
+        }
+        else{
+          await this.updatewarrenty(i)
+        }
+
+       break;
     }
   }
 
@@ -1968,6 +2130,7 @@ export class SliderWindowComponent implements OnInit {
     this.removeUpdateTextForItems = 'REMOVE';
     this.removeUpdateTextForManuFac = 'REMOVE';
     this.removeUpdateTextForProfile = 'REMOVE'
+    this.removeUpdateTextForwarrenty = 'REMOVE'
 
     this.isLoaderAvailableForBrand = false;
     this.isLoaderAvailableForCompany = false;
@@ -2020,5 +2183,10 @@ export class SliderWindowComponent implements OnInit {
     //profile
     this.profile.reset();
     this.allSavedprofiles = [];
+
+    
+    //warrenty
+    this.warrenty.reset();
+    this.allSavedwarrentys = [];
   }
 }

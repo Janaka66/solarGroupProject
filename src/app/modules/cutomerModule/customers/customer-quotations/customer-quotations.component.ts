@@ -123,6 +123,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
 
       this.allIQuot = []
       this.prodRefNumbers = [];
+      this.prodNameforItems = '';
 
       this.CommonLoaderComponent.show();
       this.selectedCustID = custData.id;
@@ -155,7 +156,7 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
   }
 
   async getAllQout(){
-
+debugger
       return new Promise(async (resolve, reject) => {
 
         if(!this.selectedCustID && !this.prodNameforItems && !this.prodRefNumber){
@@ -428,8 +429,8 @@ export class CustomerQuotationsComponent implements OnInit, AfterViewInit{
         })
       }
 
-      this
-      this.EmployeeSearchComponent.showEmployees(result.data);
+      // this
+      // this.EmployeeSearchComponent.showEmployees(result.data);
 
     } catch (e: any) {
       console.log(e.error)

@@ -881,7 +881,7 @@ export class ExtApiService {
   
     const options = { headers, params: reqFields };
   
-    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedComplains`, options).toPromise();
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedComplains`, options).toPromise();
   }
   
   GetEmployeeAssignedQuotationsForAccept(reqFields?: any): Promise<any> {
@@ -892,6 +892,53 @@ export class ExtApiService {
   
     const options = { headers, params: reqFields };
   
-    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetEmployeeAssignedQuotationsForAccept`, options).toPromise();
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetEmployeeAssignedQuotationsForAccept`, options).toPromise();
   }
+
+  GetCustDuePayments(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/GetCustDuePayments`, reqFields, {headers}).toPromise();
+    
+  }
+
+  AddWarrentyItemAction(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Setup/AddWarrentyItemAction`, reqFields, {headers}).toPromise();
+    
+  }
+
+  GetWarrentyItemAction(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Setup/GetWarrentyItemAction`, reqFields, {headers}).toPromise();
+    
+  }
+
+  UpdateWarrentyItemAction(reqFields?: any): Promise<any> {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+
+    return this.http.put<any>(this.appConfig.getBaseUrl('api') + `/api/Setup/UpdateWarrentyItemAction`, reqFields, {headers}).toPromise();
+    
+  }
+
+
+
 }

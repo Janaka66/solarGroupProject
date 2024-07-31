@@ -245,3 +245,19 @@ mat-dialog-container{
     }
 
 }
+
+mat-card  {
+
+    table{
+
+        ng-container{
+            .verified {
+                background-color: green;
+              }
+              
+              .not-verified {
+                background-color: red;
+              }
+        }
+    }
+}

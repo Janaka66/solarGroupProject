@@ -44,6 +44,7 @@ import { DialogModule } from 'primeng/dialog';
 import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from './auth/auth.service';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -95,6 +96,7 @@ import { tokenGetter } from './auth/auth.service';
     CommonModule,
     MatDialogModule,
     DialogModule,
+    MatTableModule,
     JwtModule.forRoot({
       config: {
           allowedDomains: ['localhost:4200'],

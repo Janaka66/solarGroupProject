@@ -29,43 +29,43 @@ export class sharedData{
     
     majorCompInfo = [
 
-        {icon : "", title: "Dashboard",                     comp: DashboardComponent,   idx: 1,                 children: []} ,
-        {icon : "", title: "Customer",     idx: 0, children: [
-            {icon : "", title: "Customer Profile",                 comp: CustomersComponent,    idx: 3},
-            {icon : "", title: "Warrenty",                 comp: WarrantyComponent,    idx: 30}
+        {icon : "dashboard", title: "Dashboard",                     comp: DashboardComponent,   idx: 1,                 children: []} ,
+        {icon : "person", title: "Customer",     idx: 0, children: [
+            {icon : "account_circle", title: "Customer Profile",                 comp: CustomersComponent,    idx: 3},
+            {icon : "verified_user", title: "Warrenty",                 comp: WarrantyComponent,    idx: 30}
         ]} ,
 
-        {icon : "", title: "Quotations",     idx: 0, children: [
-            {icon : "", title: "Customer Quotations",       comp: CustomerQuotationsComponent,  idx: 6},
-            {icon : "", title: "Quotations Confirmation",   comp: CustomerQuotationsConfirmation,  idx: 26},
+        {icon : "description", title: "Quotations",     idx: 0, children: [
+            {icon : "request_quote", title: "Customer Quotations",       comp: CustomerQuotationsComponent,  idx: 6},
+            {icon : "check_circle", title: "Quotations Confirmation",   comp: CustomerQuotationsConfirmation,  idx: 26},
         ]},
 
-        {icon : "", title: "Invoices",     idx: 0, children: [
-            {icon : "", title: "Customer Invoices",         comp: CustomerInvoicesComponent,    idx: 5},
+        {icon : "receipt", title: "Invoices",     idx: 0, children: [
+            {icon : "description", title: "Customer Invoices",         comp: CustomerInvoicesComponent,    idx: 5},
         ]},
 
-        {icon : "", title: "Payments",     idx: 0, children: [
-            {icon : "", title: "Customer Payments",         comp: CustomerPaymentsComponent,    idx: 7},
+        {icon : "payment", title: "Payments",     idx: 0, children: [
+            {icon : "attach_money", title: "Customer Payments",         comp: CustomerPaymentsComponent,    idx: 7},
         ]},
 
-        {icon : "", title: "Products",     idx: 0, children: [
-            {icon : "", title: "Customer Products",         comp: CustomerProductsComponent,    idx: 4},
+        {icon : "shopping_cart", title: "Products",     idx: 0, children: [
+            {icon : "shopping_bag", title: "Customer Products",         comp: CustomerProductsComponent,    idx: 4},
         ]},
 
-        {icon : "", title: "Employees",     idx: 0, children: [
-            {icon : "", title: "Add Employees",             comp: EmployeeComponent,            idx: 21}
+        {icon : "group", title: "Employees",     idx: 0, children: [
+            {icon : "person_add", title: "Add Employees",             comp: EmployeeComponent,            idx: 21}
         ]} ,
-        {icon : "", title: "Inquires",      idx: 0, children: [            
-            {icon : "", title: "Customer Inquiries",        comp: CustomerInquiriesComponent,   idx: 22},
-            {icon : "", title: "Manage Inquiries",          comp: ManageInquiriesComponent,     idx: 23},
+        {icon : "question_answer", title: "Inquires",      idx: 0, children: [            
+            {icon : "help_outline", title: "Customer Inquiries",        comp: CustomerInquiriesComponent,   idx: 22},
+            {icon : "manage_accounts", title: "Manage Inquiries",          comp: ManageInquiriesComponent,     idx: 23},
             {icon : "", title: "cust Inquiries userMode",          comp: CustomerInqUserViewsComponent,     idx: 30},
         ]},
-        {icon : "", title: "Complains",     idx: 0, children: [            
-            {icon : "", title: "Customer Complains",        comp: CustomerComplainsComponent,   idx: 24},
-            {icon : "", title: "Manage Complains",          comp: ManageComplainsComponent,     idx: 25},
+        {icon : "report_problem", title: "Complains",     idx: 0, children: [            
+            {icon : "feedback", title: "Customer Complains",        comp: CustomerComplainsComponent,   idx: 24},
+            {icon : "settings", title: "Manage Complains",          comp: ManageComplainsComponent,     idx: 25},
             {icon : "", title: "cust Complain userMode",          comp: CustomerComplainUserViewComponent,     idx: 31},
         ]},
-        {icon : "verified_user", title: "User", comp: CustomerProfileComponent,   idx: 8, children: []} , 
+        {icon : "account_box", title: "User", comp: CustomerProfileComponent,   idx: 8, children: []} , 
     ]
     
 
