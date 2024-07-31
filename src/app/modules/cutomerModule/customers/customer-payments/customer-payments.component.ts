@@ -184,7 +184,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   }
 
   async getCustPayments(){
-
+debugger
     let req = {
       "custId": this.selectedCustID,
       "prodId": this.prodForSearch,

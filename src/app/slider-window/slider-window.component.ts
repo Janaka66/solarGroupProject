@@ -32,6 +32,7 @@ export class SliderWindowComponent implements OnInit {
   @ViewChild('actionBtnContainerForStage', { static: false }) actionBtnContainerForStage: ElementRef | any;
   @ViewChild('actionBtnContainerForItems', { static: false }) actionBtnContainerForItems: ElementRef | any;
   @ViewChild('actionBtnContainerManufac', { static: false }) actionBtnContainerManufac: ElementRef | any;
+  @ViewChild('actionBtnContainerForprofile', { static: false }) actionBtnContainerForprofile: ElementRef | any;
 
   isLoading: boolean = false;
   sliderWindowState: boolean = false;
@@ -110,7 +111,6 @@ export class SliderWindowComponent implements OnInit {
   isLoaderAvailableForprofile: boolean = false;
   profile: any;
   allSavedprofiles: any;
-  actionBtnContainerForprofile: any;
 
   constructor(private formBuilder: FormBuilder, private extApi: ExtApiService, private communicationService: AppService, private router: Router){
     this.brand = this.formBuilder.group({
@@ -269,13 +269,7 @@ export class SliderWindowComponent implements OnInit {
       let adTypeRes = await this.extApi.AddBrand(reqFields);
       console.log(adTypeRes)
 
-      this.allBrandNames.push(
-        {
-          "id": "string",
-          "brandName": this.brand.value.brandName,
-          "status": 0
-        }
-      )
+      await this.loaAllbrands()
       
       this.brand.reset();
 
@@ -311,7 +305,7 @@ export class SliderWindowComponent implements OnInit {
       let removebrandRes = await this.extApi.UpdateBrand([{id: this.allBrandNames[i].id, brandName: this.allBrandNames[i].brandName, status: 1}])
       console.log(removebrandRes)
 
-      this.allBrandNames.splice(i, 1);
+      await this.loaAllbrands()
 
       this.isLoaderAvailableForBrand = false;
 
@@ -364,7 +358,7 @@ export class SliderWindowComponent implements OnInit {
       console.log(updateBrandRes);
 
       this.brand.reset();
-      this.loaAllbrands();
+      await this.loaAllbrands();
 
       this.isLoaderAvailableForBrand = false;
 
@@ -403,22 +397,7 @@ export class SliderWindowComponent implements OnInit {
       let addCompanyRes = await this.extApi.AddCompany(reqFields);
       console.log(addCompanyRes);
 
-      this.allCompanyData.push(
-        {
-          "cmpId"   : 'string',
-          "cmpName" : this.companyItems.value.cmpName,
-          "regNo"   : 'string',
-          "addLineA": this.companyItems.value.addLineA,
-          "addLineB": this.companyItems.value.addLineB,
-          "addLineC": this.companyItems.value.addLineC,
-          "phone"   : this.companyItems.value.phone,
-          "mobile"  : this.companyItems.value.mobile,
-          "fax"     : this.companyItems.value.fax,
-          "email"   : this.companyItems.value.email,
-          "logo"    : this.companyLogo,
-          "status"  : 0
-        }
-      )
+      this.loadCompany()
       
       this.companyItems.reset();
       
@@ -456,9 +435,9 @@ export class SliderWindowComponent implements OnInit {
       
       let removeItems = await this.extApi.updateCopany(
         [{
-          "cmpId"   : 'string',
+          "cmpId"   : this.allCompanyData[i].cmpId,
           "cmpName" : this.allCompanyData[i].cmpName,
-          "regNo"   : 'string',
+          "regNo"   : this.allCompanyData[i].regNo,
           "addLineA": this.allCompanyData[i].addLineA,
           "addLineB": this.allCompanyData[i].addLineB,
           "addLineC": this.allCompanyData[i].addLineC,
@@ -473,7 +452,7 @@ export class SliderWindowComponent implements OnInit {
 
       console.log(removeItems)
 
-      this.allCompanyData.splice(i, 1);
+      this.loadCompany();
 
       this.isLoaderAvailableForCompany = false;
 
@@ -511,7 +490,7 @@ export class SliderWindowComponent implements OnInit {
 
       this.companyItems.reset();
 
-      this.loadCompany();
+      await this.loadCompany();
       this.isLoaderAvailableForCompany = false;
 
     } catch (e:any) {
@@ -610,13 +589,7 @@ export class SliderWindowComponent implements OnInit {
       let adTypeRes = await this.extApi.AddEmployeeDesignation(reqFields);
       console.log(adTypeRes)
 
-      this.alldesoignations.push(
-        {
-          "id": "string",
-          "desgDesc": this.designation.value.desgDesc,
-          "status": 0
-        }
-      )
+      await this.loaAllfeedbacks()
       
       this.designation.reset();
       this.isLoaderAvailableForDesignation = false;
@@ -651,7 +624,7 @@ export class SliderWindowComponent implements OnInit {
       let removefeedbackRes = await this.extApi.UpdateEmployeeDesignation([{id: this.alldesoignations[i].id, desgDesc: this.alldesoignations[i].desgDesc, status: 1}])
       console.log(removefeedbackRes)
 
-      this.alldesoignations.splice(i, 1);
+      await this.loaAllfeedbacks()
 
       this.isLoaderAvailableForDesignation = false;
 
@@ -747,13 +720,8 @@ export class SliderWindowComponent implements OnInit {
       let adTypeRes = await this.extApi.AddDocType(reqFields);
       console.log(adTypeRes)
 
-      this.allSavedDocsTypes.push(
-        {
-          "id": "string",
-          "name": this.docType.value.documentType,
-          "status": 0
-        }
-      )
+      await this.loaAllDocuments()
+      
       
       this.docType.reset();
 
@@ -789,7 +757,7 @@ export class SliderWindowComponent implements OnInit {
       let removeDOcTypeRes = await this.extApi.UpdateDocType({id: this.allSavedDocsTypes[i].id, name: this.allSavedDocsTypes[i].name, status: 1})
       console.log(removeDOcTypeRes)
 
-      this.allSavedDocsTypes.splice(i, 1);
+      this.loaAllDocuments()
       this.isLoaderAvailableForDocType = false;
 
     } catch (e:any) {
@@ -806,7 +774,7 @@ export class SliderWindowComponent implements OnInit {
 
     try {
       
-      let updateDocTypeRes = await this.extApi.UpdateDocType({id: this.allSavedDocsTypes[i].id, name: this.docType.value.name, status: 0})
+      let updateDocTypeRes = await this.extApi.UpdateDocType({id: this.allSavedDocsTypes[i].id, name: this.docType.value.documentType, status: 0})
       console.log(updateDocTypeRes)
 
       this.docType.reset();
@@ -885,13 +853,7 @@ export class SliderWindowComponent implements OnInit {
       let adTypeRes = await this.extApi.AddFeedbackStatus(reqFields);
       console.log(adTypeRes)
 
-      this.allfeedbackStatus.push(
-        {
-          "cfStatusId": "string",
-          "cfStatusDesc": this.feedbackStatusForm.value.cfStatusDesc,
-          "status": 0
-        }
-      )
+      await this.loaAllfeedbackStatus()
       
       this.feedbackStatusForm.reset();
       this.isLoaderAvailableForFeedbackStatus = false;
@@ -926,7 +888,7 @@ export class SliderWindowComponent implements OnInit {
       let removefeedbackRes = await this.extApi.UpdateFeedbackStatus([{cfStatusId: this.allfeedbackStatus[i].cfStatusId, cfStatusDesc: this.allfeedbackStatus[i].cfStatusDesc, status: 1}])
       console.log(removefeedbackRes)
 
-      this.allfeedbackStatus.splice(i, 1);
+      await this.loaAllfeedbackStatus()
 
       this.isLoaderAvailableForFeedbackStatus = false;
 
@@ -979,7 +941,7 @@ export class SliderWindowComponent implements OnInit {
       console.log(updateFeedBackStausRes)
 
       this.feedbackStatusForm.reset();
-      this.loaAllfeedbackStatus();
+      await this.loaAllfeedbackStatus();
 
       this.isLoaderAvailableForFeedbackStatus = false;
 
@@ -1025,13 +987,7 @@ export class SliderWindowComponent implements OnInit {
       let adTypeRes = await this.extApi.AddFeedbackType(reqFields);
       console.log(adTypeRes)
 
-      this.allfeedbackTypes.push(
-        {
-          "cfType": "string",
-          "typeDesc": this.feedbackTypeForm.value.typeDesc,
-          "status": 0
-        }
-      )
+      await this.loaAllfeedbackTypes()
       
       this.feedbackTypeForm.reset();
 
@@ -1067,7 +1023,7 @@ export class SliderWindowComponent implements OnInit {
       let removefeedbackRes = await this.extApi.UpdateFeedbackType([{cfType: this.allfeedbackTypes[i].cfType, typeDesc: this.allfeedbackTypes[i].typeDesc, status: 1}])
       console.log(removefeedbackRes)
 
-      this.allfeedbackTypes.splice(i, 1);
+      await this.loaAllfeedbackTypes()
 
       this.isLoaderAvailableForFeedbackType = false;
 
@@ -1089,7 +1045,7 @@ export class SliderWindowComponent implements OnInit {
       console.log(removefeedbackRes)
 
 
-      this.loaAllfeedbackTypes();
+      await this.loaAllfeedbackTypes();
       this.feedbackTypeForm.reset()
       this.isLoaderAvailableForFeedbackType = false;
 
@@ -1165,11 +1121,7 @@ export class SliderWindowComponent implements OnInit {
       let addItemTypeRes = await this.extApi.AddItemType(reqFields);
       console.log(addItemTypeRes)
 
-      this.allSavedItemTypes.push({
-        "id": "string",
-        "name": this.itemTypeForm.value.name,
-        "status": 0
-      });
+      await this.loadAllItemTypes()
 
       this.itemTypeForm.reset();
       this.isLoaderAvailableForItemType = false;
@@ -1204,7 +1156,7 @@ export class SliderWindowComponent implements OnInit {
       let removeItemType = await this.extApi.UpdateItemType([{id: this.allSavedItemTypes[i].id, name: this.allSavedItemTypes[i].name, status: 1}])
       console.log(removeItemType)
 
-      this.allSavedItemTypes.splice(i, 1);
+      await this.loadAllItemTypes()
 
       this.isLoaderAvailableForItemType = false;
 
@@ -1256,7 +1208,7 @@ export class SliderWindowComponent implements OnInit {
       let removeItemType = await this.extApi.UpdateItemType([{id: this.allSavedItemTypes[i].id, name: this.itemTypeForm.value.name, status: 0}])
       console.log(removeItemType)
 
-      this.loadAllItemTypes();
+      await this.loadAllItemTypes();
       this.itemTypeForm.reset();
       this.isLoaderAvailableForItemType = false;
 
@@ -1296,26 +1248,7 @@ export class SliderWindowComponent implements OnInit {
       let addItemRes = await this.extApi.AddItems(reqFields);
       console.log(addItemRes);
 
-      this.allItems.push(
-        {
-          "id": "string",
-          "itemName": this.items.value.itemName,
-          "description": this.items.value.description,
-          "model": this.items.value.model,
-          "powerRating": this.items.value.powerRating,
-          "efficiency":this.items.value.efficiency,
-          "unitPrice": this.items.value.unitPrice,
-          "warrantyPeriod": this.items.value.warrantyPeriod,
-          "stockQuantity": this.items.value.stockQuantity,
-          "manFcId": this.items.value.ManuFactures,
-          "brandId" : this.items.value.brandName,
-          "itemTypeId": this.items.value.itemType,
-          "status": 0,
-          'itemTypeInUi'      : this.allSavedItemTypes.find((itype: any) => itype.id === this.items.value.itemType)?.name || '',
-          'ManuFacturesInUi'  : this.allSavedIManufatureItems.find((mnf: any) => mnf.id === this.items.value.ManuFactures)?.name || '',
-          'brandNameInUi'     : this.allBrandNames.find((brnd: any) => brnd.id === this.items.value.brandName)?.brandName || '',
-        }
-      )
+      await this.loadAllItems()
       
       this.items.reset();
       this.isLoaderAvailableForItems = false;
@@ -1356,7 +1289,7 @@ export class SliderWindowComponent implements OnInit {
       
       let removeItems = await this.extApi.UpdateItem(
         [{
-          "id": "string",
+          "id": this.allItems[i].id,
           "itemName": this.allItems[i].itemName,
           "description": this.allItems[i].description,
           "model": this.allItems[i].model,
@@ -1374,7 +1307,7 @@ export class SliderWindowComponent implements OnInit {
 
       console.log(removeItems)
 
-      this.allItems.splice(i, 1);
+      await this.loadAllItems()
       this.isLoaderAvailableForItems = false;
 
     } catch (e:any) {
@@ -1453,7 +1386,7 @@ export class SliderWindowComponent implements OnInit {
 
       console.log(removeItems)
 
-      this.loadAllItems();
+      await this.loadAllItems();
       this.items.reset();
       this.isLoaderAvailableForItems = false;
 
@@ -1499,14 +1432,7 @@ export class SliderWindowComponent implements OnInit {
       let addManufactureeRes = await this.extApi.AddManufac(reqFields);
       console.log(addManufactureeRes)
 
-      this.allSavedIManufatureItems.push({
-        "id"      : "string",
-        "name"    : this.manufatureItems.value.name,
-        "phoneNo" : this.manufatureItems.value.pNumber,
-        "email"   : this.manufatureItems.value.email,
-        "address" : this.manufatureItems.value.address,
-        "status"  : 0
-      });
+      await this.loadAllIManufatureItems()
       
       this.manufatureItems.reset();
       this.isLoaderAvailableForManuFac = false;
@@ -1542,7 +1468,7 @@ export class SliderWindowComponent implements OnInit {
       let removeManuFacItems = await this.extApi.UpdateManufacturer([{id: this.allSavedIManufatureItems[i].id, name: this.allSavedIManufatureItems[i].name, phoneNo: this.allSavedIManufatureItems[i].phoneNo, email: this.allSavedIManufatureItems[i].email, address: this.allSavedIManufatureItems[i].address, status: 1}])
       console.log(removeManuFacItems)
 
-      this.allSavedIManufatureItems.splice(i, 1);
+      await this.loadAllIManufatureItems()
       this.isLoaderAvailableForManuFac = false;
 
     } catch (e:any) {
@@ -1596,7 +1522,7 @@ export class SliderWindowComponent implements OnInit {
       let updateManuFacRes = await this.extApi.UpdateManufacturer([{id: this.allSavedIManufatureItems[i].id, name: this.manufatureItems.value.name, phoneNo: this.manufatureItems.value.pNumber, email: this.manufatureItems.value.email, address: this.manufatureItems.value.address, status: 0}])
       console.log(updateManuFacRes)
 
-      this.loadAllIManufatureItems();
+      await this.loadAllIManufatureItems();
       this.manufatureItems.reset();
       this.isLoaderAvailableForManuFac = false;
 
@@ -1646,11 +1572,7 @@ export class SliderWindowComponent implements OnInit {
       let addStageRes = await this.extApi.AddStage(reqFields);
       console.log(addStageRes)
 
-      this.allSavedStages.push({
-        "id": "string",
-        "stagDesc": this.stage.value.stagDesc,
-        "status": 0
-      })
+      await this.loaAllStages()
       
       this.stage.reset();
       this.isLoaderAvailableForStage = false;
@@ -1685,7 +1607,7 @@ export class SliderWindowComponent implements OnInit {
       let removeStage = await this.extApi.UpdateStage({id: this.allSavedStages[i].id, stagDesc: this.allSavedStages[i].stagDesc, status: 1})
       console.log(removeStage)
 
-      this.allSavedStages.splice(i, 1);
+      await this.loaAllStages()
       this.isLoaderAvailableForStage = false;
 
     } catch (e:any) {
@@ -1705,7 +1627,7 @@ export class SliderWindowComponent implements OnInit {
       let updateStageRes = await this.extApi.UpdateStage({id: this.allSavedStages[i].id, stagDesc: this.stage.value.stagDesc, status: 0})
       console.log(updateStageRes)
 
-      this.loaAllStages();
+      await this.loaAllStages();
       this.stage.reset();
 
       this.isLoaderAvailableForStage = false;
@@ -1782,11 +1704,7 @@ export class SliderWindowComponent implements OnInit {
         let addprofileRes = await this.extApi.AddUserMode(reqFields);
         console.log(addprofileRes)
   
-        this.allSavedprofiles.push({
-          "id": "string",
-          "modeDesc": this.profile.value.modeDesc,
-          "status": 0
-        })
+        await this.loaAllprofiles()
         
         this.profile.reset();
         this.isLoaderAvailableForprofile = false;
@@ -1821,7 +1739,7 @@ export class SliderWindowComponent implements OnInit {
         let removeprofile = await this.extApi.UpdateUserMode([{id: this.allSavedprofiles[i].id, modeDesc: this.allSavedprofiles[i].modeDesc, status: 1}])
         console.log(removeprofile)
   
-        this.allSavedprofiles.splice(i, 1);
+        await this.loaAllprofiles()
         this.isLoaderAvailableForprofile = false;
   
       } catch (e:any) {
@@ -1841,7 +1759,7 @@ export class SliderWindowComponent implements OnInit {
         let updateprofileRes = await this.extApi.UpdateUserMode({id: this.allSavedprofiles[i].id, modeDesc: this.profile.value.modeDesc, status: 0})
         console.log(updateprofileRes)
   
-        this.loaAllprofiles();
+        await this.loaAllprofiles();
         this.profile.reset();
   
         this.isLoaderAvailableForprofile = false;

@@ -293,7 +293,7 @@ export class CustomerProductsComponent implements OnInit, AfterViewInit{
         "refNu": "string",
         "requestedOn": "2024-07-22T17:56:43.006Z",
         "prodId": this.rowData.find((el: any) => el?.productName === this?.custProdName)?.id || '',
-        "stageId": "000001",
+        "stageId": "000000",
         "description": this.prodDescription || '',
         "remark": this.remark || '',
         "isPaymentsDone": false,
