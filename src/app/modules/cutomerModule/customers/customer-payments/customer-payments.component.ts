@@ -55,6 +55,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   allQuatationForDropForSearch = [] as any;
   allProdReferanceForSearch = [] as any;
   allProductsForGetNames: any;
+  checked: any;
 
   constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private dialog: MatDialog, private cdr: ChangeDetectorRef){
 
@@ -349,6 +350,7 @@ debugger
       "payment": this.paymentForm.value.payment,
       "balance": this.productForUpdate.balance,
       "quotedPrice": this.productForUpdate.quotedPrice,
+      "isVerified": this.checked,
       "totalDue": this.productForUpdate.totalDue,
       "status": 0
     }
@@ -360,11 +362,19 @@ debugger
 
       await this.getCustPayments();
 
+      this.checked = false;
+      this.paymentForm.reset();
+
       this.isBtnEnabaled = true;
     } catch (error) {
       this.notifyMessage("Update Paymnet", "Something went wrong when update the payment details.",NotificationType.error)
       this.CommonLoaderComponent.hide();
     }
+  }
+
+  onCheckboxChange(event: any) {
+    debugger
+    this.checked = event.checked;  // true or false
   }
 
   async deletePayment(payment: any){

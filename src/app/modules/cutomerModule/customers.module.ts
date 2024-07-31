@@ -28,6 +28,7 @@ import { CustomerQuotationsConfirmation } from './customers/customer-quotations-
 import { RormViewerQoutConfirm } from 'src/app/form-viewer-qout-confirm/form-viewer-qout-confirm.component';
 import { WarrantyComponent } from './customers/warranty/warranty.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     AgGridModule,
     MatStepperModule,
     MatTableModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule
   ]
 })
 export class CustomersModule { }

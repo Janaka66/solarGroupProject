@@ -1,11 +1,13 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { AppService } from 'src/app/app.service';
 import { ExtApiService } from 'src/app/ext-api.service';
 import { CommonLoaderComponent } from 'src/app/sharedComp/common-loader/common-loader.component';
 import { CustomerSearchComponent } from 'src/app/sharedComp/customer-search/customer-search.component';
 import { EmployeeSearchComponent } from 'src/app/sharedComp/employee-search/employee-search.component';
+import { NotificationDialogComponent, NotificationType } from 'src/app/sharedComp/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-warranty',
@@ -56,7 +58,7 @@ export class WarrantyComponent implements OnInit , AfterViewInit {
   ManufactureCotact = ''
 
 
-  constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private cdr: ChangeDetectorRef){
+  constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private cdr: ChangeDetectorRef, private dialog: MatDialog){
     
     this.paymentForm = this.fb.group({
       customerName: [{ value: '', disabled: true }, Validators.required],
@@ -128,7 +130,7 @@ export class WarrantyComponent implements OnInit , AfterViewInit {
     this.fromCompPickerDate = '';
     this.addionalDescForAdd = '';
     this.remarkForAdd = '';
-    
+
     this.CommonLoaderComponent.hide();
 
   }
@@ -565,10 +567,18 @@ debugger
   }
 
   viewRow(rowData: any, event: Event): void {
- debugger
+ 
     this.manufactureAddress = rowData.item.manufacturer.address
     this.manufactureEmail = rowData.item.manufacturer.email
     this.ManufactureName = rowData.item.manufacturer.name
     this.ManufactureCotact = rowData.item.manufacturer.phoneNo
+  }
+
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
   }
 }

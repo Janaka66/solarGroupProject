@@ -4,6 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ExtApiService } from '../ext-api.service';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
+import { NotificationDialogComponent, NotificationType } from '../sharedComp/notification-dialog/notification-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-slider-window',
@@ -120,7 +122,7 @@ export class SliderWindowComponent implements OnInit {
   warrenty: any;
   allSavedwarrentys: any;
 
-  constructor(private formBuilder: FormBuilder, private extApi: ExtApiService, private communicationService: AppService, private router: Router){
+  constructor(private formBuilder: FormBuilder, private extApi: ExtApiService, private communicationService: AppService, private router: Router, private dialog: MatDialog){
     this.brand = this.formBuilder.group({
       brandName:    ['', Validators.required]
     });
@@ -199,7 +201,7 @@ export class SliderWindowComponent implements OnInit {
   }
 
   sliderEnableDisable(data: any){
-debugger
+
     this.sliderWindowState = true;
     
     this.clearAll();
@@ -258,14 +260,14 @@ debugger
     if(this.brand.value.brandName === ''){
 
       this.isLoaderAvailableForBrand = false;
-      alert("brand is empty")
+      this.notifyMessage("Brand", "Brand is empty" ,NotificationType.warn)
       return
     }
 
     if(this.allBrandNames.find((el: any) => el.brandName === this.brand.value.brandName)){
 
       this.isLoaderAvailableForBrand = false;
-      alert("brand is already added")
+      this.notifyMessage("Brand", "Brand is already added" ,NotificationType.warn)
       return
     }
 
@@ -287,6 +289,8 @@ debugger
       this.brand.reset();
 
       this.isLoaderAvailableForBrand = false;
+
+      this.notifyMessage("Brand", "Brand Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -323,6 +327,9 @@ debugger
       await this.loaAllbrands()
 
       this.isLoaderAvailableForBrand = false;
+
+      this.notifyMessage("Brand", "Brand Removed Successfully" ,NotificationType.success)
+
 
     } catch (e:any) {
       console.log(e)
@@ -377,6 +384,8 @@ debugger
 
       this.isLoaderAvailableForBrand = false;
 
+      this.notifyMessage("Brand", "Brand Updated Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -417,6 +426,8 @@ debugger
       this.companyItems.reset();
       
       this.isLoaderAvailableForCompany = false;
+
+      this.notifyMessage("Company", "Company Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -472,6 +483,8 @@ debugger
 
       this.isLoaderAvailableForCompany = false;
 
+      this.notifyMessage("Company", "Company Removed Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
       this.isLoaderAvailableForCompany = false;
@@ -508,6 +521,8 @@ debugger
 
       await this.loadCompany();
       this.isLoaderAvailableForCompany = false;
+
+      this.notifyMessage("Company", "Company Updated Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -581,14 +596,15 @@ debugger
     if(this.designation.value.desgDesc === ''){
 
       this.isLoaderAvailableForDesignation = false;
-      alert("designation is empty")
+      this.notifyMessage("Designation", "Designation is empty" ,NotificationType.warn)
+
       return
     }
 
     if(this.alldesoignations.find((el: any) => el.desgDesc === this.designation.value.desgDesc)){
 
       this.isLoaderAvailableForDesignation = false;
-      alert("designation is already added")
+      this.notifyMessage("Designation", "Designation has already added" ,NotificationType.warn)
       return
     }
 
@@ -609,6 +625,8 @@ debugger
       
       this.designation.reset();
       this.isLoaderAvailableForDesignation = false;
+
+      this.notifyMessage("Designation", "Designation Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -646,6 +664,8 @@ debugger
 
       this.isLoaderAvailableForDesignation = false;
 
+      this.notifyMessage("Designation", "Designation Removed Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -667,6 +687,8 @@ debugger
       this.loaAllfeedbacks();
 
       this.isLoaderAvailableForDesignation = false;
+
+      this.notifyMessage("Designation", "Designation Updated Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -714,14 +736,14 @@ debugger
     if(this.docType.value.documentType === ''){
 
       this.isLoaderAvailableForDocType = false;
-      alert("Document type is empty")
+      this.notifyMessage("Doc Type", "Document is empty" ,NotificationType.warn)
       return
     }
 
     if(this.allSavedDocsTypes.find((el: any) => el.name === this.docType.value.documentType)){
 
       this.isLoaderAvailableForDocType = false;
-      alert("type is already added")
+      this.notifyMessage("Doc Type", "Type is already added" ,NotificationType.warn)
       return
     }
 
@@ -744,6 +766,8 @@ debugger
       this.docType.reset();
 
       this.isLoaderAvailableForDocType = false;
+
+      this.notifyMessage("Document Type", "Document Type Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -778,6 +802,8 @@ debugger
       this.loaAllDocuments()
       this.isLoaderAvailableForDocType = false;
 
+      this.notifyMessage("Document Type", "Document Type Removed Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -799,6 +825,8 @@ debugger
       this.loaAllDocuments();
 
       this.isLoaderAvailableForDocType = false;
+
+      this.notifyMessage("Document Type", "Document Type Updated Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -846,15 +874,15 @@ debugger
     if(this.feedbackStatusForm.value.cfStatusDesc === ''){
 
     this.isLoaderAvailableForFeedbackStatus = false;
-      alert("feedback is empty")
-      return
+
+    this.notifyMessage("FeedBack Status", "Feedback is empty" ,NotificationType.warn)
+    return
     }
 
     if(this.allfeedbackStatus.find((el: any) => el.cfStatusDesc === this.feedbackStatusForm.value.cfStatusDesc)){
 
       this.isLoaderAvailableForFeedbackStatus = false;
-
-      alert("feedback is already added")
+      this.notifyMessage("FeedBack Status", "Feedback is already added" ,NotificationType.warn)
       return
     }
 
@@ -875,6 +903,8 @@ debugger
       
       this.feedbackStatusForm.reset();
       this.isLoaderAvailableForFeedbackStatus = false;
+
+      this.notifyMessage("Feedback Status", "Feedback Status Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -909,6 +939,8 @@ debugger
       await this.loaAllfeedbackStatus()
 
       this.isLoaderAvailableForFeedbackStatus = false;
+
+      this.notifyMessage("Feedback Status", "Feedback Status Removed Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -963,6 +995,8 @@ debugger
 
       this.isLoaderAvailableForFeedbackStatus = false;
 
+      this.notifyMessage("Feedback Status", "Feedback Status Updated Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -980,15 +1014,15 @@ debugger
 
       this.isLoaderAvailableForFeedbackType = false;
 
-      alert("feedback is empty")
+      this.notifyMessage("FeedBack type", "Feedback is empty" ,NotificationType.warn)
+
       return
     }
 
     if(this.allfeedbackTypes.find((el: any) => el.typeDesc === this.feedbackTypeForm.value.typeDesc)){
 
       this.isLoaderAvailableForFeedbackType = false;
-
-      alert("feedback is already added")
+      this.notifyMessage("FeedBack type", "Feedback is alrady added" ,NotificationType.warn)
       return
     }
 
@@ -1010,6 +1044,8 @@ debugger
       this.feedbackTypeForm.reset();
 
       this.isLoaderAvailableForFeedbackType = false;
+
+      this.notifyMessage("Feedback Type", "Feedback Type Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -1045,6 +1081,8 @@ debugger
 
       this.isLoaderAvailableForFeedbackType = false;
 
+      this.notifyMessage("Feedback Type", "Feedback Type Removed Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -1066,6 +1104,8 @@ debugger
       await this.loaAllfeedbackTypes();
       this.feedbackTypeForm.reset()
       this.isLoaderAvailableForFeedbackType = false;
+
+      this.notifyMessage("Feedback Type", "Feedback Type Updated Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -1115,14 +1155,14 @@ debugger
     if(this.itemTypeForm.value.name === ''){
 
       this.isLoaderAvailableForItemType = false;
-      alert("Item Type is empty")
+      this.notifyMessage("Item type", "Item Type is empty" ,NotificationType.warn)
       return
     }
 
     if(this.allSavedItemTypes.find((el: any) => el.name === this.itemTypeForm.value.name)){
 
       this.isLoaderAvailableForItemType = false;
-      alert("Item Type is already added")
+      this.notifyMessage("Item type", "Item Type is already added" ,NotificationType.warn)
       return
     }
 
@@ -1143,6 +1183,8 @@ debugger
 
       this.itemTypeForm.reset();
       this.isLoaderAvailableForItemType = false;
+
+      this.notifyMessage("Item Type", "Item Type Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -1177,6 +1219,8 @@ debugger
       await this.loadAllItemTypes()
 
       this.isLoaderAvailableForItemType = false;
+
+      this.notifyMessage("Item Type", "Item Type Removed Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -1230,6 +1274,8 @@ debugger
       this.itemTypeForm.reset();
       this.isLoaderAvailableForItemType = false;
 
+      this.notifyMessage("Item Type", "Item Type Updated Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -1270,6 +1316,8 @@ debugger
       
       this.items.reset();
       this.isLoaderAvailableForItems = false;
+
+      this.notifyMessage("Item", "Item Added Successfully" ,NotificationType.success)
 
     } catch (e: any) {
       
@@ -1327,6 +1375,8 @@ debugger
 
       await this.loadAllItems()
       this.isLoaderAvailableForItems = false;
+
+      this.notifyMessage("Item", "Item Removed Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -1408,6 +1458,8 @@ debugger
       this.items.reset();
       this.isLoaderAvailableForItems = false;
 
+      this.notifyMessage("Item", "Item Updated Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
 
@@ -1455,6 +1507,8 @@ debugger
       this.manufatureItems.reset();
       this.isLoaderAvailableForManuFac = false;
 
+      this.notifyMessage("Manufacture", "Manufacture Added Successfully" ,NotificationType.success)
+
     } catch (e: any) {
       
       console.log(e)
@@ -1488,6 +1542,8 @@ debugger
 
       await this.loadAllIManufatureItems()
       this.isLoaderAvailableForManuFac = false;
+
+      this.notifyMessage("Manufacture", "Manufacture Removed Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -1544,6 +1600,8 @@ debugger
       this.manufatureItems.reset();
       this.isLoaderAvailableForManuFac = false;
 
+      this.notifyMessage("Manufacture", "Manufacture Updated Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
       this.isLoaderAvailableForManuFac = false;
@@ -1595,6 +1653,8 @@ debugger
       this.stage.reset();
       this.isLoaderAvailableForStage = false;
 
+      this.notifyMessage("Stage", "Stage Added Successfully" ,NotificationType.success)
+
     } catch (e: any) {
       
       console.log(e)
@@ -1628,6 +1688,8 @@ debugger
       await this.loaAllStages()
       this.isLoaderAvailableForStage = false;
 
+      this.notifyMessage("Stage", "Stage Removed Successfully" ,NotificationType.success)
+
     } catch (e:any) {
       console.log(e)
       this.isLoaderAvailableForStage = false;
@@ -1649,6 +1711,8 @@ debugger
       this.stage.reset();
 
       this.isLoaderAvailableForStage = false;
+
+      this.notifyMessage("Stage", "Stage Updated Successfully" ,NotificationType.success)
 
     } catch (e:any) {
       console.log(e)
@@ -1726,6 +1790,8 @@ debugger
         
         this.profile.reset();
         this.isLoaderAvailableForprofile = false;
+
+        this.notifyMessage("User Mode", "Usermode Added Successfully" ,NotificationType.success)
   
       } catch (e: any) {
         
@@ -1760,6 +1826,8 @@ debugger
         await this.loaAllprofiles()
         this.isLoaderAvailableForprofile = false;
   
+        this.notifyMessage("User Mode", "Usermode Removed Successfully" ,NotificationType.success)
+
       } catch (e:any) {
         console.log(e)
         this.isLoaderAvailableForprofile = false;
@@ -1781,6 +1849,8 @@ debugger
         this.profile.reset();
   
         this.isLoaderAvailableForprofile = false;
+
+        this.notifyMessage("User Mode", "Usermode Updated Successfully" ,NotificationType.success)
   
       } catch (e:any) {
         console.log(e)
@@ -1858,6 +1928,8 @@ debugger
           
           this.warrenty.reset();
           this.isLoaderAvailableForwarrenty = false;
+
+          this.notifyMessage("Warrenty", "Warrenty Added Successfully" ,NotificationType.success)
     
         } catch (e: any) {
           
@@ -1891,6 +1963,8 @@ debugger
     
           await this.loaAllwarrentys()
           this.isLoaderAvailableForwarrenty = false;
+
+          this.notifyMessage("Warrenty", "Warrenty Removed Successfully" ,NotificationType.success)
     
         } catch (e:any) {
           console.log(e)
@@ -1906,13 +1980,15 @@ debugger
     
         try {
           
-          let updatewarrentyRes = await this.extApi.UpdateWarrentyItemAction({id: this.allSavedwarrentys[i].id, actionDesc: this.warrenty.value.actionDesc, status: 0})
+          let updatewarrentyRes = await this.extApi.UpdateWarrentyItemAction([{id: this.allSavedwarrentys[i].id, actionDesc: this.warrenty.value.actionDesc, status: 0}])
           console.log(updatewarrentyRes)
     
           await this.loaAllwarrentys();
           this.warrenty.reset();
     
           this.isLoaderAvailableForwarrenty = false;
+
+          this.notifyMessage("Warrenty", "Warrenty Updated Successfully" ,NotificationType.success)
     
         } catch (e:any) {
           console.log(e)
@@ -2188,5 +2264,13 @@ debugger
     //warrenty
     this.warrenty.reset();
     this.allSavedwarrentys = [];
+  }
+
+  private notifyMessage(title: string, message: string, notificationType: NotificationType) {
+
+    this.dialog.open(NotificationDialogComponent, {
+      width: '300px',
+      data: { title, message, notificationType}
+    });
   }
 }
