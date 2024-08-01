@@ -90,90 +90,6 @@ body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0,
 
 /* header */
 
-header{
-
-	.top-conatainer{
-
-		display: flex;
-    	flex-direction: row;
-		margin-bottom: 15px;
-
-		.logo{
-			width: 50%;
-			justify-content: flex-start;
-			display: flex;
-		}
-
-		.table{
-			width: 50%;
-			display: flex;
-			justify-content: flex-end;
-
-			table{
-
-				tr{
-					th{
-						width: 27%;
-					}
-				}
-			}
-		}
-
-	}
-
-	.addressDescriptionContainer{
-		display: flex;
-    	width: 100%;
-
-		.address{
-			width: 50%;
-		}
-
-		.jobDesc{
-			width: 50%;
-
-			tr{
-				display: flex;
-				flex-direction: column;
-				height: 100%;
-
-				th{
-					height: 10px;
-					align-items: center;
-					display: flex;
-				}
-
-				td{
-					height: 100%;
-				}
-			}
-		}
-	}
-
-}
-
-article{
-	.meta{
-		.billto{
-			display: flex;
-			flex-direction: column;
-			width: 50%;
-
-			th{
-				width: 100%;
-				height: 10px;
-				display: flex;
-				align-items: center;
-			}
-
-			td{
-				width: 100%;
-				height: 57px;
-			}
-		}
-	}
-}
-
 header { margin: 0 0 3em; padding: 5px 5px 0px 5px;}
 header:after { clear: both; content: ""; display: table; }
 
@@ -210,14 +126,14 @@ table.meta td { width: 85%; }
 table.inventory { clear: both; width: 100%; }
 table.inventory th { font-weight: bold; text-align: center; }
 
-table.inventory td:nth-child(1) { width: 14%; }
-table.inventory td:nth-child(2) { width: 50%; }
+table.inventory td:nth-child(1) { width: 50%; }
+table.inventory td:nth-child(2) { width: 14%; }
 table.inventory td:nth-child(3) { text-align: right; width: 12%; }
 table.inventory td:nth-child(4) { text-align: right; width: 12%; }
 table.inventory td:nth-child(5) { text-align: right; width: 12%; }
 
-table.inventory th:nth-child(1) { width: 14%; }
-table.inventory th:nth-child(2) { width: 50%; }
+table.inventory th:nth-child(1) { width: 50%; }
+table.inventory th:nth-child(2) { width: 14%; }
 table.inventory th:nth-child(3) { text-align: right; width: 12%; }
 table.inventory th:nth-child(4) { text-align: right; width: 12%; }
 table.inventory th:nth-child(5) { text-align: right; width: 12%; }
@@ -238,9 +154,9 @@ aside h1 { border-color: #999; border-bottom-style: solid; }
 	width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
 
 	img{
+		width: 54%;
     	object-fit: cover;
 	}
 }
