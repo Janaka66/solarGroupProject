@@ -185,6 +185,9 @@ export class SliderWindowComponent implements OnInit {
 
     this.stage = this.formBuilder.group({
       stagDesc:    ['', Validators.required],
+      hierarchyLevel:    ['', Validators.required],
+      stagePrecentage:    ['', Validators.required],
+      daysFromQuotation:    ['', Validators.required],
     });
 
     this.profile = this.formBuilder.group({
@@ -1622,7 +1625,7 @@ export class SliderWindowComponent implements OnInit {
 
     this.isLoaderAvailableForStage = true;
 
-    if(this.stage.value.stagDesc === ''){
+    if(this.stage.value.stagDesc === '' && this.stage.value.hierarchyLevel === '' && this.stage.value.stagePrecentage === '' && this.stage.value.daysFromQuotation === ''){
       this.isLoaderAvailableForStage = false;
       alert("Stage is empty")
       return
@@ -1639,6 +1642,9 @@ export class SliderWindowComponent implements OnInit {
       {
         "id": "string",
         "stagDesc": this.stage.value.stagDesc,
+        "hierarchyLevel": this.stage.value.hierarchyLevel,
+        "stagePrecentage": this.stage.value.stagePrecentage,
+        "daysFromQuotation": this.stage.value.daysFromQuotation,
         "status": 0
       }
     ]
@@ -1682,7 +1688,7 @@ export class SliderWindowComponent implements OnInit {
 
     try {
       
-      let removeStage = await this.extApi.UpdateStage({id: this.allSavedStages[i].id, stagDesc: this.allSavedStages[i].stagDesc, status: 1})
+      let removeStage = await this.extApi.UpdateStage({id: this.allSavedStages[i].id, stagDesc: this.allSavedStages[i].stagDesc, hierarchyLevel : this.allSavedStages[i].hierarchyLevel, stagePrecentage: this.allSavedStages[i].stagePrecentage , daysFromQuotation: this.allSavedStages[i].daysFromQuotation, status: 1})
       console.log(removeStage)
 
       await this.loaAllStages()
@@ -1704,7 +1710,7 @@ export class SliderWindowComponent implements OnInit {
 
     try {
       
-      let updateStageRes = await this.extApi.UpdateStage({id: this.allSavedStages[i].id, stagDesc: this.stage.value.stagDesc, status: 0})
+      let updateStageRes = await this.extApi.UpdateStage({id: this.allSavedStages[i].id, stagDesc: this.stage.value.stagDesc, hierarchyLevel : this.stage.value.hierarchyLevel, stagePrecentage: this.stage.value.stagePrecentage , daysFromQuotation: this.stage.value.daysFromQuotation, status: 0})
       console.log(updateStageRes)
 
       await this.loaAllStages();
@@ -1750,6 +1756,9 @@ export class SliderWindowComponent implements OnInit {
 
     this.stage.setValue({
       stagDesc: data.stagDesc,
+      hierarchyLevel: data.hierarchyLevel,
+      stagePrecentage: data.stagePrecentage,
+      daysFromQuotation: data.daysFromQuotation,
     })
 
 

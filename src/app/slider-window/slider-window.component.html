@@ -804,6 +804,23 @@
                                     <mat-label>Stage</mat-label>
                                     <input matInput formControlName="stagDesc" required>
                                 </mat-form-field>
+
+                                <mat-form-field>
+                                    <mat-label>Hierarchy Level</mat-label>
+                                    <input matInput formControlName="hierarchyLevel" required>
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <mat-label>stage Precentage</mat-label>
+                                    <input matInput formControlName="stagePrecentage" required>
+                                </mat-form-field>
+
+                                
+                                <mat-form-field>
+                                    <mat-label>Days From Quotation</mat-label>
+                                    <input matInput formControlName="daysFromQuotation" required>
+                                </mat-form-field>
+
                                 
                             </form>
                     
@@ -822,10 +839,31 @@
                 
                             <div class="top" (click)="bindStageDataToUI(stage, i)">
     
-                                <div>
-                                    {{stage.stagDesc}}
-                                </div>
+                                <div class="stageContainer">
+
+                                    <div class="company-details">
+                                        <div class="title">Stage</div>
+                                        <div>{{stage.stagDesc}}</div>
+                                    </div>
+        
+                                    <div class="company-details">
+                                        <div class="title">Hierarchy Level</div>
+                                        <div>{{stage.hierarchyLevel}}</div>
+                                    </div>
+        
+                                    <div class="company-details">
+                                        <div class="title">Stage Precentage</div>
+                                        <div>{{stage.stagePrecentage}}</div>
+                                    </div>
+        
+                                    <div class="company-details">
+                                        <div class="title">Days From Quotation</div>
+                                        <div>{{stage.daysFromQuotation}}</div>
+                                    </div>
     
+                                    
+                                </div>
+                                
                             </div>
                             <div class="bottom" [id] = "i" (click)="removeUpdateOpt(stage.btnTxt, i, 'stage')">
                                 {{removeUpdateTextForStage}}
