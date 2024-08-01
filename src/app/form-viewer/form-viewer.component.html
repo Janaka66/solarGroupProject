@@ -8,13 +8,13 @@
 
     </div>
 
-    <div class="company">
+    <!-- <div class="company">
         <select [(ngModel)]="selectedOption" (change)="selectAddress()">
             <option *ngFor="let option of allCompanyData" [ngValue]="option">
             {{option.cmpName}}
             </option>
         </select>
-    </div>
+    </div> -->
 
     <div class="btns">
         <button *ngIf="cutomerInvoice" [useExistingCss]="true" printSectionId="invoice-print-section"  mat-raised-button color="primary" ngxPrint>print</button> 
@@ -28,53 +28,82 @@
     <header>
       <h1>Invoice</h1>
 
-      <div class="logo">
-        <img src="../../assets/invoiceLogo.png">
+      <div class="top-conatainer">
+          <div class="logo">
+            <div class="logo">
+              <img src="../../assets/invoiceLogo.png">
+            </div>
+          </div>
+        <div class="table">
+
+          <table class="meta">
+            <tr>
+              <th><span contenteditable>Invoice No</span></th>
+              <td><span contenteditable>{{invoiceNo}}</span></td>
+            </tr>
+            <tr>
+              <th><span contenteditable>Date</span></th>
+              <td><span contenteditable>{{invoiceDate}}</span></td>
+            </tr>
+          </table>
+
+        </div>
       </div>
 
-      <address contenteditable>
-        <h3>BG Solar Energy (Private)Ltd.</h3>
-        <p>{{comapnyAddress}}</p>
-        <p>Kurunegala, Sri Lanka</p>
-        <p>(PV 114860)</p>
+      <div class="addressDescriptionContainer">
 
-        <p>Tel : {{mobile}}</p>
-        <p>Fax : {{fax}}</p>
-        <p>E-mail : {{email}}</p>
-      </address>
+        <div class="address">
+
+          <address>
+            <h3>BG Solar Energy (Private)Ltd.</h3>
+            <p>74/30/K, Rajamal Uyana, Colombo Road,</p>
+            <p>(PV 114860)</p>
+            <p>Tel : +94 077 3030237, +94 071 1812818</p>
+            <p>Fax : +94 037 2229515</p>
+            <p>E-mail : begesolar@gmail.com</p>
+          </address>
+    
+        </div>
+
+        <div class="jobDesc">
+
+          <tr>
+
+            <th><span contenteditable>JOB DESCRPTION</span></th>
+            <td><span contenteditable (blur)="updateJobDescription($event)">{{jobDescription}}</span></td>
+          </tr>
+        </div>
+
+      </div>
 
     </header>
     <article>
       <table class="meta">
-        <tr>
-          <th><span contenteditable>Invoice No</span></th>
-          <td><span contenteditable>{{invoiceNo}}</span></td>
-        </tr>
-        <tr>
-          <th><span contenteditable>Date</span></th>
-          <td><span contenteditable>{{invoiceDate}}</span></td>
-        </tr>
-        <tr>
-          <th><span contenteditable>Bill To</span></th>
+        <tr class="billto">
+          <th><span contenteditable>Bill To:</span></th>
           <td><span contenteditable>{{custDataForInvoice}}</span></td>
         </tr>
-        <tr>
+        <!-- <tr>
           <th><span contenteditable>Job Description</span></th>
           <td><span contenteditable (blur)="updateJobDescription($event)">{{jobDescription}}</span></td>
           <td><span contenteditable (click)="updateDescription()">update</span></td>
-        </tr>
+        </tr> -->
       </table>
       <table class="inventory">
         <thead>
           <tr>
-            <th><span contenteditable>Item</span></th>
-            <th><span contenteditable>Rate</span></th>
-            <th><span contenteditable>Quantity</span></th>
-            <th><span contenteditable>Amount</span></th>
+            <th><span contenteditable>REF</span></th>
+            <th><span contenteditable>DESCRIPTION</span></th>
+            <th><span contenteditable>QUOTED PRICE (RS.)</span></th>
+            <th><span contenteditable>BALANCE (RS.)</span></th>
+            <th><span contenteditable>PAYMENT (RS.)</span></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of invoiceItems; let i = index">
+            <td>
+              #{{i}}
+            </td>
             <td>
               <a class="cut" (click)="removeItem(i)">-</a>
               <select [(ngModel)]="item.invItem" (change)="onItemChangeInvoice(i)" [disabled]="item.flag === 'saved'">
@@ -99,7 +128,7 @@
       <a class="add" (click)="addItem()">+</a>
       <table class="balance totalAmt">
         <tr>
-          <th>Total</th>
+          <th>TOTAL DUE</th>
           <td>
             <span data-prefix>$</span>
             <span>{{totalAmount}}</span>
@@ -108,12 +137,11 @@
       </table>
     </article>
     <aside>
-      <h1><span contenteditable>Thank you for the business</span></h1>
-      <div contenteditable>
         
-    <div class="invoiceBottom">
-        <img src="../../assets//invoiceBottom.png">
-    </div>
+      <div>
+        <div class="invoiceBottom">
+            <img src="../../assets/bottomInvice.PNG">
+        </div>
     </div>
     </aside>
 </div>
