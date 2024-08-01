@@ -270,7 +270,7 @@ export class FormViewerComponent implements OnInit, AfterViewInit{
   }
 
   // =========================select customer and send to viewr==========================
-      async setSelectedCustData(selectedCustData: any){
+      async setSelectedCustData(selectedCustData: any){ 
   
       this.custDataForInvoice = '';
 

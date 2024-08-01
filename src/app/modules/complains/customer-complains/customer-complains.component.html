@@ -77,7 +77,7 @@
                         <div class="btncontainer">
                             <button class="icon-btn verify" mat-raised-button  [disabled]="isVerifiedBtnDisabled" (click)="verifyInq()">
                                 <span class="icon">&#10003;</span>
-                                <span class="text">Verify</span>
+                                <span class="text">Handled</span>
                             </button>
                             <button class="icon-btn decline" mat-raised-button  [disabled]="isDeclinedBtnDisabled" (click)="declineInq()">
                                 <span class="icon">&#10007;</span>
@@ -126,7 +126,7 @@
                             <div class="complain-card">
                                 <div class="complain-date">
                                     <span>complain Date:</span>
-                                    {{inquire.iquiryAddeddAt}}
+                                    {{inquire.complainedAt}}
                                 </div>
                                 <div class="completion-date">
                                     <span>Completion Date:</span>

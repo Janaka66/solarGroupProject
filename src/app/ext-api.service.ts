@@ -51,8 +51,8 @@ export class ExtApiService {
     }).toPromise();
   }
 
-  CustomerAddresses(custID: any){
-    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/CustomerAddresses?addId=${custID}`, '',{
+  CustomerAddresses(reqFields: any){
+    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Customer/CustomerAddresses`, reqFields,{
       headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'))
     }).toPromise();
   }
@@ -874,14 +874,16 @@ export class ExtApiService {
   }
   
   GetEmployeeAssignedComplains(reqFields?: any): Promise<any> {
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     });
-  
+
     const options = { headers, params: reqFields };
   
-    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedComplains`, options).toPromise();
+    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/CustomerFeedback/GetEmployeeAssignedComplains`, options).toPromise();
+    
   }
   
   GetEmployeeAssignedQuotationsForAccept(reqFields?: any): Promise<any> {
@@ -892,8 +894,9 @@ export class ExtApiService {
   
     const options = { headers, params: reqFields };
   
-    return this.http.post<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetEmployeeAssignedQuotationsForAccept`, options).toPromise();
+    return this.http.get<any>(this.appConfig.getBaseUrl('api') + `/api/Quotation/GetEmployeeAssignedQuotationsForAccept`, options).toPromise();
   }
+
 
   GetCustDuePayments(reqFields?: any): Promise<any> {
 

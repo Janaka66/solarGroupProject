@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { ExtApiService } from 'src/app/ext-api.service';
 import { EmployeeSearchComponent } from 'src/app/sharedComp/employee-search/employee-search.component';
@@ -39,7 +39,7 @@ export class CustomerInquiriesComponent implements OnInit, AfterViewInit{
   custID: any;
   isLoaderAvailable : boolean = false;
 
-  constructor(private communicationService: AppService, private extApi : ExtApiService){
+  constructor(private communicationService: AppService, private extApi : ExtApiService, private cdr: ChangeDetectorRef){
     
   }
 
@@ -94,16 +94,20 @@ export class CustomerInquiriesComponent implements OnInit, AfterViewInit{
       }
   }
 
-  bindCutomerData(event: any){
-
-    this.getCustomerInquiry({custId: event.id})
+  async bindCutomerData(event: any){
 
     this.isNewBtnDisabled = false;
     this.updateBtnDisabled = true;
 
+    await this.getCustomerInquiry({custId: event.id})
+
+
+
     this.custID = event.id
 
-    this.clear();
+    this.cdr.detectChanges()
+
+
   }
 
   removeEmployee(event : any){

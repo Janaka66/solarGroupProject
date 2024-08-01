@@ -244,7 +244,7 @@ export class CustomerComplainsComponent implements OnInit , AfterViewInit{
   }
 
   showClickedData(data: any){
-    
+    debugger
     this.description = data.description
     this.inqDate = data.complainedAt
     this.completedDate = data.completedAt

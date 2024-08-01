@@ -55,7 +55,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
   allQuatationForDropForSearch = [] as any;
   allProdReferanceForSearch = [] as any;
   allProductsForGetNames: any;
-  checked: any;
+  checked: boolean = false;
 
   constructor(private communicationService: AppService, private extApi : ExtApiService, private fb: FormBuilder, private dialog: MatDialog, private cdr: ChangeDetectorRef){
 
@@ -172,7 +172,7 @@ export class CustomerPaymentsComponent implements AfterViewInit {
 
         this.notifyMessage("Add Paymnet", "Successfully added the payment",NotificationType.success)
     
-       await this.getCustPayments();
+      //  await this.getCustPayments();
        this.CommonLoaderComponent.hide();
 
         
@@ -508,7 +508,7 @@ debugger
     this.allQuatationForDrop = [];
 
         try {
-    
+    debugger
           let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.paymentForm.value.selectedRefNum, "prodId": this.paymentForm.value.productName, "custId":this.selectedCustID});
     
           getProdRef.data = getProdRef.data.filter((el: any) => el.status === 0)
@@ -588,7 +588,7 @@ debugger
         this.allQuatationForDropForSearch = []
 
             try {
-        
+        debugger
               let getProdRef = await this.extApi.GetQuotation({"prodRefNu": this.selectedRefNum, "prodId": this.prodForSearch, "custId":this.selectedCustID});
         
               getProdRef.data = getProdRef.data.filter((el: any) => el.status === 0)
@@ -617,7 +617,7 @@ debugger
         this.quotForSearch = '',
         this.paymentForm.reset();
         this.payments = [],
-        this.isBtnEnabaled = false;
+        this.isBtnEnabaled = true;
       }
 }
 

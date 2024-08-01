@@ -109,9 +109,12 @@ export class CustomerInvoicesComponent implements OnInit, AfterViewInit{
 
         this.selectedCustID = custData.id;
 
+        // await this.getAllInvoices();
+        // this.formViewer.setSelectedCustData({custName: custData.dispName, custID: this.selectedCustID})
+
         try {
             
-            let custAddress = await this.extApi.CustomerAddresses(custData.id);
+            let custAddress = await this.extApi.CustomerAddresses({custId : custData.id});
 
             let defaultAddress = custAddress.data.find((el:any) => el.isDefault === 1)
             this.formViewer.setSelectedCustData({custName: custData.dispName, custAddress: defaultAddress.addLine1 + ' ' + defaultAddress.addLine2 + ' ' + defaultAddress.addLine3, custID: this.selectedCustID})
